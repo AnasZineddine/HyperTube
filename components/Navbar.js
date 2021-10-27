@@ -6,7 +6,7 @@ const Navbar = () => {
       <div className="logo">
         <h1>Hypertube</h1>
       </div>
-      <Link href="/">
+      <Link href="/signin">
         <a>Sign in</a>
       </Link>
       <Link href="/signup">
