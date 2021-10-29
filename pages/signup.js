@@ -16,7 +16,7 @@ import {
 
 const schema = Yup.object().shape({
   firstName: Yup.string()
-    .min(3, "Must have 3 character minimum")
+    .min(1, "Must have 1 character minimum")
     .max(255, "Must be shorter than 255")
     .required("Must enter a firstname"),
   lastName: Yup.string()
@@ -53,7 +53,7 @@ const SignUp = () => {
   return (
     <Flex alignItems="stretch" justifyContent="center">
       <Stack
-        spacing={10}
+        spacing={0}
         m={50}
         justifyContent="flex-start"
         alignItems="stretch"
@@ -70,6 +70,16 @@ const SignUp = () => {
             {...register("firstName")}
           />
           <FormErrorMessage>{errors?.firstName?.message}</FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={errors.lastName?.message} p="4" isRequired>
+          <FormLabel htmlFor="lastName">Last name</FormLabel>
+          <Input
+            type="text"
+            name="lastName"
+            placeholder="Enter your lastname"
+            {...register("lastName")}
+          />
+          <FormErrorMessage>{errors?.lastName?.message}</FormErrorMessage>
         </FormControl>
         <Button variant="solid" size="md">
           Register
