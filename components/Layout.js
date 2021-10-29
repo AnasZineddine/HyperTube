@@ -1,13 +1,18 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { Flex } from "@chakra-ui/react";
 
 const Layout = ({ children }) => {
   return (
-    <div className="content">
+    <Flex
+      flexDirection="column"
+      alignItems="stretch"
+      justifyContent="flex-start"
+    >
       <Navbar />
       {children}
       <Footer />
-    </div>
+    </Flex>
   );
 };
 

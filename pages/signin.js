@@ -1,6 +1,18 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import Error from "../utils/formError";
+import React from "react";
+import {
+  Flex,
+  Text,
+  Stack,
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  FormHelperText,
+  Button,
+} from "@chakra-ui/react";
 
 const validationSchema = Yup.object().shape({
   userName: Yup.string()
@@ -16,65 +28,35 @@ const validationSchema = Yup.object().shape({
 
 const SignUp = () => {
   return (
-    <Formik
-      initialValues={{
-        userName: "",
-        password: "",
-      }}
-      validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
-        setSubmitting(true);
-        //TODO:handesumit and setSubmitting to false
-      }}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-      }) => (
-        <form onSubmit={handleSubmit}>
-          <div className="input-row">
-            <label htmlFor="userName">Username</label>
-            <input
-              type="text"
-              name="userName"
-              id="userName"
-              placeholder="Enter an username"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.userName}
-              className={touched.username && errors.name ? "has-error" : null}
-            />
-            <Error touched={touched.userName} message={errors.userName} />
-          </div>
-
-          <div className="input-row">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Enter a password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-              className={touched.password && errors.name ? "has-error" : null}
-            />
-            <Error touched={touched.password} message={errors.password} />
-          </div>
-
-          <div className="input-row">
-            <button type="submit" disabled={isSubmitting}>
-              Sign in
-            </button>
-          </div>
-        </form>
-      )}
-    </Formik>
+    <Flex alignItems="stretch" justifyContent="center">
+      <Stack
+        spacing={10}
+        m={50}
+        justifyContent="flex-start"
+        alignItems="stretch"
+      >
+        <Text display="flex" justifyContent="center">
+          Sign In
+        </Text>
+        <FormControl>
+          <FormLabel>Firstname</FormLabel>
+          <Input placeholder="Enter your firstname" />
+          <FormErrorMessage>Error message</FormErrorMessage>
+          <FormLabel>Lastname</FormLabel>
+          <Input placeholder="Enter your lastname" />
+          <FormLabel>Username</FormLabel>
+          <Input placeholder="Enter your username" />
+          <FormLabel>Email</FormLabel>
+          <Input placeholder="Enter your email" />
+          <FormLabel>Password</FormLabel>
+          <Input />
+          <FormHelperText>Please enter a strong password</FormHelperText>
+        </FormControl>
+        <Button variant="solid" size="md">
+          Register
+        </Button>
+      </Stack>
+    </Flex>
   );
 };
 

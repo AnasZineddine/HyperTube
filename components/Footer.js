@@ -1,5 +1,13 @@
+import { Flex, Text } from "@chakra-ui/react";
+
 const Footer = () => {
-  return <footer className="footer">Copyright 2021 Hypertube</footer>;
+  return (
+    <Flex justifyContent="center">
+      <Flex justifyContent="flex-start">
+        <Text>copyright 2021</Text>
+      </Flex>
+    </Flex>
+  );
 };
 
 export default Footer;

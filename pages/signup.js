@@ -1,10 +1,22 @@
-import { Formik } from "formik";
+import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import Error from "../utils/formError";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-const validationSchema = Yup.object().shape({
+import {
+  Flex,
+  Text,
+  Stack,
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  FormHelperText,
+  Button,
+} from "@chakra-ui/react";
+
+const schema = Yup.object().shape({
   firstName: Yup.string()
-    .min(1, "Must have a character")
+    .min(3, "Must have 3 character minimum")
     .max(255, "Must be shorter than 255")
     .required("Must enter a firstname"),
   lastName: Yup.string()
@@ -27,114 +39,43 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignUp = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = (values) => console.log(values);
+
   return (
-    <Formik
-      initialValues={{
-        firstName: "",
-        lastName: "",
-        userName: "",
-        email: "",
-        password: "",
-      }}
-      validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
-        setSubmitting(true);
-        //TODO:handesumit and setSubmitting to false
-      }}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-      }) => (
-        <form onSubmit={handleSubmit}>
-          <div className="input-row">
-            <label htmlFor="firstName">Firstname</label>
-            <input
-              type="text"
-              name="firstName"
-              id="firstName"
-              placeholder="Enter your firstname"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.firstName}
-              className={touched.firstName && errors.name ? "has-error" : null}
-            />
-            <Error touched={touched.firstName} message={errors.firstName} />
-          </div>
-
-          <div className="input-row">
-            <label htmlFor="lastName">Lastname</label>
-            <input
-              type="text"
-              name="lastName"
-              id="lastName"
-              placeholder="Enter your lastname"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.lastName}
-              className={touched.lastName && errors.name ? "has-error" : null}
-            />
-            <Error touched={touched.lastName} message={errors.lastName} />
-          </div>
-
-          <div className="input-row">
-            <label htmlFor="userName">Username</label>
-            <input
-              type="text"
-              name="userName"
-              id="userName"
-              placeholder="Enter a username"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.userName}
-              className={touched.username && errors.name ? "has-error" : null}
-            />
-            <Error touched={touched.userName} message={errors.userName} />
-          </div>
-
-          <div className="input-row">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Enter your email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-              className={touched.email && errors.name ? "has-error" : null}
-            />
-            <Error touched={touched.email} message={errors.email} />
-          </div>
-
-          <div className="input-row">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Enter a password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-              className={touched.password && errors.name ? "has-error" : null}
-            />
-            <Error touched={touched.password} message={errors.password} />
-          </div>
-
-          <div className="input-row">
-            <button type="submit" disabled={isSubmitting}>
-              Register
-            </button>
-          </div>
-        </form>
-      )}
-    </Formik>
+    <Flex alignItems="stretch" justifyContent="center">
+      <Stack
+        spacing={10}
+        m={50}
+        justifyContent="flex-start"
+        alignItems="stretch"
+      >
+        <Text display="flex" justifyContent="center">
+          Sign In
+        </Text>
+        <FormControl isInvalid={errors.firstName?.message} p="4" isRequired>
+          <FormLabel htmlFor="firstName">First name</FormLabel>
+          <Input
+            type="text"
+            name="firstName"
+            placeholder="Enter your firstname"
+            {...register("firstName")}
+          />
+          <FormErrorMessage>{errors?.firstName?.message}</FormErrorMessage>
+        </FormControl>
+        <Button variant="solid" size="md">
+          Register
+        </Button>
+      </Stack>
+    </Flex>
   );
 };
 
