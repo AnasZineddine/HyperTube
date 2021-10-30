@@ -16,14 +16,14 @@ import {
 
 const schema = Yup.object().shape({
   firstName: Yup.string()
-    .min(1, "Must have 1 character minimum")
+    .min(3, "Must have 1 character minimum")
     .max(255, "Must be shorter than 255")
     .required("Must enter a firstname"),
   lastName: Yup.string()
     .min(1, "Must have a character")
     .max(255, "Must be shorter than 255")
     .required("Must enter a lastname"),
-  userName: Yup.string()
+  username: Yup.string()
     .min(1, "Must have a character")
     .max(255, "Must be shorter than 255")
     .required("Must enter a username"),
@@ -44,7 +44,7 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onBlur",
+    mode: "onTouched",
     resolver: yupResolver(schema),
   });
 
@@ -57,11 +57,13 @@ const SignUp = () => {
         m={50}
         justifyContent="flex-start"
         alignItems="stretch"
+        w={350}
       >
         <Text display="flex" justifyContent="center">
           Sign In
         </Text>
-        <FormControl isInvalid={errors.firstName?.message} p="4" isRequired>
+
+        <FormControl isInvalid={errors.firstName?.message} p="1" isRequired>
           <FormLabel htmlFor="firstName">First name</FormLabel>
           <Input
             type="text"
@@ -71,7 +73,7 @@ const SignUp = () => {
           />
           <FormErrorMessage>{errors?.firstName?.message}</FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={errors.lastName?.message} p="4" isRequired>
+        <FormControl isInvalid={errors.lastName?.message} p="1" isRequired>
           <FormLabel htmlFor="lastName">Last name</FormLabel>
           <Input
             type="text"
@@ -81,7 +83,48 @@ const SignUp = () => {
           />
           <FormErrorMessage>{errors?.lastName?.message}</FormErrorMessage>
         </FormControl>
-        <Button variant="solid" size="md">
+        <FormControl isInvalid={errors.username?.message} p="1" isRequired>
+          <FormLabel htmlFor="username">Username</FormLabel>
+          <Input
+            type="text"
+            name="username"
+            placeholder="Enter a username"
+            {...register("username")}
+          />
+          <FormErrorMessage>{errors?.username?.message}</FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={errors.email?.message} p="1" isRequired>
+          <FormLabel htmlFor="email">Email</FormLabel>
+          <Input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            {...register("email")}
+          />
+          <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={errors.password?.message} p="1" isRequired>
+          <FormLabel htmlFor="password">Password</FormLabel>
+          <Input
+            type="password"
+            name="password"
+            placeholder="Enter a password"
+            {...register("password")}
+          />
+          <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
+        </FormControl>
+        <Button
+          variant="solid"
+          size="md"
+          onClick={handleSubmit(onSubmit)}
+          disabled={
+            errors.email ||
+            errors.password ||
+            errors.firstName ||
+            errors.lastName ||
+            errors.username
+          }
+        >
           Register
         </Button>
       </Stack>
