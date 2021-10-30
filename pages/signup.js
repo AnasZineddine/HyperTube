@@ -60,7 +60,7 @@ const SignUp = () => {
         w={350}
       >
         <Text display="flex" justifyContent="center">
-          Sign In
+          Sign Up
         </Text>
 
         <FormControl isInvalid={errors.firstName?.message} p="1" isRequired>

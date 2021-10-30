@@ -1,4 +1,6 @@
-import { Flex, Box, Text, Stack, Link } from "@chakra-ui/react";
+import { Flex, Box, Text, Stack } from "@chakra-ui/react";
+
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -13,8 +15,8 @@ const Navbar = () => {
         isInline
         p={30}
       >
-        <Link>Sign In</Link>
-        <Link>Sign Up</Link>
+        <Link href="/signin">Sign In</Link>
+        <Link href="/signup">Sign Up</Link>
       </Stack>
     </Flex>
   );

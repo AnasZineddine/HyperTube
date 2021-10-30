@@ -1,7 +1,7 @@
-import { Formik } from "formik";
+import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import Error from "../utils/formError";
-import React from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import {
   Flex,
   Text,
@@ -10,12 +10,11 @@ import {
   FormLabel,
   Input,
   FormErrorMessage,
-  FormHelperText,
   Button,
 } from "@chakra-ui/react";
 
-const validationSchema = Yup.object().shape({
-  userName: Yup.string()
+const schema = Yup.object().shape({
+  username: Yup.string()
     .min(1, "Must have a character")
     .max(255, "Must be shorter than 255")
     .required("Must enter a username"),
@@ -27,33 +26,58 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignUp = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onTouched",
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = (values) => console.log(values);
+
   return (
     <Flex alignItems="stretch" justifyContent="center">
       <Stack
-        spacing={10}
+        spacing={0}
         m={50}
         justifyContent="flex-start"
         alignItems="stretch"
+        w={350}
       >
         <Text display="flex" justifyContent="center">
           Sign In
         </Text>
-        <FormControl>
-          <FormLabel>Firstname</FormLabel>
-          <Input placeholder="Enter your firstname" />
-          <FormErrorMessage>Error message</FormErrorMessage>
-          <FormLabel>Lastname</FormLabel>
-          <Input placeholder="Enter your lastname" />
-          <FormLabel>Username</FormLabel>
-          <Input placeholder="Enter your username" />
-          <FormLabel>Email</FormLabel>
-          <Input placeholder="Enter your email" />
-          <FormLabel>Password</FormLabel>
-          <Input />
-          <FormHelperText>Please enter a strong password</FormHelperText>
+
+        <FormControl isInvalid={errors.username?.message} p="1" isRequired>
+          <FormLabel htmlFor="username">Username</FormLabel>
+          <Input
+            type="text"
+            name="username"
+            placeholder="Enter a username"
+            {...register("username")}
+          />
+          <FormErrorMessage>{errors?.username?.message}</FormErrorMessage>
         </FormControl>
-        <Button variant="solid" size="md">
-          Register
+
+        <FormControl isInvalid={errors.password?.message} p="1" isRequired>
+          <FormLabel htmlFor="password">Password</FormLabel>
+          <Input
+            type="password"
+            name="password"
+            placeholder="Enter a password"
+            {...register("password")}
+          />
+          <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
+        </FormControl>
+        <Button
+          variant="solid"
+          size="md"
+          onClick={handleSubmit(onSubmit)}
+          disabled={errors.username || errors.password}
+        >
+          Sign in
         </Button>
       </Stack>
     </Flex>
