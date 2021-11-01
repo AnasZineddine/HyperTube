@@ -13,9 +13,12 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@hookform/resolvers": "^2.0.0-beta.17",
+    "@next-auth/prisma-adapter": "^0.5.4",
+    "@prisma/client": "^3.3.0",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "next": "11.1.2",
+    "next-auth": "^3.29.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.18.0",
@@ -23,6 +26,7 @@
   },
   "devDependencies": {
     "eslint": "^8.1.0",
-    "eslint-config-next": "11.1.2"
+    "eslint-config-next": "11.1.2",
+    "prisma": "^3.3.0"
   }
 }

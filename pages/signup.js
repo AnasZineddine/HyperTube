@@ -16,11 +16,11 @@ import {
 
 const schema = Yup.object().shape({
   firstName: Yup.string()
-    .min(3, "Must have 1 character minimum")
+    .min(1, "Must have 1 character minimum")
     .max(255, "Must be shorter than 255")
     .required("Must enter a firstname"),
   lastName: Yup.string()
-    .min(1, "Must have a character")
+    .min(1, "Must have 1 character minimum")
     .max(255, "Must be shorter than 255")
     .required("Must enter a lastname"),
   username: Yup.string()
