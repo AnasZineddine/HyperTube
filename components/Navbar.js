@@ -1,10 +1,10 @@
 import { Flex, Box, Text, Stack } from "@chakra-ui/react";
-import { signOut, useSession } from "next-auth/client";
+import { signOut, useSession } from "next-auth/react";
 
 import Link from "next/link";
 
 const Navbar = () => {
-  const [session] = useSession();
+  const { data: session } = useSession();
   if (!session) {
     return (
       <Flex alignItems="stretch" justifyContent="space-between">

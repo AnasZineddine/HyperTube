@@ -1,16 +1,16 @@
 import Layout from "../components/Layout";
 import { ChakraProvider } from "@chakra-ui/react";
-import { Provider } from "next-auth/client";
+import { SessionProvider } from "next-auth/react";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Provider session={pageProps.session}>
+    <SessionProvider session={pageProps.session}>
       <ChakraProvider resetCSS>
         <Layout>
           <Component {...pageProps} />
         </Layout>
       </ChakraProvider>
-    </Provider>
+    </SessionProvider>
   );
 }
 
