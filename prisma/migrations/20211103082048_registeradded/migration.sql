@@ -31,8 +31,11 @@ CREATE TABLE "Session" (
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "name" TEXT,
+    "firstName" TEXT,
+    "lastName" TEXT,
     "email" TEXT,
+    "username" TEXT,
+    "password" TEXT,
     "emailVerified" TIMESTAMP(3),
     "image" TEXT,
 
@@ -54,6 +57,9 @@ CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");

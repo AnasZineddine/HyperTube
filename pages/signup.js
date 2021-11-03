@@ -48,7 +48,7 @@ const SignUp = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (values) => console.log(values);
+  const onSubmit = (values) => console.log(values.email);
 
   return (
     <Flex alignItems="stretch" justifyContent="center">
