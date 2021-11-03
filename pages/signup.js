@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useToast } from "@chakra-ui/react";
 
 import {
   Flex,
@@ -39,6 +40,7 @@ const schema = Yup.object().shape({
 });
 
 const SignUp = () => {
+  const toast = useToast();
   const {
     register,
     handleSubmit,
@@ -47,8 +49,36 @@ const SignUp = () => {
     mode: "onTouched",
     resolver: yupResolver(schema),
   });
-
-  const onSubmit = (values) => console.log(values.email);
+  const onSubmit = async (values) => {
+    const response = await fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify(values),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (data.success === true) {
+      toast({
+        title: "Account created.",
+        description: "We've created your account for you.",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: data.error,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+    console.log(data);
+  };
 
   return (
     <Flex alignItems="stretch" justifyContent="center">
