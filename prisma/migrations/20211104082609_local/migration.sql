@@ -31,6 +31,7 @@ CREATE TABLE "Session" (
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
+    "name" TEXT,
     "firstName" TEXT,
     "lastName" TEXT,
     "email" TEXT,

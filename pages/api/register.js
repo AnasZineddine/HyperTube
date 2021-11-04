@@ -17,6 +17,7 @@ export default async function handler(req, res) {
           OR: [{ username: username }, { email: email }],
         },
       });
+      console.log({ result });
       //TODO: return error more descriptiice here below
       if (result) {
         return res
