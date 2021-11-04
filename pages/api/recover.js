@@ -4,6 +4,8 @@ import set from "date-fns/set";
 
 const prisma = new PrismaClient();
 
+//TODO: validate data on register route also
+
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { emailTorecover } = req.body;
@@ -27,7 +29,7 @@ export default async function handler(req, res) {
           },
         });
         console.log(user);
-        return res.status(200).json({ success: true });
+        return res.status(200).json({ success: true }); //TODO: check status to return 201 for succesful creation
         //TODO:Send email
       }
       console.log({ result });
