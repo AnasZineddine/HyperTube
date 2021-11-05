@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { PrismaClient } from "@prisma/client";
 const argon2 = require("argon2");
+const { sendConfirmationEmail } = require("../../services/emailService");
 
 const prisma = new PrismaClient();
 
@@ -33,6 +34,7 @@ export default async function handler(req, res) {
           password: await argon2.hash(password),
         },
       });
+      sendConfirmationEmail(user, "sdfsdfsdf");
       console.log(user);
       return res.status(200).json({ success: true });
     } catch (e) {

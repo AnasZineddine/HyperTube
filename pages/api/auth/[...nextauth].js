@@ -10,6 +10,9 @@ const argon2 = require("argon2");
 const prisma = new PrismaClient();
 
 export default NextAuth({
+  theme: {
+    colorScheme: "light",
+  },
   adapter: PrismaAdapter(prisma),
   providers: [
     FortyTwoProvider({

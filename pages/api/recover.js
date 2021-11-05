@@ -8,11 +8,11 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { emailTorecover } = req.body;
+    const { emailToRecover } = req.body;
     try {
       const result = await prisma.user.findFirst({
         where: {
-          email: emailTorecover,
+          email: emailToRecover,
         },
       });
       if (!result) {
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         });
       } else {
         const user = await prisma.user.update({
-          where: { email: emailTorecover },
+          where: { email: emailToRecover },
           data: {
             resetPasswordToken: crypto.randomBytes(20).toString("hex"),
             resetPasswordExpires: set(Date.now(), { hours: 1 }),

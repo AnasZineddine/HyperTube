@@ -18,7 +18,7 @@ const Navbar = () => {
           isInline
           p={30}
         >
-          <Link href="/signin">Sign In</Link>
+          <Link href="/api/auth/signin">Sign In</Link>
           <Link href="/signup">Sign Up</Link>
         </Stack>
       </Flex>

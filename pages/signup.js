@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useToast } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 import {
   Flex,
@@ -40,6 +41,7 @@ const schema = Yup.object().shape({
 });
 
 const SignUp = () => {
+  const router = useRouter();
   const toast = useToast();
   const {
     register,
@@ -67,6 +69,7 @@ const SignUp = () => {
         isClosable: true,
         position: "top",
       });
+      router.push("/api/auth/verify-request");
     } else {
       toast({
         title: "Error",
