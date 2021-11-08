@@ -18,15 +18,15 @@ import {
 
 const schema = Yup.object().shape({
   firstName: Yup.string()
-    .min(1, "Must have 1 character minimum")
+    //.min(1, "Must have 1 character minimum")
     .max(255, "Must be shorter than 255")
     .required("Must enter a firstname"),
   lastName: Yup.string()
-    .min(1, "Must have 1 character minimum")
+    //  .min(1, "Must have 1 character minimum")
     .max(255, "Must be shorter than 255")
     .required("Must enter a lastname"),
   username: Yup.string()
-    .min(1, "Must have a character")
+    // .min(1, "Must have a character")
     .max(255, "Must be shorter than 255")
     .required("Must enter a username"),
   email: Yup.string()
@@ -61,14 +61,14 @@ const SignUp = () => {
     });
     const data = await response.json();
     if (data.success === true) {
-      toast({
+      /* toast({
         title: "Account created.",
         description: "We've created your account for you.",
         status: "success",
         duration: 2000,
         isClosable: true,
         position: "top",
-      });
+      }); */
       router.push("/api/auth/verify-request");
     } else {
       toast({

@@ -25,6 +25,7 @@ export default NextAuth({
       authorizationUrl:
         "https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code",
     }),
+
     CredentialsProvider({
       name: "Credentials",
       // The credentials is used to generate a suitable form on the sign in page.
@@ -65,6 +66,9 @@ export default NextAuth({
 
     // ...add more providers here
   ],
+  pages: {
+    signIn: "../../signin",
+  },
   callbacks: {
     jwt: ({ token, user }) => {
       if (user) {
@@ -87,7 +91,7 @@ export default NextAuth({
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   jwt: {
-    secret: "sdfsdfsdfsdf",
+    secret: "sdfsdfsdfsdf", //TODO: .env...
     encryption: true,
   },
 });

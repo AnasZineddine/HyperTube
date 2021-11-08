@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { signIn, getCsrfToken, getProviders } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import {
   Flex,
@@ -15,17 +17,16 @@ import {
 
 const schema = Yup.object().shape({
   username: Yup.string()
-    .min(1, "Must have a character")
     .max(255, "Must be shorter than 255")
     .required("Must enter a username"),
   password: Yup.string()
+    .required("Must enter a password")
     .min(8, "Password is too short - should be 8 chars minimum.")
     .max(255, "Must be shorter than 255")
-    .matches(/[a-zA-Z]/, "Password can only contain Latin letters.") // TODO:make it stronger
-    .required("Must enter a password"),
+    .matches(/[a-zA-Z]/, "Password can only contain Latin letters."), // TODO:make it stronger
 });
 
-const SignUp = () => {
+export default function SignIn({ csrfToken, providers }) {
   const {
     register,
     handleSubmit,
@@ -35,9 +36,15 @@ const SignUp = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (values) => console.log(values);
+  const onSubmit = (values) =>
+    signIn("credentials", {
+      username: values.username,
+      password: values.password,
+      callbackUrl: "/",
+    });
 
   return (
+    //
     <Flex alignItems="stretch" justifyContent="center">
       <Stack
         spacing={0}
@@ -50,6 +57,7 @@ const SignUp = () => {
           Sign In
         </Text>
 
+        <Input name="csrfToken" type="hidden" defaultValue={csrfToken} />
         <FormControl isInvalid={errors.username?.message} p="1" isRequired>
           <FormLabel htmlFor="username">Username</FormLabel>
           <Input
@@ -79,9 +87,24 @@ const SignUp = () => {
         >
           Sign in
         </Button>
+
+        {Object.values(providers).map((provider) => (
+          <div key={provider.name}>
+            <button onClick={() => signIn(provider.id)}>
+              Sign in with {provider.name}
+            </button>
+          </div>
+        ))}
       </Stack>
     </Flex>
   );
-};
+}
 
-export default SignUp;
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      csrfToken: await getCsrfToken(context),
+      providers: await getProviders(),
+    },
+  };
+}

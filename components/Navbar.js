@@ -18,7 +18,7 @@ const Navbar = () => {
           isInline
           p={30}
         >
-          <Link href="/api/auth/signin">Sign In</Link>
+          <Link href="/signin">Sign In</Link>
           <Link href="/signup">Sign Up</Link>
         </Stack>
       </Flex>
@@ -36,7 +36,13 @@ const Navbar = () => {
         isInline
         p={30}
       >
-        <button onClick={() => signOut()}>Sign out</button>
+        <button
+          onClick={() =>
+            signOut({ callbackUrl: "http://localhost:3000/signin" })
+          }
+        >
+          Sign out
+        </button>
       </Stack>
     </Flex>
   );
