@@ -62,15 +62,16 @@ const SignUp = () => {
     });
     const data = await response.json();
     if (data.success === true) {
-      /* toast({
+      //TODO: ADD email
+      router.push("/signin");
+      toast({
         title: "Account created.",
         description: "We've created your account for you.",
         status: "success",
-        duration: 2000,
+        duration: 3000,
         isClosable: true,
         position: "top",
-      }); */
-      router.push("/api/auth/verify-request");
+      });
     } else {
       toast({
         title: "Error",

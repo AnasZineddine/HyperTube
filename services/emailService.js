@@ -16,7 +16,6 @@ const nodemailer = require("nodemailer");
 // http://ethereal.email/ Transporter
 //FIXME: ethereal email can crash the server sometimes don t use in defense !
 
-console.log(process.env.email);
 const transporter = nodemailer.createTransport({
   host: "smtp.ethereal.email",
   port: 587,
@@ -45,11 +44,11 @@ const sendConfirmationEmail = (user, token) => {
 };
 
 const sendResetEmail = (user) => {
-  const url = `http://localhost:3000/change-password/${user.resetPasswordToken}`;
+  const url = `http://localhost:3000/api/reset/${user.resetPasswordToken}`;
 
   transporter.sendMail({
     from: `${process.env.email}`,
-    to: `${user.rows[0].user.firstName} <${user.email}>`,
+    to: `${user.firstName} <${user.email}>`,
     subject: "Reset password",
     html: `Reset password link <a href=${url}> ${url}</a>`,
   }),

@@ -1,18 +1,18 @@
 const crypto = require("crypto");
 import { PrismaClient } from "@prisma/client";
 import set from "date-fns/set";
-
+const { sendResetEmail } = require("../../services/emailService");
 const prisma = new PrismaClient();
 
 //TODO: validate data on register route also
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { emailToRecover } = req.body;
+    const { email } = req.body;
     try {
       const result = await prisma.user.findFirst({
         where: {
-          email: emailToRecover,
+          email: email,
         },
       });
       if (!result) {
@@ -22,17 +22,18 @@ export default async function handler(req, res) {
         });
       } else {
         const user = await prisma.user.update({
-          where: { email: emailToRecover },
+          where: { email: email },
           data: {
             resetPasswordToken: crypto.randomBytes(20).toString("hex"),
             resetPasswordExpires: set(Date.now(), { hours: 1 }),
           },
         });
         console.log(user);
-        return res.status(200).json({ success: true }); //TODO: check status to return 201 for succesful creation
+
         //TODO:Send email
+        sendResetEmail(user);
+        return res.status(200).json({ success: true }); //TODO: check status to return 201 for succesful creation
       }
-      console.log({ result });
     } catch (e) {
       res.send(
         JSON.stringify({

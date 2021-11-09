@@ -10,10 +10,11 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { emailToRecover, newPassword } = req.body;
-    console.log(req.query);
+    console.log(req.query.token);
     try {
       const result = await prisma.user.findFirst({
         where: {
+          email: emailToRecover,
           resetPasswordToken: req.query.token,
           resetPasswordExpires: {
             gt: set(Date.now(), { hours: 0 }), //TODO: check veracity of this

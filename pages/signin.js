@@ -8,6 +8,7 @@ import {
   getSession,
 } from "next-auth/react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import {
   Flex,
@@ -52,7 +53,7 @@ export default function SignIn({ csrfToken, providers }) {
     //
     <Flex alignItems="stretch" justifyContent="center">
       <Stack
-        spacing={0}
+        spacing={5}
         m={50}
         justifyContent="flex-start"
         alignItems="stretch"
@@ -84,6 +85,7 @@ export default function SignIn({ csrfToken, providers }) {
           />
           <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
         </FormControl>
+        <Link href="/forgotpassword">Forgot password?</Link>
         <Button
           variant="solid"
           size="md"
