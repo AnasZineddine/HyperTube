@@ -1,7 +1,12 @@
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { signIn, getCsrfToken, getProviders } from "next-auth/react";
+import {
+  signIn,
+  getCsrfToken,
+  getProviders,
+  getSession,
+} from "next-auth/react";
 import { useRouter } from "next/router";
 
 import {
@@ -90,9 +95,13 @@ export default function SignIn({ csrfToken, providers }) {
 
         {Object.values(providers).map((provider) => (
           <div key={provider.name}>
-            <button onClick={() => signIn(provider.id)}>
+            <Button
+              variant="solid"
+              size="md"
+              onClick={() => signIn(provider.id)}
+            >
               Sign in with {provider.name}
-            </button>
+            </Button>
           </div>
         ))}
       </Stack>
@@ -101,10 +110,21 @@ export default function SignIn({ csrfToken, providers }) {
 }
 
 export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
   return {
     props: {
       csrfToken: await getCsrfToken(context),
       providers: await getProviders(),
+      session,
     },
   };
 }

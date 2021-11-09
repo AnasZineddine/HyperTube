@@ -15,10 +15,32 @@ export default NextAuth({
   },
   adapter: PrismaAdapter(prisma),
   providers: [
-    FortyTwoProvider({
+    /* FortyTwoProvider({
       clientId: process.env.FORTY_TWO_CLIENT_ID,
       clientSecret: process.env.FORTY_TWO_CLIENT_SECRET,
-    }),
+    }), */
+    {
+      id: "42-school",
+      name: "42 School",
+      type: "oauth",
+      version: "2.0",
+      authorization: {
+        url: "https://api.intra.42.fr/oauth/authorize?response_type=code",
+        params: { scope: "" },
+      },
+      token: "https://api.intra.42.fr/oauth/token",
+      userinfo: "https://api.intra.42.fr/v2/me",
+      profile(profile) {
+        return {
+          id: profile.id,
+          email: profile.email,
+          image: profile.image_url,
+          name: profile.usual_full_name,
+        };
+      },
+      clientId: process.env.FORTY_TWO_CLIENT_ID,
+      clientSecret: process.env.FORTY_TWO_CLIENT_SECRET,
+    },
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,

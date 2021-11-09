@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { getSession } from "next-auth/react";
 
 import {
   Flex,
@@ -166,3 +167,21 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      session,
+    },
+  };
+}

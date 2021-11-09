@@ -14,6 +14,7 @@ CREATE TABLE "Account" (
     "session_state" TEXT,
     "oauth_token_secret" TEXT,
     "oauth_token" TEXT,
+    "created_at" INTEGER,
 
     CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
 );
@@ -39,6 +40,8 @@ CREATE TABLE "User" (
     "password" TEXT,
     "emailVerified" TIMESTAMP(3),
     "image" TEXT,
+    "resetPasswordToken" TEXT,
+    "resetPasswordExpires" TIMESTAMP(3),
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
