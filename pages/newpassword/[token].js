@@ -17,13 +17,14 @@ import {
 } from "@chakra-ui/react";
 
 const schema = Yup.object().shape({
-  email: Yup.string()
-    .email("Must be a valid email adress")
+  password: Yup.string()
+    .required("Must enter a password")
+    .min(8, "Password is too short - should be 8 chars minimum.")
     .max(255, "Must be shorter than 255")
-    .required("Must enter an email"),
+    .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
 });
 
-export default function ForgotPassword({ csrfToken, providers }) {
+export default function NewPassword({ csrfToken, providers }) {
   const toast = useToast();
   const {
     register,
@@ -34,8 +35,12 @@ export default function ForgotPassword({ csrfToken, providers }) {
     resolver: yupResolver(schema),
   });
 
+  const router = useRouter();
+  const { token } = router.query;
+  const url = `/api/reset/${token}`;
+
   const onSubmit = async (values) => {
-    const response = await fetch("/api/recover", {
+    const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify(values),
       headers: {
@@ -45,10 +50,10 @@ export default function ForgotPassword({ csrfToken, providers }) {
     const data = await response.json();
     if (data.success === true) {
       //TODO: ADD email
-      //router.push("/signin");
+      router.push("/signin");
       toast({
         title: "Done",
-        description: "We've sent a recover link to your email",
+        description: "New Password confirmed",
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -81,24 +86,24 @@ export default function ForgotPassword({ csrfToken, providers }) {
           Forgot Password
         </Text>
 
-        <FormControl isInvalid={errors.email?.message} p="1" isRequired>
-          <FormLabel htmlFor="email">Email</FormLabel>
+        <FormControl isInvalid={errors.password?.message} p="1" isRequired>
+          <FormLabel htmlFor="password">New password</FormLabel>
           <Input
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            {...register("email")}
+            type="password"
+            name="password"
+            placeholder="Enter your new password"
+            {...register("password")}
           />
-          <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
+          <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
         </FormControl>
 
         <Button
           variant="solid"
           size="md"
           onClick={handleSubmit(onSubmit)}
-          disabled={errors.email}
+          disabled={errors.password}
         >
-          Reset Password
+          Confirm
         </Button>
       </Stack>
     </Flex>

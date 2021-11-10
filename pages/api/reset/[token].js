@@ -9,28 +9,25 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { emailToRecover, newPassword } = req.body;
-    console.log(req.query.token);
+    const { password } = req.body;
     try {
       const result = await prisma.user.findFirst({
         where: {
-          email: emailToRecover,
           resetPasswordToken: req.query.token,
           resetPasswordExpires: {
             gt: set(Date.now(), { hours: 0 }), //TODO: check veracity of this
           },
         },
       });
-
       if (!result)
         return res
           .status(401)
           .json({ message: "Password reset token is invalid or has expired." });
       else {
         const user = await prisma.user.update({
-          where: { email: emailToRecover },
+          where: { email: result.email },
           data: {
-            password: await argon2.hash(newPassword),
+            password: await argon2.hash(password),
             resetPasswordToken: null,
             resetPasswordExpires: null,
           },

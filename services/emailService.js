@@ -44,7 +44,7 @@ const sendConfirmationEmail = (user, token) => {
 };
 
 const sendResetEmail = (user) => {
-  const url = `http://localhost:3000/api/reset/${user.resetPasswordToken}`;
+  const url = `http://localhost:3000/newpassword/${user.resetPasswordToken}`;
 
   transporter.sendMail({
     from: `${process.env.email}`,
