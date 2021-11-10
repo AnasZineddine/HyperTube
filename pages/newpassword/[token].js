@@ -38,6 +38,7 @@ export default function NewPassword({ csrfToken, providers }) {
   const router = useRouter();
   const { token } = router.query;
   const url = `/api/reset/${token}`;
+  //TODO: check token validity before ??
 
   const onSubmit = async (values) => {
     const response = await fetch(url, {

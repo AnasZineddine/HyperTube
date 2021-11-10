@@ -29,7 +29,6 @@ export default async function handler(req, res) {
           },
         });
         console.log(user);
-
         //TODO:Send email
         sendResetEmail(user);
         return res.status(200).json({ success: true }); //TODO: check status to return 201 for succesful creation
