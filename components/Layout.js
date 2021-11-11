@@ -10,7 +10,9 @@ const Layout = ({ children }) => {
       justifyContent="flex-start"
     >
       <Navbar />
-      {children}
+      <Flex flexDirection="column" alignItems="center" justifyContent="center">
+        {children}
+      </Flex>
       <Footer />
     </Flex>
   );
