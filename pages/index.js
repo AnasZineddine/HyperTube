@@ -1,8 +1,16 @@
 import fetch from "unfetch";
 import useSWR from "swr";
 import Image from "next/image";
-import { Grid } from "@chakra-ui/react";
+import {
+  chakra,
+  Box,
+  Flex,
+  useColorModeValue,
+  Link,
+  Grid,
+} from "@chakra-ui/react";
 import useSWRInfinite from "swr/infinite";
+import { Progress } from "@chakra-ui/react";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -12,7 +20,7 @@ export default function Home() {
     fetcher
   );
   if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (!data) return <div>Loading...</div>;
   console.log(data);
 
   /*  const getKey = (pageIndex, previousPageData) => {
@@ -31,16 +39,24 @@ export default function Home() {
   return (
     // render data
 
-    <Grid templateColumns="repeat(5, 1fr)" gap={0}>
-      {data.data.movies.map((movies) => (
-        <Image
-          src={movies.medium_cover_image}
-          width={230}
-          height={345}
-          key={movies.id}
-        />
-        //<li>{movies.title}</li>
-      ))}
-    </Grid>
+    <Flex
+      bg={useColorModeValue("#F9FAFB", "gray.600")}
+      p={50}
+      w="full"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Grid templateColumns="repeat(5, 1fr)" gap={1}>
+        {data.data.movies.map((movies) => (
+          <Image
+            key={movies.id}
+            src={movies.medium_cover_image}
+            width={230}
+            height={345}
+          />
+          //<li>{movies.title}</li>
+        ))}
+      </Grid>
+    </Flex>
   );
 }

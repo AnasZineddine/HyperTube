@@ -44,7 +44,7 @@ const Navbar = () => {
   return (
     <Flex alignItems="stretch" justifyContent="space-between">
       <Box p={30}>
-        <Text>Hypertube</Text>
+        <Link href="/">HyperTube</Link>
       </Box>
       <Stack
         spacing={2}
