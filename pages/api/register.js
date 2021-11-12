@@ -27,6 +27,7 @@ export default async function handler(req, res) {
         data: {
           firstName: firstName,
           lastName: lastName,
+          name: firstName + " " + lastName,
           username: username,
           email: email,
           password: await argon2.hash(password),

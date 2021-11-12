@@ -1,20 +1,5 @@
 import { ReactNode } from "react";
-import {
-  Box,
-  Flex,
-  Avatar,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  useDisclosure,
-  useColorModeValue,
-  Stack,
-  useColorMode,
-  Center,
-} from "@chakra-ui/react";
+import { Box, Flex, Avatar, Stack, Button } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { signOut, useSession } from "next-auth/react";
 
@@ -47,19 +32,21 @@ const Navbar = () => {
         <Link href="/">HyperTube</Link>
       </Box>
       <Stack
-        spacing={2}
+        spacing={10}
         alignItems="stretch"
         justifyContent="flex-start"
         isInline
         p={30}
       >
-        <button
+        <Avatar name={session.user.name} src={session.user.image} />
+        <Button
+          colorScheme="red"
           onClick={() =>
             signOut({ callbackUrl: "http://localhost:3000/signin" })
           }
         >
           Sign out
-        </button>
+        </Button>
       </Stack>
     </Flex>
   );
