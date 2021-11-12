@@ -1,9 +1,9 @@
 const crypto = require("crypto");
-import { PrismaClient } from "@prisma/client";
+
 import set from "date-fns/set";
 const argon2 = require("argon2");
 
-const prisma = new PrismaClient();
+import prisma from "../../../prisma/db";
 
 //TODO:validate data input
 

@@ -1,8 +1,7 @@
 const crypto = require("crypto");
-import { PrismaClient } from "@prisma/client";
 import set from "date-fns/set";
 const { sendResetEmail } = require("../../services/emailService");
-const prisma = new PrismaClient();
+import prisma from "../../prisma/db";
 
 //TODO: validate data on register route also
 

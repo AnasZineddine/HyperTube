@@ -83,10 +83,6 @@ export default function NewPassword({ csrfToken, providers }) {
         alignItems="stretch"
         w={350}
       >
-        <Text display="flex" justifyContent="center">
-          Forgot Password
-        </Text>
-
         <FormControl isInvalid={errors.password?.message} p="1" isRequired>
           <FormLabel htmlFor="password">New password</FormLabel>
           <Input
@@ -97,7 +93,6 @@ export default function NewPassword({ csrfToken, providers }) {
           />
           <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
         </FormControl>
-
         <Button
           variant="solid"
           size="md"

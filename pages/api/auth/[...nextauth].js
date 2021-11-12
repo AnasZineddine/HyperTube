@@ -4,10 +4,8 @@ import GoogleProvider from "next-auth/providers/google";
 import FortyTwoProvider from "next-auth/providers/42";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../../prisma/db";
 const argon2 = require("argon2");
-
-const prisma = new PrismaClient();
 
 export default NextAuth({
   theme: {
