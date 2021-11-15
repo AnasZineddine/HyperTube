@@ -48,7 +48,7 @@ const sendResetEmail = (user) => {
 
   transporter.sendMail({
     from: `${process.env.email}`,
-    to: `${user.firstName} <${user.email}>`,
+    to: `${user.username} <${user.email}>`,
     subject: "Reset password",
     html: `Reset password link <a href=${url}> ${url}</a>`,
   }),

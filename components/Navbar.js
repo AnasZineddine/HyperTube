@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Box, Flex, Avatar, Stack, Button } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import Link from "next/link";
 

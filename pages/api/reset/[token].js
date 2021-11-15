@@ -45,6 +45,6 @@ export default async function handler(req, res) {
       );
     }
   } else {
-    res.status(405).json({ message: "POST METHOD ONLY" });
+    res.status(405).json({ message: "METHOD NOT ALLOWED" });
   }
 }
