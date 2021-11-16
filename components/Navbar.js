@@ -10,13 +10,13 @@ const Navbar = () => {
   const { data: session } = useSession();
   if (!session) {
     return (
-      <Flex alignItems="stretch" justifyContent="space-between">
+      <Flex alignItems="center" justifyContent="space-between">
         <Box p={30}>
           <Link href="/">HyperTube</Link>
         </Box>
         <Stack
           spacing={2}
-          alignItems="stretch"
+          alignItems="strectch"
           justifyContent="flex-start"
           isInline
           p={30}
@@ -28,14 +28,14 @@ const Navbar = () => {
     );
   }
   return (
-    <Flex alignItems="stretch" justifyContent="space-between">
+    <Flex alignItems="center" justifyContent="space-between">
       <Box p={30}>
         <Link href="/">HyperTube</Link>
       </Box>
       <Stack
         spacing={10}
-        alignItems="stretch"
-        justifyContent="flex-start"
+        alignItems="center"
+        justifyContent="center"
         isInline
         p={30}
       >
