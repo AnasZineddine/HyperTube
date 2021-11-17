@@ -1,13 +1,9 @@
-//import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import prisma from "../../../prisma/db";
 
 export default async function handler(req, res) {
-  //const session = await getSession({ req });
-  const session = {
-    user: {
-      id: "ckw0p3gw50209otu29vk8cb74",
-    },
-  };
+  const session = await getSession({ req });
+  console.log("serverhere", req);
   if (!session) {
     res.status(403).json({ error: "You must sign in" });
   } else {

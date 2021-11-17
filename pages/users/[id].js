@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useToast } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 
 import {
   Button,
@@ -34,9 +35,9 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { SmallCloseIcon } from "@chakra-ui/icons";
-import { useSession, signIn } from "next-auth/react";
-import React from "react";
+import { useSession, signIn, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import React from "react";
 
 const schema = Yup.object().shape({
   firstName: Yup.string()
@@ -64,6 +65,12 @@ export default function profile({ data2 }) {
     if (status === "loading") return; // Do nothing while loading
     if (!isUser) signIn(); // If not authenticated, force log in
   }, [isUser, status]);
+
+  //console.log({ session });
+
+  // Fetch content from protected route
+  console.log("heeeeEre", data2);
+
   const router = useRouter();
   console.log(router.query);
 
@@ -107,9 +114,7 @@ export default function profile({ data2 }) {
     }
   };
 
-  console.log(data2);
   if (isUser) {
-    console.log(session);
     return (
       <Flex
         //minH={"100vh"}
@@ -160,7 +165,9 @@ export default function profile({ data2 }) {
             <Input
               type="text"
               name="firstName"
-              placeholder={data2.data.firstName}
+              //value={data2.data.firstName}
+              //placeholder={data2.data.firstName}
+              // defaultValue={date2.data.firstName}
               {...register("firstName")}
             />
             <FormErrorMessage>{errors?.firstName?.message}</FormErrorMessage>
@@ -170,7 +177,7 @@ export default function profile({ data2 }) {
             <Input
               type="text"
               name="lastName"
-              placeholder="Enter your lastname"
+              //   defaultValue={data2.data.lastName}
               {...register("lastName")}
             />
             <FormErrorMessage>{errors?.lastName?.message}</FormErrorMessage>
@@ -180,7 +187,7 @@ export default function profile({ data2 }) {
             <Input
               type="text"
               name="username"
-              placeholder="Enter a username"
+              // defaultValue={data2.data.username}
               {...register("username")}
             />
             <FormErrorMessage>{errors?.username?.message}</FormErrorMessage>
@@ -190,7 +197,7 @@ export default function profile({ data2 }) {
             <Input
               type="email"
               name="email"
-              placeholder="Enter your email"
+              // defaultValue={data2.data.email}
               {...register("email")}
             />
             <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
@@ -227,14 +234,13 @@ export default function profile({ data2 }) {
         </Stack>
       </Flex>
     );
-  } else return <>sign in</>;
+  } else return <p>not user</p>;
 }
 
-export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`http://localhost:3000/api/users/kjsdfkddkdk`);
-  const data2 = await res.json();
-
-  // Pass data to the page via props
-  return { props: { data2 } };
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      session: await getSession(context),
+    },
+  };
 }
