@@ -63,7 +63,7 @@ export default async function handler(req, res) {
           error: "User not found",
         });
       }
-      res.status(200).send({ success: true, data2: result });
+      res.status(200).json({ success: true, content: result });
     } else {
       res.status(405).json({ message: "METHOD NOT ALLOWED" });
     }
