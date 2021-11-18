@@ -3,7 +3,6 @@ import prisma from "../../../prisma/db";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
-  console.log("serverhere", req);
   if (!session) {
     res.status(403).json({ error: "You must sign in" });
   } else {
@@ -11,7 +10,7 @@ export default async function handler(req, res) {
       const { firstName, lastName, username, email } = req.body;
       const result = await prisma.user.findFirst({
         where: {
-          id: session.user.id,
+          id: session.id,
         },
       });
       if (!result) {
@@ -23,7 +22,7 @@ export default async function handler(req, res) {
         const checkIfUserExists = await prisma.user.findFirst({
           where: {
             OR: [{ username: username }, { email: email }],
-            NOT: { id: session.user.id },
+            NOT: { id: session.id },
           },
         });
         if (checkIfUserExists) {
@@ -33,7 +32,7 @@ export default async function handler(req, res) {
           });
         }
         const user = await prisma.user.update({
-          where: { id: session.user.id },
+          where: { id: session.id },
           data: {
             firstName: firstName,
             lastName: lastName,
@@ -47,7 +46,7 @@ export default async function handler(req, res) {
     } else if (req.method === "GET") {
       const result = await prisma.user.findFirst({
         where: {
-          id: session.user.id,
+          id: session.id,
         },
         select: {
           firstName: true,
@@ -64,7 +63,7 @@ export default async function handler(req, res) {
           error: "User not found",
         });
       }
-      res.status(200).json({ success: true, data: result });
+      res.status(200).send({ success: true, data2: result });
     } else {
       res.status(405).json({ message: "METHOD NOT ALLOWED" });
     }
