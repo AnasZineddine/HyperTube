@@ -24,6 +24,7 @@ import {
 import { SmallCloseIcon } from "@chakra-ui/icons";
 import { useSession, getSession, signIn } from "next-auth/react";
 import React from "react";
+import { useRouter } from "next/router";
 
 const schema = Yup.object().shape({
   firstName: Yup.string()
@@ -45,10 +46,11 @@ const schema = Yup.object().shape({
 });
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
-
 export default function profile() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+  const { data, error } = useSWR("/api/users/kjsdfkddkdk", fetcher);
   const toast = useToast();
+  const router = useRouter();
 
   const {
     register,
@@ -58,6 +60,9 @@ export default function profile() {
     mode: "onTouched",
     resolver: yupResolver(schema),
   });
+  const color = useColorModeValue("white", "gray.700");
+  if (error) return <div>failed to load</div>;
+  if (!data) return <div>loading...</div>;
 
   const onSubmit = async (values) => {
     const response = await fetch("/api/users/kdkddkkdkd", {
@@ -101,7 +106,7 @@ export default function profile() {
         spacing={4}
         w={"full"}
         maxW={"md"}
-        bg={useColorModeValue("white", "gray.700")}
+        bg={color}
         rounded={"xl"}
         boxShadow={"lg"}
         p={6}
@@ -116,8 +121,8 @@ export default function profile() {
             <Center>
               <Avatar
                 size="xl"
-                // name={session.user.name}
-                //  src={session.user.image}
+                name={session.user.name}
+                src={session.user.image}
               >
                 <AvatarBadge
                   as={IconButton}
@@ -141,7 +146,7 @@ export default function profile() {
             type="text"
             name="firstName"
             //placeholder={data2.data.firstName}
-            //defaultValue={content.firstName}
+            defaultValue={data.content.firstName}
             {...register("firstName")}
           />
           <FormErrorMessage>{errors?.firstName?.message}</FormErrorMessage>
@@ -151,7 +156,7 @@ export default function profile() {
           <Input
             type="text"
             name="lastName"
-            // defaultValue={content.lastName}
+            defaultValue={data.content.lastName}
             {...register("lastName")}
           />
           <FormErrorMessage>{errors?.lastName?.message}</FormErrorMessage>
@@ -161,7 +166,7 @@ export default function profile() {
           <Input
             type="text"
             name="username"
-            //defaultValue={content.username}
+            defaultValue={data.content.username}
             {...register("username")}
           />
           <FormErrorMessage>{errors?.username?.message}</FormErrorMessage>
@@ -171,7 +176,7 @@ export default function profile() {
           <Input
             type="email"
             name="email"
-            // defaultValue={content.email}
+            defaultValue={data.content.email}
             {...register("email")}
           />
           <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
@@ -184,6 +189,7 @@ export default function profile() {
             _hover={{
               bg: "red.500",
             }}
+            onClick={() => router.push("/")}
           >
             Cancel
           </Button>
