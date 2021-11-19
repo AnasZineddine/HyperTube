@@ -17,6 +17,7 @@
     "@next-auth/prisma-adapter": "^0.5.2-next.19",
     "@prisma/client": "^2.30.3",
     "argon2": "^0.28.2",
+    "axios": "^0.24.0",
     "crypto": "^1.0.1",
     "date-fns": "^2.25.0",
     "formik": "^2.2.9",

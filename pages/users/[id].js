@@ -2,8 +2,9 @@ import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useToast } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import useSWR, { SWRConfig } from "swr";
+import axios from "axios";
 
 import {
   Button,
@@ -21,7 +22,7 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { SmallCloseIcon } from "@chakra-ui/icons";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, getSession, signIn } from "next-auth/react";
 import React from "react";
 
 const schema = Yup.object().shape({
@@ -44,33 +45,10 @@ const schema = Yup.object().shape({
 });
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
-const API = "http://localhost:3000/api/users/kjsdfkddkdk";
 
 export default function profile() {
-  const { data: session, loading } = useSession();
-  console.log(session);
-  if (typeof window !== "undefined" && loading) return null;
-  const { content, error } = useSWR(API, fetcher);
-
-  if (!session) {
-    return <h1>not auth</h1>;
-  }
-  console.log(content);
-  if (error) return "An error has occurred.";
-  if (!content) return "Loading...";
-  //const [content, setContent] = useState();
+  const { data: session, status } = useSession();
   const toast = useToast();
-
-  /* useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("/api/users/kdkddkkdkd");
-      const json = await res.json();
-      if (json.content) {
-        setContent(json.content);
-      }
-    };
-    fetchData();
-  }, [session]); */
 
   const {
     register,
@@ -112,8 +90,6 @@ export default function profile() {
     }
   };
 
-  console.log(content);
-
   return (
     <Flex
       //minH={"100vh"}
@@ -140,8 +116,8 @@ export default function profile() {
             <Center>
               <Avatar
                 size="xl"
-                name={session.user.name}
-                src={session.user.image}
+                // name={session.user.name}
+                //  src={session.user.image}
               >
                 <AvatarBadge
                   as={IconButton}
@@ -165,7 +141,7 @@ export default function profile() {
             type="text"
             name="firstName"
             //placeholder={data2.data.firstName}
-            defaultValue={content.firstName}
+            //defaultValue={content.firstName}
             {...register("firstName")}
           />
           <FormErrorMessage>{errors?.firstName?.message}</FormErrorMessage>
@@ -175,7 +151,7 @@ export default function profile() {
           <Input
             type="text"
             name="lastName"
-            defaultValue={content.lastName}
+            // defaultValue={content.lastName}
             {...register("lastName")}
           />
           <FormErrorMessage>{errors?.lastName?.message}</FormErrorMessage>
@@ -185,7 +161,7 @@ export default function profile() {
           <Input
             type="text"
             name="username"
-            defaultValue={content.username}
+            //defaultValue={content.username}
             {...register("username")}
           />
           <FormErrorMessage>{errors?.username?.message}</FormErrorMessage>
@@ -195,7 +171,7 @@ export default function profile() {
           <Input
             type="email"
             name="email"
-            defaultValue={content.email}
+            // defaultValue={content.email}
             {...register("email")}
           />
           <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
@@ -233,3 +209,5 @@ export default function profile() {
     </Flex>
   );
 }
+
+profile.auth = true;
