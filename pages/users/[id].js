@@ -103,7 +103,7 @@ export default function profile() {
       //bg={useColorModeValue("gray.50", "gray.800")}
     >
       <Stack
-        spacing={4}
+        spacing={5}
         w={"full"}
         maxW={"md"}
         bg={color}
@@ -112,11 +112,12 @@ export default function profile() {
         p={6}
         my={12}
       >
-        <Heading lineHeight={1.1} fontSize={{ base: "2xl", sm: "3xl" }}>
-          User Profile Edit
-        </Heading>
+        <Center w="full">
+          <Heading lineHeight={1.1} fontSize={{ base: "2xl", sm: "3xl" }}>
+            User Profile Edit
+          </Heading>
+        </Center>
         <FormControl id="userName">
-          <FormLabel>User Icon</FormLabel>
           <Stack direction={["column", "row"]} spacing={6}>
             <Center>
               <Avatar

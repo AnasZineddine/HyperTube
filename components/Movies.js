@@ -20,6 +20,7 @@ export default function Movies() {
     "https://yts.mx/api/v2/list_movies.json?sort_by=rating&limit=50",
     fetcher
   );
+  const color = useColorModeValue("#F9FAFB", "gray.600");
   if (error) return <div>failed to load</div>;
   if (!data) return <div>Loading...</div>;
   console.log(data);
@@ -60,15 +61,9 @@ export default function Movies() {
       </Grid>
     </Flex> */
 
-    <Wrap
-      spacing="5px"
-      justify="center"
-      w="full"
-      p={30}
-      bg={useColorModeValue("#F9FAFB", "gray.600")}
-    >
+    <Wrap spacing="5px" justify="center" w="full" p={30} bg={color}>
       {data.data.movies.map((movies) => (
-        <WrapItem>
+        <WrapItem key={movies.id}>
           <Image
             key={movies.id}
             src={movies.medium_cover_image}
