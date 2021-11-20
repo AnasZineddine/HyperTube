@@ -5,6 +5,7 @@ import { useToast } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import useSWR, { SWRConfig } from "swr";
 import axios from "axios";
+import UploadUi from "../../components/Upload";
 
 import {
   Button,
@@ -95,6 +96,21 @@ export default function profile() {
     }
   };
 
+  const onChange = async (formData) => {
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+      onUploadProgress: (event) => {
+        console.log(
+          `Current progress:`,
+          Math.round((event.loaded * 100) / event.total)
+        );
+      },
+    };
+    const response = await axios.post("/api/upload", formData, config);
+
+    console.log("response", response.data);
+  };
+
   return (
     <Flex
       //minH={"100vh"}
@@ -137,7 +153,11 @@ export default function profile() {
               </Avatar>
             </Center>
             <Center w="full">
-              <Button w="full">Change Image</Button>
+              <UploadUi
+                label="Upload Single File"
+                uploadFileName="theFiles"
+                onChange={onChange}
+              />
             </Center>
           </Stack>
         </FormControl>
