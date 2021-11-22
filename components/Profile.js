@@ -12,6 +12,7 @@ import {
   IconButton,
   Center,
   FormErrorMessage,
+  Text,
 } from "@chakra-ui/react";
 
 const Profile = (props) => {
@@ -37,7 +38,7 @@ const Profile = (props) => {
       >
         <FormControl id="userName">
           <Stack
-            direction={["column", "row"]}
+            direction={["column"]}
             spacing={6}
             align={"center"}
             justify={"center"}
@@ -49,16 +50,10 @@ const Profile = (props) => {
                 name={props.data.firstName + " " + props.data.lastName}
               ></Avatar>
             </Center>
+            <Text fontSize="xl">{props.data.firstName}</Text>
+            <Text fontSize="xl">{props.data.lastName}</Text>
+            <Text fontSize="xl">{props.data.username}</Text>
           </Stack>
-        </FormControl>
-        <FormControl p="1" isRequired>
-          <FormLabel htmlFor="firstName">First name</FormLabel>
-          <Input
-            type="text"
-            name="firstName"
-            //placeholder={data2.data.firstName}
-            defaultValue={props.data.firstName}
-          />
         </FormControl>
       </Stack>
     </Flex>

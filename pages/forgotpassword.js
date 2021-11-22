@@ -23,7 +23,7 @@ const schema = Yup.object().shape({
     .required("Must enter an email"),
 });
 
-export default function ForgotPassword({ csrfToken, providers }) {
+export default function ForgotPassword() {
   const toast = useToast();
   const {
     register,

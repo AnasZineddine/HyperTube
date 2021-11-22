@@ -14,55 +14,50 @@ import {
 import useSWRInfinite from "swr/infinite";
 import { Progress } from "@chakra-ui/react";
 
+const fetcher = (url) => fetch(url).then((r) => r.json());
+
 export default function Movies() {
-  const fetcher = (url) => fetch(url).then((r) => r.json());
+  /* const fetcher = (url) => fetch(url).then((r) => r.json());
   const { data, error } = useSWR(
     "https://yts.mx/api/v2/list_movies.json?sort_by=rating&limit=50",
     fetcher
-  );
-  const color = useColorModeValue("#F9FAFB", "gray.600");
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>Loading...</div>;
-  console.log(data);
-
-  /*  const getKey = (pageIndex, previousPageData) => {
-    if (previousPageData && !previousPageData.data) return null;
-
-    // first page, we don't have `previousPageData`
-    if (pageIndex === 0) {
-      return `https://yts.mx/api/v2/list_movies.json?sort_by=rating&limit=50`;
-    }
-
-    return `https://yts.mx/api/v2/list_movies.json?sort_by=rating&limit=50&page=${pageIndex}`;
-  };
-
-  const { data2, size } = useSWRInfinite(getKey, fetcher);
-  console.log(data2); */
-  return (
-    // render data
-
-    /* <Flex
-      bg={useColorModeValue("#F9FAFB", "gray.600")}
-      p={10}
-      w="full"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Grid templateColumns="repeat(5, 1fr)" gap={1}>
-        {data.data.movies.map((movies) => (
+    );
+    const color = useColorModeValue("#F9FAFB", "gray.600");
+    if (error) return <div>failed to load</div>;
+    if (!data) return <div>Loading...</div>;
+    console.log(data);
+    return (
+      <Wrap spacing="5px" justify="center" w="full" p={30} bg={color}>
+      {data.data.movies.map((movies) => (
+        <WrapItem key={movies.id}>
           <Image
-            key={movies.id}
+          key={movies.id}
             src={movies.medium_cover_image}
             width={230}
             height={345}
-          />
-          //<li>{movies.title}</li>
+            />
+        </WrapItem>
         ))}
-      </Grid>
-    </Flex> */
+        </Wrap>
+        ); */
 
+  const getKey = (pageIndex, previousPageData) => {
+    pageIndex = pageIndex + 1;
+    if (previousPageData && !previousPageData.length) return null; // reached the end
+    return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=rating&limit=50`; // SWR key
+  };
+  const {
+    data: paginatedData,
+    size,
+    setSize,
+  } = useSWRInfinite(getKey, fetcher);
+  const color = useColorModeValue("#F9FAFB", "gray.600");
+  if (!paginatedData) return "loading";
+  console.log({ paginatedData, size });
+
+  /* return (
     <Wrap spacing="5px" justify="center" w="full" p={30} bg={color}>
-      {data.data.movies.map((movies) => (
+      {data.movies.map((movies) => (
         <WrapItem key={movies.id}>
           <Image
             key={movies.id}
@@ -71,8 +66,9 @@ export default function Movies() {
             height={345}
           />
         </WrapItem>
-        //<li>{movies.title}</li>
       ))}
     </Wrap>
-  );
+  ); */
+
+  return <button onClick={() => setSize(size + 1)}>load more</button>;
 }

@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 const Navbar = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   if (!session) {
     return (
@@ -45,6 +46,7 @@ const Navbar = () => {
           variant={"link"}
           //cursor={"pointer"}
           minW={0}
+          onClick={() => router.push(`/users/${session.id}`)}
         >
           <Avatar name={session.user.name} src={session.user.image} />
         </Button>
