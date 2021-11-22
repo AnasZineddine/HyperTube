@@ -39,7 +39,16 @@ const Navbar = () => {
         isInline
         p={30}
       >
-        <Avatar name={session.user.name} src={session.user.image} />
+        <Button
+          //as={Button}
+          rounded={"full"}
+          variant={"link"}
+          //cursor={"pointer"}
+          minW={0}
+        >
+          <Avatar name={session.user.name} src={session.user.image} />
+        </Button>
+
         <Button
           colorScheme="red"
           onClick={() =>

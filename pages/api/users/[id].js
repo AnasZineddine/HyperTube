@@ -46,7 +46,7 @@ export default async function handler(req, res) {
     } else if (req.method === "GET") {
       const result = await prisma.user.findFirst({
         where: {
-          id: session.id,
+          id: req.query.id,
         },
         select: {
           firstName: true,
