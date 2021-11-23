@@ -1,16 +1,7 @@
 import fetch from "unfetch";
 import useSWR from "swr";
 import Image from "next/image";
-import {
-  chakra,
-  Box,
-  Flex,
-  useColorModeValue,
-  Link,
-  Grid,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/react";
+import { useColorModeValue, Wrap, WrapItem, Button } from "@chakra-ui/react";
 import useSWRInfinite from "swr/infinite";
 import { Progress } from "@chakra-ui/react";
 
@@ -43,8 +34,8 @@ export default function Movies() {
 
   const getKey = (pageIndex, previousPageData) => {
     pageIndex = pageIndex + 1;
-    if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=rating&limit=50`; // SWR key
+    //if (previousPageData && !previousPageData.length) return null; // reached the end
+    return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=rating&limit=20`; // SWR key
   };
   const {
     data: paginatedData,
@@ -53,22 +44,27 @@ export default function Movies() {
   } = useSWRInfinite(getKey, fetcher);
   const color = useColorModeValue("#F9FAFB", "gray.600");
   if (!paginatedData) return "loading";
-  console.log({ paginatedData, size });
+  //console.log(paginatedData);
 
-  /* return (
-    <Wrap spacing="5px" justify="center" w="full" p={30} bg={color}>
-      {data.movies.map((movies) => (
-        <WrapItem key={movies.id}>
-          <Image
-            key={movies.id}
-            src={movies.medium_cover_image}
-            width={230}
-            height={345}
-          />
-        </WrapItem>
-      ))}
-    </Wrap>
-  ); */
-
-  return <button onClick={() => setSize(size + 1)}>load more</button>;
+  return (
+    <>
+      <Wrap spacing="5px" justify="center" w="full" p={30} bg={color}>
+        {paginatedData.map((data) =>
+          data.data.movies.map((movies) => (
+            <WrapItem key={movies.id}>
+              <Image
+                key={movies.id}
+                src={movies.medium_cover_image}
+                width={230}
+                height={345}
+              />
+            </WrapItem>
+          ))
+        )}
+      </Wrap>
+      <div>
+        <Button onClick={() => setSize(size + 1)}>load more</Button>
+      </div>
+    </>
+  );
 }
