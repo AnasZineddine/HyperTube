@@ -1,28 +1,38 @@
 import { Flex, Text, Stack, Container, Image, Center } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import useSWR from "swr";
 
 const Movie = () => {
+  const fetcher = (url) => fetch(url).then((r) => r.json());
   const router = useRouter();
-
   const { id } = router.query;
-  console.log({ id });
+  const { data, error } = useSWR(
+    `https://yts.mx/api/v2/movie_details.json?movie_id=${id}`,
+    fetcher
+  );
+  if (error) return <div>failed to load</div>;
+  if (!data) return <div>Loading...</div>;
+
+  console.log(data);
   return (
     <Flex alignItems="stretch" justifyContent="center">
       <Stack spacing={10} m={50} justifyContent="center" alignItems="stretch">
-        <Container>
-          <Container>
-            <Image
-              height="100px"
-              width="100px"
-              src="https://media.istockphoto.com/vectors/video-player-screen-with-bar-multimedia-interface-with-player-bar-for-vector-id1252447446?k=20&m=1252447446&s=612x612&w=0&h=1tjggag-kjC70w58govLL_OETAxgASJK1f_y5_dyl_Q="
-            />
-          </Container>
+        <Stack spacing={20}>
           <Container>
             <Center>
-              <Text>Fiml details</Text>
+              <iframe
+                width="1200"
+                height="700"
+                title={data.data.movie.title}
+                src={`https://www.youtube.com/embed/${data.data.movie.yt_trailer_code}`}
+                allowFullScreen
+              />
             </Center>
           </Container>
-        </Container>
+          <Container>
+            <Text textAlign="justify">{data.data.movie.description_full}</Text>
+          </Container>
+        </Stack>
         <Container>
           <Center>
             <Text>Comments</Text>
