@@ -1,6 +1,7 @@
 import { Flex, Text, Stack, Container, Image, Center } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import Comments from "../../components/Comments";
 
 const Movie = () => {
   const fetcher = (url) => fetch(url).then((r) => r.json());
@@ -34,9 +35,7 @@ const Movie = () => {
           </Container>
         </Stack>
         <Container>
-          <Center>
-            <Text>Comments</Text>
-          </Center>
+          <Comments />
         </Container>
       </Stack>
     </Flex>
@@ -44,3 +43,5 @@ const Movie = () => {
 };
 
 export default Movie;
+
+Movie.auth = true;

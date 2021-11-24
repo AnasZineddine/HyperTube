@@ -85,7 +85,7 @@ export default function profile() {
         title: "Done",
         description: "Data saved successfully",
         status: "success",
-        duration: 3000,
+        duration: 3500,
         isClosable: true,
         position: "top",
       });
@@ -99,6 +99,7 @@ export default function profile() {
         position: "top",
       });
     }
+    router.push("/");
   };
 
   const onChange = async (formData) => {
