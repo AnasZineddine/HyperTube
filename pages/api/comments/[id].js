@@ -61,7 +61,7 @@ export default async function handler(req, res) {
       },
     });
     if (!checkExisting) {
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
         error: "Comments for this movie not found",
       });
