@@ -1,24 +1,37 @@
-import { Text, Textarea } from "@chakra-ui/react";
-import React from "react";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
-const Comments = () => {
-  let [value, setValue] = React.useState("");
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
-  let handleInputChange = (e) => {
-    let inputValue = e.target.value;
-    setValue(inputValue);
-  };
+const Comments = ({ movieId }) => {
+  const { data: session, status } = useSession();
+  const [content, setContent] = useState();
+
+  //console.log(session);
+  console.log(movieId);
+
+  // Fetch content from protected route
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`/api/comments/${movieId}`);
+      const json = await res.json();
+      if (json.content) {
+        setContent(json.content);
+      }
+    };
+    fetchData();
+  }, [session]);
+
+  if (typeof window !== "undefined" && status === "loading") return null;
+
+  console.log("content", content);
 
   return (
-    <>
-      <Text mb="8px">Comment: {value}</Text>
-      <Textarea
-        value={value}
-        onChange={handleInputChange}
-        placeholder="Comment on the video"
-        size="sm"
-      />
-    </>
+    <div>
+      {content?.comments.map((comments) => (
+        <h1 key={comments.id}>{comments.body}</h1>
+      ))}
+    </div>
   );
 };
 

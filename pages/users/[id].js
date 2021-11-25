@@ -48,7 +48,7 @@ const schema = Yup.object().shape({
 });
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
-export default function profile() {
+export default function ProfilePage() {
   const { data: session } = useSession();
   const router = useRouter();
   const { data, error } = useSWR(`/api/users/${router.query.id}`, fetcher);
@@ -247,4 +247,4 @@ export default function profile() {
   }
 }
 
-profile.auth = true;
+ProfilePage.auth = true;

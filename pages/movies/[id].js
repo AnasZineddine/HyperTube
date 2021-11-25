@@ -35,7 +35,7 @@ const Movie = () => {
           </Container>
         </Stack>
         <Container>
-          <Comments />
+          <Comments movieId={id} />
         </Container>
       </Stack>
     </Flex>

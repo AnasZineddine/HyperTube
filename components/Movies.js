@@ -67,7 +67,8 @@ export default function Movies() {
                 minW={0}
                 onClick={() => router.push(`/movies/${movies.id}`)}
               >
-                <Image
+                <Image // TODO: see next/image docs for loading}
+                  alt="movies picture"
                   key={movies.id}
                   src={movies.medium_cover_image}
                   width={230}

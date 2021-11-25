@@ -53,6 +53,7 @@ const SignUp = () => {
     resolver: yupResolver(schema),
   });
   const onSubmit = async (values) => {
+    console.log(values);
     const response = await fetch("/api/register", {
       method: "POST",
       body: JSON.stringify(values),
