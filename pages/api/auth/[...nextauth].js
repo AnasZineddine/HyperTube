@@ -29,11 +29,13 @@ export default NextAuth({
       token: "https://api.intra.42.fr/oauth/token",
       userinfo: "https://api.intra.42.fr/v2/me",
       profile(profile) {
+        console.log(profile);
         return {
           id: profile.id,
           email: profile.email,
           image: profile.image_url,
           name: profile.usual_full_name,
+          login: profile.login,
         };
       },
       clientId: process.env.FORTY_TWO_CLIENT_ID,
@@ -100,6 +102,7 @@ export default NextAuth({
       if (token) {
         session.id = token.id;
       }
+      console.log("session", session);
       return session;
     },
   },

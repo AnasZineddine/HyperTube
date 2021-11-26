@@ -43,22 +43,19 @@ const Comments = ({ movieId }) => {
           key={comments.id}
         >
           <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
-            <Avatar src={null} alt={"Author"} />
+            <Avatar src="" alt={"Author"} />
             <Stack direction={"column"} spacing={0} fontSize={"sm"}>
               <Text fontWeight={600}>{comments.username}</Text>
               <Text color={"gray.500"}>
-                {moment(comments.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
+                {moment(comments.createdAt).format("MMMM Do YYYY, h:mm a")}
               </Text>
             </Stack>
           </Stack>
           <Stack>
-            <Text color={"gray.500"} textAlign="justify">
-              {comments.body}
-            </Text>
+            <Text textAlign="justify">{comments.body}</Text>
           </Stack>
         </Box>
       ))}
-
       <CommentForm movieId={movieId} />
     </>
   );

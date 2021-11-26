@@ -3,8 +3,11 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import Comments from "../../components/Comments";
 
+import { useSession } from "next-auth/react";
+
 const Movie = () => {
   const fetcher = (url) => fetch(url).then((r) => r.json());
+  const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
   const { data, error } = useSWR(

@@ -2,10 +2,10 @@ import { getSession } from "next-auth/react";
 import prisma from "../../../prisma/db";
 
 export default async function handler(req, res) {
-  /*  const session = await getSession({ req });
+  const session = await getSession({ req });
   if (!session) {
     res.status(403).json({ error: "You must sign in" });
-  } */
+  }
 
   if (req.method === "POST") {
     const { username, body } = req.body;
