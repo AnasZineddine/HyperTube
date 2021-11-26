@@ -56,8 +56,12 @@ export default async function handler(req, res) {
       where: {
         apiId: movieId,
       },
-      select: {
-        comments: true,
+      include: {
+        comments: {
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
       },
     });
     if (!checkExisting) {

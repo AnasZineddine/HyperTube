@@ -14,7 +14,6 @@ const Movie = () => {
   if (error) return <div>failed to load</div>;
   if (!data) return <div>Loading...</div>;
 
-  console.log(data);
   return (
     <Flex alignItems="stretch" justifyContent="center">
       <Stack spacing={10} m={50} justifyContent="center" alignItems="stretch">
