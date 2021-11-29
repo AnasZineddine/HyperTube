@@ -24,7 +24,7 @@ export default async function handler(req, res) {
           comments: {
             create: [
               {
-                username: username,
+                authorId: session.id,
                 body: body,
               },
             ],
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
           comments: {
             create: [
               {
-                username: username,
+                authorId: session.id,
                 body: body,
               },
             ],
@@ -58,6 +58,14 @@ export default async function handler(req, res) {
       },
       include: {
         comments: {
+          include: {
+            author: {
+              select: {
+                image: true,
+                username: true,
+              },
+            },
+          },
           orderBy: {
             createdAt: "asc",
           },
@@ -70,6 +78,7 @@ export default async function handler(req, res) {
         error: "Comments for this movie not found",
       });
     } else {
+      //console.log("comments", checkExisting.comments);
       res.status(200).json({ success: true, content: checkExisting });
     }
   } else res.status(405).json({ message: "METHOD NOT ALLOWED" });

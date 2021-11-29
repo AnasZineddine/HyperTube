@@ -5,6 +5,7 @@ import { Box, Text, Stack, Avatar, useColorModeValue } from "@chakra-ui/react";
 import CommentForm from "./CommentForm";
 
 var moment = require("moment");
+import Link from "next/link";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -43,9 +44,10 @@ const Comments = ({ movieId }) => {
           key={comments.id}
         >
           <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
-            <Avatar src="" alt={"Author"} />
+            <Avatar src={comments.author.image} alt={"Author"} />
             <Stack direction={"column"} spacing={0} fontSize={"sm"}>
-              <Text fontWeight={600}>{comments.username}</Text>
+              <Text fontWeight={600}>{comments.author.username}</Text>
+
               <Text color={"gray.500"}>
                 {moment(comments.createdAt).format("MMMM Do YYYY, h:mm a")}
               </Text>

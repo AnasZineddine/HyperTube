@@ -35,7 +35,9 @@ export default NextAuth({
           email: profile.email,
           image: profile.image_url,
           name: profile.usual_full_name,
-          login: profile.login,
+          username: profile.login,
+          firstName: profile.first_name,
+          lastName: profile.last_name,
         };
       },
       clientId: process.env.FORTY_TWO_CLIENT_ID,

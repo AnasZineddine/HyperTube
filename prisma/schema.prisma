@@ -55,6 +55,7 @@ model User {
   resetPasswordExpires DateTime?
   accounts             Account[]
   sessions             Session[]
+  comments             Comment[]
 }
 
 model VerificationToken {
@@ -73,9 +74,10 @@ model Movie {
 
 model Comment {
   id        Int      @id @default(autoincrement())
-  username  String
+  author    User     @relation(fields: [authorId], references: [id])
   body      String
   movie     Movie    @relation(fields: [movieId], references: [id])
   movieId   Int
+  authorId  String
   createdAt DateTime @default(now())
 }
