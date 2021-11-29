@@ -44,6 +44,7 @@ const CommentForm = ({ movieId }) => {
     const data = await response.json();
     if (data.success === true) {
       router.reload();
+      //console.log(data);
     } else {
       toast({
         title: "Error",

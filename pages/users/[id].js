@@ -99,7 +99,7 @@ export default function ProfilePage() {
         position: "top",
       });
     }
-    router.push("/");
+    router.back();
   };
 
   const onChange = async (formData) => {
@@ -217,7 +217,7 @@ export default function ProfilePage() {
               _hover={{
                 bg: "red.500",
               }}
-              onClick={() => router.push("/")}
+              onClick={() => router.back()}
             >
               Cancel
             </Button>

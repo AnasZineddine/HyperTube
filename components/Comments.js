@@ -1,11 +1,19 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { Box, Text, Stack, Avatar, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Stack,
+  Avatar,
+  useColorModeValue,
+  Button,
+} from "@chakra-ui/react";
 import CommentForm from "./CommentForm";
+import Link from "next/link";
 
 var moment = require("moment");
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -13,6 +21,7 @@ const Comments = ({ movieId }) => {
   const { data: session, status } = useSession();
   const [content, setContent] = useState();
   const color = useColorModeValue("white", "gray.900");
+  const router = useRouter();
 
   //console.log(session);
 
@@ -44,9 +53,22 @@ const Comments = ({ movieId }) => {
           key={comments.id}
         >
           <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
-            <Avatar src={comments.author.image} alt={"Author"} />
+            <Button
+              //as={Button}
+              rounded={"full"}
+              variant={"link"}
+              //cursor={"pointer"}
+              minW={0}
+              onClick={() => router.push(`/users/${comments.author.id}`)}
+            >
+              <Avatar src={comments.author.image} alt={"Author"} />
+            </Button>
             <Stack direction={"column"} spacing={0} fontSize={"sm"}>
-              <Text fontWeight={600}>{comments.author.username}</Text>
+              <Text fontWeight={600}>
+                <Link href={`/users/${comments.author.id}`}>
+                  {comments.author.username}
+                </Link>
+              </Text>
 
               <Text color={"gray.500"}>
                 {moment(comments.createdAt).format("MMMM Do YYYY, h:mm a")}
