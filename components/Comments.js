@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import CommentForm from "./CommentForm";
 import Link from "next/link";
+import { useToast } from "@chakra-ui/react";
 
 var moment = require("moment");
 import { useRouter } from "next/router";
@@ -22,6 +23,7 @@ const Comments = ({ movieId }) => {
   const [content, setContent] = useState();
   const color = useColorModeValue("white", "gray.900");
   const router = useRouter();
+  const toast = useToast();
 
   //console.log(session);
 
@@ -38,6 +40,34 @@ const Comments = ({ movieId }) => {
   }, [session]);
 
   if (typeof window !== "undefined" && status === "loading") return null;
+
+  const deleteComment = async (commentId) => {
+    const response = await fetch(`/api/comments/${movieId}/${commentId}`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+    if (data.success === true) {
+      //TODO: ADD email
+      toast({
+        title: "Done",
+        description: "Data saved successfully",
+        status: "success",
+        duration: 3500,
+        isClosable: true,
+        position: "top",
+      });
+      router.reload();
+    } else {
+      toast({
+        title: "Error",
+        description: data.error,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  };
 
   return (
     <>
@@ -77,6 +107,19 @@ const Comments = ({ movieId }) => {
           </Stack>
           <Stack p={3} ml={12}>
             <Text textAlign="justify">{comments.body}</Text>
+            {session.id === comments.author.id && (
+              <Button
+                bg={"red.400"}
+                color={"white"}
+                w={70}
+                _hover={{
+                  bg: "red.500",
+                }}
+                onClick={() => deleteComment(comments.id)}
+              >
+                DELETE
+              </Button>
+            )}
           </Stack>
         </Box>
       ))}
