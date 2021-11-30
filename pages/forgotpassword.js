@@ -25,6 +25,7 @@ const schema = Yup.object().shape({
 
 export default function ForgotPassword() {
   const toast = useToast();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -64,6 +65,8 @@ export default function ForgotPassword() {
         position: "top",
       });
     }
+    router.back();
+
     console.log(data);
   };
 
@@ -76,6 +79,7 @@ export default function ForgotPassword() {
         justifyContent="flex-start"
         alignItems="stretch"
         w={350}
+        spacing={7}
       >
         <Text display="flex" justifyContent="center">
           Forgot Password
@@ -92,20 +96,33 @@ export default function ForgotPassword() {
           <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
         </FormControl>
 
-        <Button
-          variant="solid"
-          size="md"
-          onClick={handleSubmit(onSubmit)}
-          disabled={errors.email}
-        >
-          Reset Password
-        </Button>
+        <Stack spacing={1}>
+          <Button
+            variant="solid"
+            size="md"
+            onClick={handleSubmit(onSubmit)}
+            disabled={errors.email}
+          >
+            Reset Password
+          </Button>
+          <Button
+            bg={"red.400"}
+            color={"white"}
+            w="full"
+            _hover={{
+              bg: "red.500",
+            }}
+            onClick={() => router.back()}
+          >
+            Cancel
+          </Button>
+        </Stack>
       </Stack>
     </Flex>
   );
 }
 
-export async function getServerSideProps(context) {
+/* export async function getServerSideProps(context) {
   const session = await getSession(context);
 
   if (session) {
@@ -119,4 +136,4 @@ export async function getServerSideProps(context) {
   return {
     props: { session },
   };
-}
+} */

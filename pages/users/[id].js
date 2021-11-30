@@ -160,11 +160,16 @@ export default function ProfilePage() {
                 </Avatar>
               </Center>
               <Center w="full">
-                <UploadUi
-                  label="Upload Single File"
-                  uploadFileName="theFiles"
-                  onChange={onChange}
-                />
+                <Stack>
+                  <UploadUi
+                    label="Upload Single File"
+                    uploadFileName="theFiles"
+                    onChange={onChange}
+                  />
+                  <Button onClick={() => router.push("/forgotpassword")}>
+                    Change password
+                  </Button>
+                </Stack>
               </Center>
             </Stack>
           </FormControl>

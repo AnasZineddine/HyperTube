@@ -75,7 +75,7 @@ const Comments = ({ movieId }) => {
               </Text>
             </Stack>
           </Stack>
-          <Stack>
+          <Stack p={3} ml={12}>
             <Text textAlign="justify">{comments.body}</Text>
           </Stack>
         </Box>
