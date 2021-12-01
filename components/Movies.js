@@ -37,7 +37,7 @@ export default function Movies() {
   const getKey = (pageIndex, previousPageData) => {
     pageIndex = pageIndex + 1;
     //if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=rating&limit=30`; // SWR key
+    return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=rating&limit=35`; // SWR key
   };
   const router = useRouter();
   const {

@@ -32,7 +32,7 @@ export default async function handler(req, res) {
         },
       });
     } else {
-      await prisma.movie.update({
+      const cmt = await prisma.movie.update({
         data: {
           comments: {
             create: [
@@ -47,8 +47,8 @@ export default async function handler(req, res) {
           id: checkExisting.id,
         },
       });
+      res.status(200).json({ success: true, content: cmt });
     }
-    res.status(200).json({ success: true });
   } else if (req.method === "GET") {
     const movieId = req.query.id[0];
 

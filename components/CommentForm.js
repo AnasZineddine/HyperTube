@@ -41,6 +41,7 @@ const CommentForm = ({ movieId }) => {
         "Content-Type": "application/json",
       },
     });
+
     const data = await response.json();
     if (data.success === true) {
       router.reload();

@@ -45,7 +45,7 @@ export default function ForgotPassword() {
     });
     const data = await response.json();
     if (data.success === true) {
-      //TODO: ADD email
+      //TODO: ADD email ? and signout user if logged in in the new password section ?
       //router.push("/signin");
       toast({
         title: "Done",

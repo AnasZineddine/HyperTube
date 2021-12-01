@@ -1,8 +1,18 @@
 import { ReactNode } from "react";
-import { Box, Flex, Avatar, Stack, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Avatar,
+  Stack,
+  Button,
+  Text,
+  Container,
+  Center,
+} from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import SearchButton from "../components/SearchButton";
 
 import Link from "next/link";
 
@@ -13,7 +23,9 @@ const Navbar = () => {
     return (
       <Flex alignItems="center" justifyContent="space-between">
         <Box p={30}>
-          <Link href="/">HyperTube</Link>
+          <Text fontWeight={600}>
+            <Link href="/">HyperTube</Link>
+          </Text>
         </Box>
         <Stack
           spacing={2}
@@ -30,9 +42,12 @@ const Navbar = () => {
   }
   return (
     <Flex alignItems="center" justifyContent="space-between">
-      <Box p={30}>
-        <Link href="/">HyperTube</Link>
-      </Box>
+      <Stack p={30} direction="row" alignItems="center">
+        <Text fontWeight={600}>
+          <Link href="/">HyperTube</Link>
+        </Text>
+      </Stack>
+
       <Stack
         spacing={10}
         alignItems="center"
@@ -40,6 +55,8 @@ const Navbar = () => {
         isInline
         p={30}
       >
+        {router.pathname === "/" && <SearchButton />}
+
         <Button
           //as={Button}
           rounded={"full"}
