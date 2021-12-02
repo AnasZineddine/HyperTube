@@ -11,11 +11,13 @@ const Movie = () => {
   const router = useRouter();
   const { id } = router.query;
   const { data, error } = useSWR(
-    `https://yts.mx/api/v2/movie_details.json?movie_id=${id}`,
+    `https://yts.mx/api/v2/movie_details.json?movie_id=${id}&with_cast=true`,
     fetcher
   );
   if (error) return <div>failed to load</div>;
   if (!data) return <div>Loading...</div>;
+
+  console.log("movieData", data);
 
   return (
     <Flex alignItems="stretch" justifyContent="center">
