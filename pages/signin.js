@@ -95,17 +95,18 @@ export default function SignIn({ csrfToken, providers }) {
           Sign in
         </Button>
 
-        {Object.values(providers).map((provider) => (
-          <div key={provider.name}>
+        <Stack spacing={1}>
+          {Object.values(providers).map((provider) => (
             <Button
+              key={provider.name}
               variant="solid"
               size="md"
               onClick={() => signIn(provider.id)}
             >
               Sign in with {provider.name}
             </Button>
-          </div>
-        ))}
+          ))}
+        </Stack>
       </Stack>
     </Flex>
   );

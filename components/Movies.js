@@ -36,8 +36,14 @@ export default function Movies() {
 
   const getKey = (pageIndex, previousPageData) => {
     pageIndex = pageIndex + 1;
-    //if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=rating&limit=35`; // SWR key
+    console.log("previousPageData", previousPageData);
+    if (
+      previousPageData &&
+      previousPageData.data.movie_count / previousPageData.data.limit <=
+        previousPageData.data.page_number
+    )
+      return null; // reached the end
+    return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=download_count&limit=35&query_term=bat`; // SWR key
   };
   const router = useRouter();
   const {

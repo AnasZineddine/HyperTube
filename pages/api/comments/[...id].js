@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     });
 
     if (!checkExisting) {
-      await prisma.movie.create({
+      const cmt = await prisma.movie.create({
         data: {
           apiId: movieId,
           comments: {
@@ -31,6 +31,7 @@ export default async function handler(req, res) {
           },
         },
       });
+      res.status(200).json({ success: true, content: cmt });
     } else {
       const cmt = await prisma.movie.update({
         data: {
