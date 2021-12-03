@@ -23,7 +23,7 @@ const Navbar = () => {
     return (
       <Flex alignItems="center" justifyContent="space-between">
         <Box p={30}>
-          <Text fontWeight={600}>
+          <Text fontWeight={900} color="red" fontSize="2xl">
             <Link href="/">HyperTube</Link>
           </Text>
         </Box>
@@ -43,7 +43,7 @@ const Navbar = () => {
   return (
     <Flex alignItems="center" justifyContent="space-between">
       <Stack p={30} direction="row" alignItems="center">
-        <Text fontWeight={600}>
+        <Text fontWeight={900} color="red" fontSize="2xl">
           <Link href="/">HyperTube</Link>
         </Text>
       </Stack>

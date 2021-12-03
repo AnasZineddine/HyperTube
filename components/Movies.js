@@ -70,11 +70,12 @@ export default function Movies() {
         </InfiniteScroll>
       </Stack>
     );
-  } else
+  }
+  //TODO: style this below
+  else
     return (
       <>
         <h2>Your search did not match any movie Suggestions:</h2>
-
         <ul>
           <li>Make sure that all words are spelled correctly.</li>
           <li>Try different keywords.</li>

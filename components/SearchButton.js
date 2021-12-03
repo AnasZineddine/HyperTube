@@ -13,10 +13,12 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { Search2Icon } from "@chakra-ui/icons";
+import { useRouter } from "next/router";
 
 const SearchButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
+  const router = useRouter();
 
   return (
     <>
@@ -31,16 +33,14 @@ const SearchButton = () => {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Search movies</DrawerHeader>
-
           <DrawerBody>
             <Input placeholder="Type here..." />
           </DrawerBody>
-
           <DrawerFooter>
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue">Save</Button>
+            <Button colorScheme="blue">Search</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

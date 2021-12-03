@@ -7,6 +7,7 @@ export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  //TODO: nest layout inside Auth component ...
   return (
     <SessionProvider session={session}>
       <ChakraProvider resetCSS>
