@@ -42,10 +42,11 @@ const Navbar = () => {
   }
   return (
     <Flex alignItems="center" justifyContent="space-between">
-      <Stack p={30} direction="row" alignItems="center">
+      <Stack p={30} direction="row" alignItems="center" spacing={5}>
         <Text fontWeight={900} color="red" fontSize="2xl">
           <Link href="/">HyperTube</Link>
         </Text>
+        {router.pathname === "/" && <SearchButton />}
       </Stack>
 
       <Stack
@@ -55,8 +56,6 @@ const Navbar = () => {
         isInline
         p={30}
       >
-        {router.pathname === "/" && <SearchButton />}
-
         <Button
           //as={Button}
           rounded={"full"}

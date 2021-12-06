@@ -12,10 +12,11 @@ import useSWRInfinite from "swr/infinite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
 
-const fetcher = (url) => fetch(url).then((r) => r.json());
+const fetcher1 = (url) => fetch(url).then((r) => r.json());
+const fetcher2 = (url) => fetch(url).then((r) => r.json());
 
 export default function Movies() {
-  const getKey = (pageIndex, previousPageData) => {
+  const getKey1 = (pageIndex, previousPageData) => {
     pageIndex = pageIndex + 1;
     if (
       previousPageData &&
@@ -25,15 +26,27 @@ export default function Movies() {
       return null; // reached the end
     return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=download_count&limit=35&query_term=&genre=`; // SWR key
   };
+
+  const getKey2 = (pageIndex, previousPageData) => {
+    pageIndex = pageIndex + 1;
+    // if (previousPageData && !previousPageData.length) return null; // reached the end
+    return `http://popcorn-ru.tk/movies/${pageIndex}`; // SWR key
+  };
+
   const router = useRouter();
   const {
     data: paginatedData,
     size,
     setSize,
-  } = useSWRInfinite(getKey, fetcher);
+  } = useSWRInfinite(getKey1, fetcher1);
+  const {
+    data2: paginatedData2,
+    size2,
+    setSize2,
+  } = useSWRInfinite(getKey2, fetcher2);
   const color = useColorModeValue("#F9FAFB", "gray.600");
   if (!paginatedData) return "loading";
-  console.log(paginatedData);
+  console.log(paginatedData2);
 
   if (paginatedData[0].data.movie_count !== 0) {
     return (
