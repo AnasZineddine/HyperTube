@@ -15,49 +15,78 @@ import { useRouter } from "next/router";
 const fetcher1 = (url) => fetch(url).then((r) => r.json());
 const fetcher2 = (url) => fetch(url).then((r) => r.json());
 
+const getKey1 = (pageIndex, previousPageData) => {
+  pageIndex = pageIndex + 1;
+  if (
+    previousPageData &&
+    previousPageData.data.movie_count / previousPageData.data.limit <=
+      previousPageData.data.page_number
+  )
+    return null; // reached the end
+  return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=download_count&limit=35&query_term=&genre=`; // SWR key
+};
+
+const getKey2 = (pageIndex, previousPageData) => {
+  pageIndex = pageIndex + 1;
+  //if (previousPageData && !previousPageData.length) return null; // reached the end
+  return `http://popcorn-ru.tk/movies/${pageIndex}`; // SWR key
+};
+
 export default function Movies() {
-  const getKey1 = (pageIndex, previousPageData) => {
-    pageIndex = pageIndex + 1;
-    if (
-      previousPageData &&
-      previousPageData.data.movie_count / previousPageData.data.limit <=
-        previousPageData.data.page_number
-    )
-      return null; // reached the end
-    return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=download_count&limit=35&query_term=&genre=`; // SWR key
-  };
-
-  const getKey2 = (pageIndex, previousPageData) => {
-    pageIndex = pageIndex + 1;
-    // if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `http://popcorn-ru.tk/movies/${pageIndex}`; // SWR key
-  };
-
   const router = useRouter();
+  const color = useColorModeValue("#F9FAFB", "gray.600");
   const {
     data: paginatedData,
+    error: error1,
     size,
     setSize,
   } = useSWRInfinite(getKey1, fetcher1);
   const {
-    data2: paginatedData2,
-    size2,
-    setSize2,
+    data: paginatedData2,
+    error: error2,
+    size: size2,
+    setSize: setSize2,
   } = useSWRInfinite(getKey2, fetcher2);
-  const color = useColorModeValue("#F9FAFB", "gray.600");
-  if (!paginatedData) return "loading";
-  console.log(paginatedData2);
+
+  if (error1 || error2) return <div>failed to load</div>;
+  if (!paginatedData2 || !paginatedData) return <div>loading...</div>;
+
+  //console.log(paginatedData2);
 
   if (paginatedData[0].data.movie_count !== 0) {
     return (
       <Stack>
         <InfiniteScroll
-          next={() => setSize(size + 1)}
-          dataLength={paginatedData.length}
+          next={() => {
+            setSize(size + 1);
+            setSize2(size2 + 1);
+          }}
+          dataLength={paginatedData.length + paginatedData2.length}
           hasMore={true}
           //loader={<h1>loading ...</h1>} //TODO: do not display when reach end, or comment that shit :D
         >
           <Wrap spacing="5px" justify="center" w="full" p={30} bg={color}>
+            {paginatedData2.map((data) =>
+              data.map((data) => (
+                <WrapItem key={data._id}>
+                  <Button //as={Button}
+                    //rounded={"full"}
+                    variant={"link"}
+                    //cursor={"pointer"}
+                    minW={0}
+                    onClick={() => router.push(`/movies/${data._id}`)}
+                  >
+                    <Image // TODO: see next/image docs for loading}
+                      alt="Movie picture"
+                      key={data._id}
+                      src={data.images.banner}
+                      width={230}
+                      height={345}
+                    />
+                  </Button>
+                </WrapItem>
+              ))
+            )}
             {paginatedData.map((data) =>
               data.data.movies.map((movies) => (
                 <WrapItem key={movies.id}>

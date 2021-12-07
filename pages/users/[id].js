@@ -4,7 +4,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useToast } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import useSWR, { SWRConfig } from "swr";
-import axios from "axios";
 import UploadUi from "../../components/Upload";
 
 import {
