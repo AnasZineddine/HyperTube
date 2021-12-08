@@ -1,5 +1,7 @@
 import fetch from "unfetch";
 
+import { Spinner } from "@chakra-ui/react";
+
 import Image from "next/image";
 import {
   useColorModeValue,
@@ -7,6 +9,7 @@ import {
   WrapItem,
   Button,
   Stack,
+  Container,
 } from "@chakra-ui/react";
 import useSWRInfinite from "swr/infinite";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -14,27 +17,34 @@ import { useRouter } from "next/router";
 
 const fetcher1 = (url) => fetch(url).then((r) => r.json());
 const fetcher2 = (url) => fetch(url).then((r) => r.json());
-
-const getKey1 = (pageIndex, previousPageData) => {
-  pageIndex = pageIndex + 1;
-  if (
-    previousPageData &&
-    previousPageData.data.movie_count / previousPageData.data.limit <=
-      previousPageData.data.page_number
-  )
-    return null; // reached the end
-  return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=download_count&limit=35&query_term=&genre=`; // SWR key
-};
-
-const getKey2 = (pageIndex, previousPageData) => {
-  pageIndex = pageIndex + 1;
-  //if (previousPageData && !previousPageData.length) return null; // reached the end
-  return `http://popcorn-ru.tk/movies/${pageIndex}`; // SWR key
-};
-
+//TODO: fix infinite scroll loading a lot of data
+//TODO: check for null img
 export default function Movies() {
   const router = useRouter();
+  console.log(router);
+  if (!router.query.keyword) {
+    router.query.keyword = "";
+  }
+  if (!router.query.genre) {
+    router.query.genre = "";
+  }
   const color = useColorModeValue("#F9FAFB", "gray.600");
+  const getKey1 = (pageIndex, previousPageData) => {
+    pageIndex = pageIndex + 1;
+    if (
+      previousPageData &&
+      previousPageData.data.movie_count / previousPageData.data.limit <=
+        previousPageData.data.page_number
+    )
+      return null; // reached the end
+    return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=download_count&limit=35&query_term=${router.query.keyword}&genre=${router.query.genre}`; // SWR key
+  };
+
+  const getKey2 = (pageIndex, previousPageData) => {
+    pageIndex = pageIndex + 1;
+    if (previousPageData && !previousPageData.length) return null; // reached the end
+    return `http://popcorn-ru.tk/movies/${pageIndex}?keywords=${router.query.keyword}&genre=${router.query.genre}`; // SWR key
+  };
   const {
     data: paginatedData,
     error: error1,
@@ -49,13 +59,27 @@ export default function Movies() {
   } = useSWRInfinite(getKey2, fetcher2);
 
   if (error1 || error2) return <div>failed to load</div>;
-  if (!paginatedData2 || !paginatedData) return <div>loading...</div>;
-
-  //console.log(paginatedData2);
-
-  if (paginatedData[0].data.movie_count !== 0) {
+  if (!paginatedData2 || !paginatedData)
+    return (
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="xl"
+      />
+    );
+  console.log(paginatedData, paginatedData2);
+  if (
+    paginatedData[0].data.movie_count !== 0 ||
+    paginatedData2[0].length !== 0
+  ) {
     return (
       <Stack>
+        {router.asPath !== "/" && (
+          <Button onClick={() => router.push("/")}>Clear all filters</Button>
+        )}
+
         <InfiniteScroll
           next={() => {
             setSize(size + 1);
@@ -63,51 +87,53 @@ export default function Movies() {
           }}
           dataLength={paginatedData.length + paginatedData2.length}
           hasMore={true}
-          //loader={<h1>loading ...</h1>} //TODO: do not display when reach end, or comment that shit :D
+          //loader={} //TODO: do not display when reach end, or comment that shit :D
         >
           <Wrap spacing="5px" justify="center" w="full" p={30} bg={color}>
-            {paginatedData2.map((data) =>
-              data.map((data) => (
-                <WrapItem key={data._id}>
-                  <Button //as={Button}
-                    //rounded={"full"}
-                    variant={"link"}
-                    //cursor={"pointer"}
-                    minW={0}
-                    onClick={() => router.push(`/movies/${data._id}`)}
-                  >
-                    <Image // TODO: see next/image docs for loading}
-                      alt="Movie picture"
-                      key={data._id}
-                      src={data.images.banner}
-                      width={230}
-                      height={345}
-                    />
-                  </Button>
-                </WrapItem>
-              ))
-            )}
-            {paginatedData.map((data) =>
-              data.data.movies.map((movies) => (
-                <WrapItem key={movies.id}>
-                  <Button //as={Button}
-                    //rounded={"full"}
-                    variant={"link"}
-                    //cursor={"pointer"}
-                    minW={0}
-                    onClick={() => router.push(`/movies/${movies.id}`)}
-                  >
-                    <Image // TODO: see next/image docs for loading}
-                      alt="Movie picture"
-                      key={movies.id}
-                      src={movies.medium_cover_image}
-                      width={230}
-                      height={345}
-                    />
-                  </Button>
-                </WrapItem>
-              ))
-            )}
+            {paginatedData2.length !== 0 &&
+              paginatedData2.map((data) =>
+                data.map((data) => (
+                  <WrapItem key={data._id}>
+                    <Button //as={Button}
+                      //rounded={"full"}
+                      variant={"link"}
+                      //cursor={"pointer"}
+                      minW={0}
+                      onClick={() => router.push(`/movie/${data._id}`)}
+                    >
+                      <Image // TODO: see next/image docs for loading}
+                        alt="Movie picture"
+                        key={data._id}
+                        src={data.images.banner}
+                        width={230}
+                        height={345}
+                      />
+                    </Button>
+                  </WrapItem>
+                ))
+              )}
+            {paginatedData[0].data.movie_count !== 0 &&
+              paginatedData.map((data) =>
+                data.data.movies.map((movies) => (
+                  <WrapItem key={movies.id}>
+                    <Button //as={Button}
+                      //rounded={"full"}
+                      variant={"link"}
+                      //cursor={"pointer"}
+                      minW={0}
+                      onClick={() => router.push(`/movie/${movies.id}`)}
+                    >
+                      <Image // TODO: see next/image docs for loading}
+                        alt="Movie picture"
+                        key={movies.id}
+                        src={movies.medium_cover_image}
+                        width={230}
+                        height={345}
+                      />
+                    </Button>
+                  </WrapItem>
+                ))
+              )}
           </Wrap>
         </InfiniteScroll>
       </Stack>

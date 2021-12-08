@@ -10,6 +10,7 @@ import {
   useDisclosure,
   Input,
   Button,
+  Stack,
 } from "@chakra-ui/react";
 import React from "react";
 import { Search2Icon } from "@chakra-ui/icons";
@@ -19,6 +20,8 @@ const SearchButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const router = useRouter();
+  const [value, setValue] = React.useState("");
+  const handleChange = (event) => setValue(event.target.value);
 
   return (
     <>
@@ -34,13 +37,36 @@ const SearchButton = () => {
           <DrawerCloseButton />
           <DrawerHeader>Search movies</DrawerHeader>
           <DrawerBody>
-            <Input placeholder="Type here..." />
+            <Stack spacing={2}>
+              <Input
+                value={value}
+                placeholder="Type here..."
+                onChange={handleChange}
+              />
+              <Button
+                colorScheme="blue"
+                onClick={() => {
+                  value && router.push(`/?keyword=${value}`);
+                  onClose();
+                }}
+              >
+                Quick search
+              </Button>
+            </Stack>
           </DrawerBody>
           <DrawerFooter>
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue">Search</Button>
+            <Button
+              colorScheme="blue"
+              onClick={() => {
+                value && router.push(`/?keyword=${value}`);
+                onClose();
+              }}
+            >
+              Advanced Search
+            </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
