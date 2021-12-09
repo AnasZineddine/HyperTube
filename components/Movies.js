@@ -43,7 +43,7 @@ export default function Movies() {
   const getKey2 = (pageIndex, previousPageData) => {
     pageIndex = pageIndex + 1;
     if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `http://popcorn-ru.tk/movies/${pageIndex}?keywords=${router.query.keyword}&genre=${router.query.genre}`; // SWR key
+    return `http://popcorn-ru.tk/movies/${pageIndex}?sort=trending&order=-1&keywords=${router.query.keyword}&genre=${router.query.genre}`; // SWR key
   };
   const {
     data: paginatedData,
@@ -71,8 +71,8 @@ export default function Movies() {
     );
   console.log(paginatedData, paginatedData2);
   if (
-    paginatedData[0].data.movie_count !== 0 ||
-    paginatedData2[0].length !== 0
+    paginatedData[0].data.movies &&
+    (paginatedData[0].data.movie_count !== 0 || paginatedData2[0].length !== 0)
   ) {
     return (
       <Stack>
@@ -92,47 +92,53 @@ export default function Movies() {
           <Wrap spacing="5px" justify="center" w="full" p={30} bg={color}>
             {paginatedData2.length !== 0 &&
               paginatedData2.map((data) =>
-                data.map((data) => (
-                  <WrapItem key={data._id}>
-                    <Button //as={Button}
-                      //rounded={"full"}
-                      variant={"link"}
-                      //cursor={"pointer"}
-                      minW={0}
-                      onClick={() => router.push(`/movie/${data._id}`)}
-                    >
-                      <Image // TODO: see next/image docs for loading}
-                        alt="Movie picture"
-                        key={data._id}
-                        src={data.images.banner}
-                        width={230}
-                        height={345}
-                      />
-                    </Button>
-                  </WrapItem>
-                ))
+                data.map(
+                  (data) =>
+                    data.images.banner && (
+                      <WrapItem key={data._id}>
+                        <Button //as={Button}
+                          //rounded={"full"}
+                          variant={"link"}
+                          //cursor={"pointer"}
+                          minW={0}
+                          onClick={() => router.push(`/movie/${data._id}`)}
+                        >
+                          <Image // TODO: see next/image docs for loading}
+                            alt="Movie picture"
+                            key={data._id}
+                            src={data.images.banner}
+                            width={230}
+                            height={345}
+                          />
+                        </Button>
+                      </WrapItem>
+                    )
+                )
               )}
             {paginatedData[0].data.movie_count !== 0 &&
               paginatedData.map((data) =>
-                data.data.movies.map((movies) => (
-                  <WrapItem key={movies.id}>
-                    <Button //as={Button}
-                      //rounded={"full"}
-                      variant={"link"}
-                      //cursor={"pointer"}
-                      minW={0}
-                      onClick={() => router.push(`/movie/${movies.id}`)}
-                    >
-                      <Image // TODO: see next/image docs for loading}
-                        alt="Movie picture"
-                        key={movies.id}
-                        src={movies.medium_cover_image}
-                        width={230}
-                        height={345}
-                      />
-                    </Button>
-                  </WrapItem>
-                ))
+                data.data.movies.map(
+                  (movies) =>
+                    movies.medium_cover_image && (
+                      <WrapItem key={movies.id}>
+                        <Button //as={Button}
+                          //rounded={"full"}
+                          variant={"link"}
+                          //cursor={"pointer"}
+                          minW={0}
+                          onClick={() => router.push(`/movie/${movies.id}`)}
+                        >
+                          <Image // TODO: see next/image docs for loading}
+                            alt="Movie picture"
+                            key={movies.id}
+                            src={movies.medium_cover_image}
+                            width={230}
+                            height={345}
+                          />
+                        </Button>
+                      </WrapItem>
+                    )
+                )
               )}
           </Wrap>
         </InfiniteScroll>

@@ -20,6 +20,7 @@ import {
   useRadioGroup,
   Center,
   Grid,
+  Divider,
 } from "@chakra-ui/react";
 import React from "react";
 import { Search2Icon } from "@chakra-ui/icons";
@@ -62,12 +63,13 @@ const SearchButton = () => {
   const btnRef = React.useRef();
   const router = useRouter();
   const [value, setValue] = React.useState("");
+  const [genre, setGenre] = React.useState("");
   const handleChange = (event) => setValue(event.target.value);
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "framework",
     defaultValue: "All",
-    onChange: console.log,
+    onChange: setGenre,
   });
 
   const group = getRootProps();
@@ -83,8 +85,8 @@ const SearchButton = () => {
     "Drama",
     "Adventure",
     "Animation",
-    "Superhero",
-    "Mystery",
+    "Documentary",
+    "Crime",
   ];
   return (
     <>
@@ -113,8 +115,9 @@ const SearchButton = () => {
                   onClose();
                 }}
               >
-                Quick search
+                Quick Search
               </Button>
+              <Divider p={1} />
               <Stack pt={10} spacing={10}>
                 <Grid {...group} templateColumns="repeat(2, 1fr)" gap={6}>
                   {options.map((value) => {
@@ -150,7 +153,8 @@ const SearchButton = () => {
             <Button
               colorScheme="blue"
               onClick={() => {
-                value && router.push(`/?keyword=${value}`);
+                (value || genre) &&
+                  router.push(`/?keyword=${value}&genre=${genre}`);
                 onClose();
               }}
             >
