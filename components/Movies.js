@@ -37,7 +37,13 @@ export default function Movies() {
         previousPageData.data.page_number
     )
       return null; // reached the end
-    return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=download_count&limit=35&query_term=${router.query.keyword}&genre=${router.query.genre}`; // SWR key
+    return `https://yts.mx/api/v2/list_movies.json?page=${pageIndex}&sort_by=download_count&limit=35&query_term=${
+      router.query.keyword
+    }&genre=${
+      router.query.genre === "All"
+        ? (router.query.genre = "")
+        : (router.query.genre = router.query.genre)
+    }`; // SWR key
   };
 
   const getKey2 = (pageIndex, previousPageData) => {

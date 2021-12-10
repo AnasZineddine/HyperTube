@@ -21,6 +21,8 @@ import {
   Center,
   Grid,
   Divider,
+  Select,
+  HStack,
 } from "@chakra-ui/react";
 import React from "react";
 import { Search2Icon } from "@chakra-ui/icons";
@@ -64,10 +66,11 @@ const SearchButton = () => {
   const router = useRouter();
   const [value, setValue] = React.useState("");
   const [genre, setGenre] = React.useState("");
+
   const handleChange = (event) => setValue(event.target.value);
 
   const { getRootProps, getRadioProps } = useRadioGroup({
-    name: "framework",
+    name: "frameworks",
     defaultValue: "All",
     onChange: setGenre,
   });
@@ -119,6 +122,20 @@ const SearchButton = () => {
               </Button>
               <Divider p={1} />
               <Stack pt={10} spacing={10}>
+                <HStack>
+                  <Select variant="filled" placeholder="Sort by">
+                    <option value="name">Name</option>
+                    <option value="rating">Rating</option>
+                    <option value="released">Released</option>
+                    <option value="trending">Trending</option>
+                    <option value="updated">Updated</option>
+                    <option value="year">Year</option>
+                  </Select>
+                  <Select variant="filled" placeholder="Order">
+                    <option value="Ascending">Ascending</option>
+                    <option value="Descending">Descending</option>
+                  </Select>
+                </HStack>
                 <Grid {...group} templateColumns="repeat(2, 1fr)" gap={6}>
                   {options.map((value) => {
                     const radio = getRadioProps({ value });
@@ -135,6 +152,19 @@ const SearchButton = () => {
                   max={2021}
                   step={5}
                   defaultValue={[1920, 2021]}
+                  onChangeEnd={(val) => console.log(val)}
+                >
+                  <RangeSliderTrack>
+                    <RangeSliderFilledTrack />
+                  </RangeSliderTrack>
+                  <RangeSliderThumb index={0} />
+                  <RangeSliderThumb index={1} />
+                </RangeSlider>
+                <RangeSlider
+                  min={0}
+                  max={100}
+                  step={5}
+                  defaultValue={[0, 100]}
                   onChangeEnd={(val) => console.log(val)}
                 >
                   <RangeSliderTrack>
