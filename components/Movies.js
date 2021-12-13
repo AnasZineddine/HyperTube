@@ -9,7 +9,7 @@ import {
   WrapItem,
   Button,
   Stack,
-  Container,
+  Text,
 } from "@chakra-ui/react";
 import useSWRInfinite from "swr/infinite";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -135,7 +135,7 @@ export default function Movies() {
                           minW={0}
                           onClick={() => router.push(`/movie/${movies.id}`)}
                         >
-                          <Image // TODO: see next/image docs for loading}
+                          <Image // TODO: see next/image docs for loading
                             alt="Movie picture"
                             key={movies.id}
                             src={movies.medium_cover_image}
