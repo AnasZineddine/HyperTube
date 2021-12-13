@@ -23,6 +23,7 @@ import {
   Divider,
   Select,
   HStack,
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
 import { Search2Icon } from "@chakra-ui/icons";
@@ -66,11 +67,17 @@ const SearchButton = () => {
   const router = useRouter();
   const [value, setValue] = React.useState("");
   const [genre, setGenre] = React.useState("");
+  const [yearGap, setYearGap] = React.useState("");
+  const [ratingGap, setRatingGap] = React.useState("");
+  const [sort, setSort] = React.useState("");
+  const [order, setOrder] = React.useState("");
 
   const handleChange = (event) => setValue(event.target.value);
+  const handleChange2 = (event) => setSort(event.target.value);
+  const handleChange3 = (event) => setOrder(event.target.value);
 
   const { getRootProps, getRadioProps } = useRadioGroup({
-    name: "frameworks",
+    name: "genres",
     defaultValue: "All",
     onChange: setGenre,
   });
@@ -123,7 +130,11 @@ const SearchButton = () => {
               <Divider p={1} />
               <Stack pt={10} spacing={10}>
                 <HStack>
-                  <Select variant="filled" placeholder="Sort by">
+                  <Select
+                    variant="filled"
+                    placeholder="Sort by"
+                    onChange={handleChange2}
+                  >
                     <option value="name">Name</option>
                     <option value="rating">Rating</option>
                     <option value="released">Released</option>
@@ -131,9 +142,13 @@ const SearchButton = () => {
                     <option value="updated">Updated</option>
                     <option value="year">Year</option>
                   </Select>
-                  <Select variant="filled" placeholder="Order">
-                    <option value="Ascending">Ascending</option>
-                    <option value="Descending">Descending</option>
+                  <Select
+                    variant="filled"
+                    placeholder="Order"
+                    onChange={handleChange3}
+                  >
+                    <option value="1">Ascending</option>
+                    <option value="-1">Descending</option>
                   </Select>
                 </HStack>
                 <Grid {...group} templateColumns="repeat(2, 1fr)" gap={6}>
@@ -147,32 +162,38 @@ const SearchButton = () => {
                   })}
                 </Grid>
 
-                <RangeSlider
-                  min={1920}
-                  max={2021}
-                  step={5}
-                  defaultValue={[1920, 2021]}
-                  onChangeEnd={(val) => console.log(val)}
-                >
-                  <RangeSliderTrack>
-                    <RangeSliderFilledTrack />
-                  </RangeSliderTrack>
-                  <RangeSliderThumb index={0} />
-                  <RangeSliderThumb index={1} />
-                </RangeSlider>
-                <RangeSlider
-                  min={0}
-                  max={100}
-                  step={5}
-                  defaultValue={[0, 100]}
-                  onChangeEnd={(val) => console.log(val)}
-                >
-                  <RangeSliderTrack>
-                    <RangeSliderFilledTrack />
-                  </RangeSliderTrack>
-                  <RangeSliderThumb index={0} />
-                  <RangeSliderThumb index={1} />
-                </RangeSlider>
+                <Stack spacing={3}>
+                  <Text>Year gap {String(yearGap).match(/.{1,4}/g)}</Text>
+                  <RangeSlider
+                    min={1920}
+                    max={2021}
+                    step={5}
+                    defaultValue={[1920, 2021]}
+                    onChangeEnd={(yearGap) => setYearGap(yearGap)}
+                  >
+                    <RangeSliderTrack>
+                      <RangeSliderFilledTrack />
+                    </RangeSliderTrack>
+                    <RangeSliderThumb index={0} />
+                    <RangeSliderThumb index={1} />
+                  </RangeSlider>
+                </Stack>
+                <Stack spacing={3}>
+                  <Text>Rating gap {String(ratingGap).match(/.{1,2}/g)}</Text>
+                  <RangeSlider
+                    min={0}
+                    max={100}
+                    step={5}
+                    defaultValue={[0, 100]}
+                    onChangeEnd={(ratingGap) => setRatingGap(ratingGap)}
+                  >
+                    <RangeSliderTrack>
+                      <RangeSliderFilledTrack />
+                    </RangeSliderTrack>
+                    <RangeSliderThumb index={0} />
+                    <RangeSliderThumb index={1} />
+                  </RangeSlider>
+                </Stack>
               </Stack>
             </Stack>
           </DrawerBody>
@@ -183,9 +204,13 @@ const SearchButton = () => {
             <Button
               colorScheme="blue"
               onClick={() => {
-                (value || genre) &&
-                  router.push(`/?keyword=${value}&genre=${genre}`);
+                (value || genre || sort || order) &&
+                  router.push(
+                    `/?keyword=${value}&genre=${genre}&sort_by=${sort}&order_by=${order}`
+                  );
                 onClose();
+                setSort("");
+                setOrder("");
               }}
             >
               Advanced Search
