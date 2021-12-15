@@ -21,13 +21,8 @@ const fetcher2 = (url) => fetch(url).then((r) => r.json());
 //TODO: check for null img
 export default function Movies() {
   const router = useRouter();
-  /* console.log(router);
-  if (!router.query.keyword) {
-    router.query.keyword = "";
-  }
-  if (!router.query.genre) {
-    router.query.genre = "";
-  } */
+  console.log(router);
+
   let { keyword, genre, sort_by, order_by } = router.query;
   if (!keyword) {
     keyword = "";
@@ -35,6 +30,13 @@ export default function Movies() {
   if (!genre) {
     genre = "";
   }
+
+  /**
+   * TODO: fix sort for both sources
+   * popcorn sort :  name , rating , released , trending , updated , year .
+   * yts sort :  (title, year, rating, peers, seeds, download_count, like_count, date_added)
+   * **/
+
   const color = useColorModeValue("#F9FAFB", "gray.600");
   const getKey1 = (pageIndex, previousPageData) => {
     pageIndex = pageIndex + 1;
@@ -108,7 +110,7 @@ export default function Movies() {
                           variant={"link"}
                           //cursor={"pointer"}
                           minW={0}
-                          onClick={() => router.push(`/movie/${data._id}`)}
+                          onClick={() => router.push(`/movie2/${data._id}`)}
                         >
                           <Image // TODO: see next/image docs for loading}
                             alt="Movie picture"
@@ -133,7 +135,7 @@ export default function Movies() {
                           variant={"link"}
                           //cursor={"pointer"}
                           minW={0}
-                          onClick={() => router.push(`/movie/${movies.id}`)}
+                          onClick={() => router.push(`/movie1/${movies.id}`)}
                         >
                           <Image // TODO: see next/image docs for loading
                             alt="Movie picture"

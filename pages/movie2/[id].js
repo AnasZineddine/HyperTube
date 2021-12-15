@@ -10,14 +10,11 @@ const Movie = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
-  const { data, error } = useSWR(
-    `https://yts.mx/api/v2/movie_details.json?movie_id=${id}&with_cast=true`,
-    fetcher
-  );
+  const { data, error } = useSWR(`http://popcorn-ru.tk/movie/${id}`, fetcher);
   if (error) return <div>failed to load</div>;
   if (!data) return <div>Loading...</div>;
 
-  console.log("movieData", data);
+  console.log("movieData2", data);
 
   return (
     <Flex alignItems="stretch" justifyContent="center">
@@ -28,14 +25,16 @@ const Movie = () => {
               <iframe
                 width="1200"
                 height="700"
-                title={data.data.movie.title}
-                src={`https://www.youtube.com/embed/${data.data.movie.yt_trailer_code}`}
+                title={data.title}
+                src={`https://www.youtube.com/embed/${
+                  data.trailer.split("=")[1]
+                }`}
                 allowFullScreen
               />
             </Center>
           </Container>
           <Container>
-            <Text textAlign="justify">{data.data.movie.description_full}</Text>
+            <Text textAlign="justify">{data.synopsis}</Text>
           </Container>
         </Stack>
         <Container>

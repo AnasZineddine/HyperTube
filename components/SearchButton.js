@@ -123,6 +123,7 @@ const SearchButton = () => {
                 onClick={() => {
                   value && router.push(`/?keyword=${value}`);
                   onClose();
+                  setValue("");
                 }}
               >
                 Quick Search
@@ -211,6 +212,7 @@ const SearchButton = () => {
                 onClose();
                 setSort("");
                 setOrder("");
+                setValue("");
               }}
             >
               Advanced Search
