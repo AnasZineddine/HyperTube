@@ -1,4 +1,4 @@
-import { Flex, Text, Stack, Container, Image, Center } from "@chakra-ui/react";
+import { Flex, Text, Stack, Container, Center } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Comments from "../../components/Comments";

@@ -3,6 +3,8 @@ import fetch from "unfetch";
 import { Spinner } from "@chakra-ui/react";
 
 import Image from "next/image";
+import Link from "next/link";
+
 import {
   useColorModeValue,
   Wrap,
@@ -17,6 +19,7 @@ import { useRouter } from "next/router";
 
 const fetcher1 = (url) => fetch(url).then((r) => r.json());
 const fetcher2 = (url) => fetch(url).then((r) => r.json());
+
 //TODO: fix infinite scroll loading a lot of data
 //TODO: check for null img
 export default function Movies() {
