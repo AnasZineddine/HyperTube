@@ -3,7 +3,6 @@ import fetch from "unfetch";
 import { Spinner } from "@chakra-ui/react";
 
 import Image from "next/image";
-import Link from "next/link";
 
 import {
   useColorModeValue,
@@ -11,11 +10,12 @@ import {
   WrapItem,
   Button,
   Stack,
-  Text,
+  Flex,
 } from "@chakra-ui/react";
 import useSWRInfinite from "swr/infinite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
+import { MdDeleteForever } from "react-icons/Md";
 
 const fetcher1 = (url) => fetch(url).then((r) => r.json());
 const fetcher2 = (url) => fetch(url).then((r) => r.json());
@@ -88,9 +88,16 @@ export default function Movies() {
   ) {
     return (
       <Stack>
-        {router.asPath !== "/" && (
-          <Button onClick={() => router.push("/")}>Clear all filters</Button>
-        )}
+        <Flex justifyContent="center">
+          {router.asPath !== "/" && (
+            <Button
+              leftIcon={<MdDeleteForever size={"1.4em"} />}
+              onClick={() => router.push("/")}
+            >
+              Clear all filters
+            </Button>
+          )}
+        </Flex>
 
         <InfiniteScroll
           next={() => {
