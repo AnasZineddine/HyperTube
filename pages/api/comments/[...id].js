@@ -1,5 +1,11 @@
 import { getSession } from "next-auth/react";
 import prisma from "../../../prisma/db";
+import Joi from "joi";
+import validate from "../../middlewares/validation";
+
+const schema = Joi.object({
+  body: Joi.string().min(1).max(1000).required(),
+});
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -8,7 +14,7 @@ export default async function handler(req, res) {
   }
 
   if (req.method === "POST") {
-    const { username, body } = req.body;
+    const { body } = req.body;
     const movieId = req.query.id[0];
 
     const checkExisting = await prisma.movie.findFirst({

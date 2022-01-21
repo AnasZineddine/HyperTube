@@ -1,13 +1,27 @@
 const crypto = require("crypto");
-
+const passwordComplexity = require("joi-password-complexity");
 import set from "date-fns/set";
 const argon2 = require("argon2");
+import validate from "../../middlewares/validation";
 
 import prisma from "../../../prisma/db";
+import Joi from "joi";
 
-//TODO:validate data input
+const complexityOptions = {
+  min: 8,
+  max: 30,
+  lowerCase: 1,
+  upperCase: 1,
+  numeric: 1,
+  symbol: 1,
+  requirementCount: 4,
+};
 
-export default async function handler(req, res) {
+const schema = Joi.object({
+  password: passwordComplexity(complexityOptions).required(),
+});
+
+async function handler(req, res) {
   if (req.method === "POST") {
     const { password } = req.body;
     try {
@@ -48,3 +62,5 @@ export default async function handler(req, res) {
     res.status(405).json({ message: "METHOD NOT ALLOWED" });
   }
 }
+
+export default validate({ body: schema }, handler);

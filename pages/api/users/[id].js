@@ -1,6 +1,15 @@
 import { getSession } from "next-auth/react";
 import prisma from "../../../prisma/db";
 
+import Joi from "joi";
+
+const schema = Joi.object({
+  firstName: Joi.string().min(1).max(100).required(),
+  lastName: Joi.string().min(1).max(100).required(),
+  username: Joi.string().alphanum().min(3).max(30).required(),
+  email: Joi.string().email().required(),
+});
+
 export default async function handler(req, res) {
   const session = await getSession({ req });
   if (!session) {

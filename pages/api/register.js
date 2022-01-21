@@ -2,8 +2,30 @@
 import prisma from "../../prisma/db";
 const argon2 = require("argon2");
 const { sendConfirmationEmail } = require("../../services/emailService");
+const passwordComplexity = require("joi-password-complexity");
 
-export default async function handler(req, res) {
+import Joi from "joi";
+import validate from "../middlewares/validation";
+
+const complexityOptions = {
+  min: 8,
+  max: 30,
+  lowerCase: 1,
+  upperCase: 1,
+  numeric: 1,
+  symbol: 1,
+  requirementCount: 4,
+};
+
+const schema = Joi.object({
+  firstName: Joi.string().min(1).max(100).required(),
+  lastName: Joi.string().min(1).max(100).required(),
+  username: Joi.string().alphanum().min(3).max(30).required(),
+  email: Joi.string().email().required(),
+  password: passwordComplexity(complexityOptions).required(),
+});
+
+async function handler(req, res) {
   if (req.method === "POST") {
     /*     res.status(200).json({ success: "true" });
      */
@@ -49,3 +71,5 @@ export default async function handler(req, res) {
     res.status(405).json({ message: "Methode not allowed" });
   }
 }
+
+export default validate({ body: schema }, handler);

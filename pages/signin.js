@@ -36,18 +36,20 @@ export default function SignIn({ csrfToken, providers }) {
   const {
     register,
     handleSubmit,
+
     formState: { errors },
   } = useForm({
     mode: "onTouched",
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (values) =>
+  const onSubmit = (values) => {
     signIn("credentials", {
       username: values.username,
       password: values.password,
       callbackUrl: "/",
     });
+  };
 
   return (
     //

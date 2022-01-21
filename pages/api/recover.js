@@ -2,10 +2,14 @@ const crypto = require("crypto");
 import set from "date-fns/set";
 const { sendResetEmail } = require("../../services/emailService");
 import prisma from "../../prisma/db";
+import Joi from "joi";
+import validate from "../middlewares/validation";
 
-//TODO: validate data on register route also
+const schema = Joi.object({
+  email: Joi.string().email().required(),
+});
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   if (req.method === "POST") {
     const { email } = req.body;
     try {
@@ -45,3 +49,5 @@ export default async function handler(req, res) {
     res.status(405).json({ message: "POST METHOD ONLY" });
   }
 }
+
+export default validate({ body: schema }, handler);

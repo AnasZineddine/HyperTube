@@ -109,14 +109,14 @@ export default function NewPassword({ csrfToken, providers }) {
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
-  if (session) {
+  /* if (session) {
     return {
       redirect: {
         destination: "/",
         permanent: false,
       },
     };
-  }
+  } */
   return {
     props: { session },
   };

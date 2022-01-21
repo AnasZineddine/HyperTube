@@ -11,6 +11,7 @@ import {
   Button,
   Stack,
   Flex,
+  Center,
 } from "@chakra-ui/react";
 import useSWRInfinite from "swr/infinite";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -87,7 +88,7 @@ export default function Movies() {
     (paginatedData[0].data.movie_count !== 0 || paginatedData2[0].length !== 0)
   ) {
     return (
-      <Stack>
+      <Stack bg={color}>
         <Flex justifyContent="center">
           {router.asPath !== "/" && (
             <Button
