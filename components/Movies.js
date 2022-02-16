@@ -168,13 +168,21 @@ export default function Movies() {
   //TODO: style this below
   else
     return (
-      <>
+      <Stack spacing={5}>
+        {router.asPath !== "/" && (
+          <Button
+            leftIcon={<MdDeleteForever size={"1.4em"} />}
+            onClick={() => router.push("/")}
+          >
+            Clear all filters
+          </Button>
+        )}
         <h2>Your search did not match any movie Suggestions:</h2>
         <ul>
           <li>Make sure that all words are spelled correctly.</li>
           <li>Try different keywords.</li>
           <li>Try more general keywords. Try fewer keywords.</li>
         </ul>
-      </>
+      </Stack>
     );
 }

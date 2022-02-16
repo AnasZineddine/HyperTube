@@ -22,19 +22,15 @@ const Movie = () => {
         <Stack spacing={20}>
           <Container>
             <Center>
-              <video
-                controls
-                src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
-                poster="https://peach.blender.org/wp-content/uploads/title_anouncement.jpg?x11217"
-                width="620"
-              >
-                Sorry, your browser doesn't support embedded videos, but don't
-                worry, you can{" "}
-                <a href="https://archive.org/details/BigBuckBunny_124">
-                  download it
-                </a>
-                and watch it with your favorite video player!
-              </video>
+              <iframe
+                width="1200"
+                height="700"
+                title={data.title}
+                src={`https://www.youtube.com/embed/${
+                  data.trailer.split("=")[1]
+                }`}
+                allowFullScreen
+              />
             </Center>
           </Container>
           <Container>

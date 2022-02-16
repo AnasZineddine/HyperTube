@@ -25,7 +25,7 @@ const schema = Joi.object({
   password: passwordComplexity(complexityOptions).required(),
 });
 
-async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method === "POST") {
     /*     res.status(200).json({ success: "true" });
      */
@@ -72,4 +72,4 @@ async function handler(req, res) {
   }
 }
 
-export default validate({ body: schema }, handler);
+//export default validate({ body: schema }, handler);

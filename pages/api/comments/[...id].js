@@ -3,8 +3,19 @@ import prisma from "../../../prisma/db";
 import Joi from "joi";
 import validate from "../../middlewares/validation";
 
-const schema = Joi.object({
+/* const schema = Joi.object({
   body: Joi.string().min(1).max(1000).required(),
+}); */
+
+const schema = Joi.when(Joi.ref("$method"), {
+  is: "POST",
+  then: Joi.object().keys({
+    body: Joi.string().min(1).max(1000).required(),
+  }),
+  /* "otherwise": Joi.object().keys({
+    "id": Joi.string().forbidden(),
+    "name": Joi.string()
+  }) */
 });
 
 export default async function handler(req, res) {

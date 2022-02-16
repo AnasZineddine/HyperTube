@@ -70,6 +70,7 @@ export default function ProfilePage() {
   }
 
   const onSubmit = async (values) => {
+    // use swr to patch changes using cache
     const response = await fetch("/api/users/kdkddkkdkd", {
       method: "PATCH",
       body: JSON.stringify(values),
