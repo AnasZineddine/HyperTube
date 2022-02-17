@@ -4,6 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
+import fr from "../utils/fr";
+import en from "../utils/en";
 
 import {
   Flex,
@@ -85,6 +87,8 @@ const SignUp = () => {
     }
     console.log(data);
   };
+  const { locale } = router;
+  const t = locale === "en" ? en : fr;
 
   return (
     <Flex alignItems="stretch" justifyContent="center">
@@ -96,11 +100,11 @@ const SignUp = () => {
         w={350}
       >
         <Text display="flex" justifyContent="center">
-          Sign Up
+          {t.signup}
         </Text>
 
         <FormControl isInvalid={errors.firstName?.message} p="1" isRequired>
-          <FormLabel htmlFor="firstName">First name</FormLabel>
+          <FormLabel htmlFor="firstName">{t.firstname}</FormLabel>
           <Input
             type="text"
             name="firstName"
@@ -110,7 +114,7 @@ const SignUp = () => {
           <FormErrorMessage>{errors?.firstName?.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.lastName?.message} p="1" isRequired>
-          <FormLabel htmlFor="lastName">Last name</FormLabel>
+          <FormLabel htmlFor="lastName">{t.lastname}</FormLabel>
           <Input
             type="text"
             name="lastName"
@@ -120,7 +124,7 @@ const SignUp = () => {
           <FormErrorMessage>{errors?.lastName?.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.username?.message} p="1" isRequired>
-          <FormLabel htmlFor="username">Username</FormLabel>
+          <FormLabel htmlFor="username">{t.username}</FormLabel>
           <Input
             type="text"
             name="username"
@@ -130,7 +134,7 @@ const SignUp = () => {
           <FormErrorMessage>{errors?.username?.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.email?.message} p="1" isRequired>
-          <FormLabel htmlFor="email">Email</FormLabel>
+          <FormLabel htmlFor="email">{t.email}</FormLabel>
           <Input
             type="email"
             name="email"
@@ -140,7 +144,7 @@ const SignUp = () => {
           <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.password?.message} p="1" isRequired>
-          <FormLabel htmlFor="password">Password</FormLabel>
+          <FormLabel htmlFor="password">{t.password}</FormLabel>
           <Input
             type="password"
             name="password"
@@ -161,7 +165,7 @@ const SignUp = () => {
             errors.username
           }
         >
-          Register
+          {t.register}
         </Button>
       </Stack>
     </Flex>

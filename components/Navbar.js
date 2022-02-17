@@ -8,8 +8,19 @@ import {
   Text,
   Container,
   Center,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
 } from "@chakra-ui/react";
+
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { IoLanguageSharp } from "react-icons/io5";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import SearchButton from "../components/SearchButton";
@@ -28,14 +39,22 @@ const Navbar = () => {
           </Text>
         </Box>
         <Stack
-          spacing={2}
-          alignItems="strectch"
-          justifyContent="flex-start"
+          spacing={5}
+          alignItems="center"
+          justifyContent="flex-center"
           isInline
           p={30}
         >
           <Link href="/signin">Sign In</Link>
           <Link href="/signup">Sign Up</Link>
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"
+              icon={<IoLanguageSharp />}
+              variant="outline"
+            />
+          </Menu>
         </Stack>
       </Flex>
     );
@@ -50,7 +69,7 @@ const Navbar = () => {
       </Stack>
 
       <Stack
-        spacing={10}
+        spacing={5}
         alignItems="center"
         justifyContent="center"
         isInline
@@ -66,6 +85,14 @@ const Navbar = () => {
         >
           <Avatar name={session.user.name} src={session.user.image} />
         </Button>
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label="Options"
+            icon={<IoLanguageSharp />}
+            variant="outline"
+          />
+        </Menu>
 
         <Button
           colorScheme="red"
