@@ -7,4 +7,10 @@ export default {
   email: "Email",
   password: "Password",
   register: "Resgister",
+  signout: "Sign out",
+  cancel: "Cancel",
+  submit: "Submit",
+  changeimage: "Change Image",
+  changepassword: "Change password",
+  userprofileedit: "User profile edit",
 };

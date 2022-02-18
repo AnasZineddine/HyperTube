@@ -24,12 +24,16 @@ import { IoLanguageSharp } from "react-icons/io5";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import SearchButton from "../components/SearchButton";
+import fr from "../utils/fr";
+import en from "../utils/en";
 
 import Link from "next/link";
 
 const Navbar = () => {
   const router = useRouter();
   const { data: session } = useSession();
+  const { pathname, asPath, query } = router;
+
   if (!session) {
     return (
       <Flex alignItems="center" justifyContent="space-between">
@@ -54,6 +58,22 @@ const Navbar = () => {
               icon={<IoLanguageSharp />}
               variant="outline"
             />
+            <MenuList>
+              <MenuItem
+                onClick={() => {
+                  router.push({ pathname, query }, asPath, { locale: "en" });
+                }}
+              >
+                en
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  router.push({ pathname, query }, asPath, { locale: "fr" });
+                }}
+              >
+                fr
+              </MenuItem>
+            </MenuList>
           </Menu>
         </Stack>
       </Flex>
@@ -92,6 +112,22 @@ const Navbar = () => {
             icon={<IoLanguageSharp />}
             variant="outline"
           />
+          <MenuList>
+            <MenuItem
+              onClick={() => {
+                router.push({ pathname, query }, asPath, { locale: "en" });
+              }}
+            >
+              en
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                router.push({ pathname, query }, asPath, { locale: "fr" });
+              }}
+            >
+              fr
+            </MenuItem>
+          </MenuList>
         </Menu>
 
         <Button

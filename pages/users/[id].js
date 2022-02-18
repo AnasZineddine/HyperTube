@@ -5,6 +5,10 @@ import { useToast } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import useSWR, { SWRConfig } from "swr";
 import UploadUi from "../../components/Upload";
+const axios = require("axios");
+
+import fr from "../../utils/fr";
+import en from "../../utils/en";
 
 import {
   Button,
@@ -69,9 +73,11 @@ export default function ProfilePage() {
     return <h1>user not found</h1>; //TODO: do it better
   }
 
+  console.log(data);
+
   const onSubmit = async (values) => {
     // use swr to patch changes using cache
-    const response = await fetch("/api/users/kdkddkkdkd", {
+    const response = await fetch("/api/users/ddfsdfsdf", {
       method: "PATCH",
       body: JSON.stringify(values),
       headers: {
@@ -117,6 +123,9 @@ export default function ProfilePage() {
     console.log("response", response.data);
   };
 
+  const { locale } = router;
+  const t = locale === "en" ? en : fr;
+
   if (id === session.id) {
     return (
       <Flex
@@ -137,7 +146,7 @@ export default function ProfilePage() {
         >
           <Center w="full">
             <Heading lineHeight={1.1} fontSize={{ base: "2xl", sm: "3xl" }}>
-              User Profile Edit
+              {t.userprofileedit}
             </Heading>
           </Center>
           <FormControl id="userName">
@@ -146,18 +155,8 @@ export default function ProfilePage() {
                 <Avatar
                   size="xl"
                   name={session.user.name}
-                  src={session.user.image}
-                >
-                  <AvatarBadge
-                    as={IconButton}
-                    size="sm"
-                    rounded="full"
-                    top="-10px"
-                    colorScheme="red"
-                    aria-label="remove Image"
-                    icon={<SmallCloseIcon />}
-                  />
-                </Avatar>
+                  src={data.content.image}
+                ></Avatar>
               </Center>
               <Center w="full">
                 <Stack>
@@ -167,14 +166,14 @@ export default function ProfilePage() {
                     onChange={onChange}
                   />
                   <Button onClick={() => router.push("/forgotpassword")}>
-                    Change password
+                    {t.changepassword}
                   </Button>
                 </Stack>
               </Center>
             </Stack>
           </FormControl>
           <FormControl isInvalid={errors.firstName?.message} p="1" isRequired>
-            <FormLabel htmlFor="firstName">First name</FormLabel>
+            <FormLabel htmlFor="firstName">{t.firstname}</FormLabel>
             <Input
               type="text"
               name="firstName"
@@ -185,7 +184,7 @@ export default function ProfilePage() {
             <FormErrorMessage>{errors?.firstName?.message}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={errors.lastName?.message} p="1" isRequired>
-            <FormLabel htmlFor="lastName">Last name</FormLabel>
+            <FormLabel htmlFor="lastName">{t.lastname}</FormLabel>
             <Input
               type="text"
               name="lastName"
@@ -195,7 +194,7 @@ export default function ProfilePage() {
             <FormErrorMessage>{errors?.lastName?.message}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={errors.username?.message} p="1" isRequired>
-            <FormLabel htmlFor="username">Username</FormLabel>
+            <FormLabel htmlFor="username">{t.username}</FormLabel>
             <Input
               type="text"
               name="username"
@@ -205,7 +204,7 @@ export default function ProfilePage() {
             <FormErrorMessage>{errors?.username?.message}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={errors.email?.message} p="1" isRequired>
-            <FormLabel htmlFor="email">Email</FormLabel>
+            <FormLabel htmlFor="email">{t.email}</FormLabel>
             <Input
               type="email"
               name="email"
@@ -224,7 +223,7 @@ export default function ProfilePage() {
               }}
               onClick={() => router.back()}
             >
-              Cancel
+              {t.cancel}
             </Button>
             <Button
               bg={"blue.400"}
@@ -241,7 +240,7 @@ export default function ProfilePage() {
                 errors.username
               }
             >
-              Submit
+              {t.submit}
             </Button>
           </Stack>
         </Stack>

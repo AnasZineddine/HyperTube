@@ -1,6 +1,8 @@
 import nextConnect from "next-connect";
 import multer from "multer";
 import fs from "fs";
+import path from "path";
+import prisma from "../../prisma/db";
 
 const oneMegabyteInBytes = 1000000;
 const outputFolderName = "./public/uploads";
@@ -30,10 +32,16 @@ const apiRoute = nextConnect({
 
 apiRoute.use(upload.array("theFiles"));
 
-apiRoute.post((req, res) => {
+apiRoute.post(async (req, res) => {
   const filenames = fs.readdirSync(outputFolderName);
   const images = filenames.map((name) => name);
-
+  /* const user = await prisma.user.update({
+    where: { id: session.id },
+    data: {
+      image:jkl
+    },
+  }); */
+  console.log(images);
   res.status(200).json({ data: images });
 });
 
