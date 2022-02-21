@@ -49,8 +49,36 @@ const Navbar = () => {
           isInline
           p={30}
         >
-          <Link href="/signin">Sign In</Link>
-          <Link href="/signup">Sign Up</Link>
+          <Link href="/signin">
+            <Button
+              fontFamily={"heading"}
+              //mt={8}
+              w={"full"}
+              bgGradient="linear(to-r, red.400,pink.400)"
+              color={"white"}
+              _hover={{
+                bgGradient: "linear(to-r, red.400,pink.400)",
+                boxShadow: "xl",
+              }}
+            >
+              Sign in
+            </Button>
+          </Link>
+          <Link href="/signup">
+            <Button
+              fontFamily={"heading"}
+              //mt={8}
+              w={"full"}
+              bgGradient="linear(to-r, red.400,pink.400)"
+              color={"white"}
+              _hover={{
+                bgGradient: "linear(to-r, red.400,pink.400)",
+                boxShadow: "xl",
+              }}
+            >
+              Sign up
+            </Button>
+          </Link>
           <Menu>
             <MenuButton
               as={IconButton}

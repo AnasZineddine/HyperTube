@@ -63,7 +63,7 @@ export default function NewPassword({ csrfToken, providers }) {
     } else {
       toast({
         title: "Error",
-        description: data.error,
+        description: data.message,
         status: "error",
         duration: 3000,
         isClosable: true,

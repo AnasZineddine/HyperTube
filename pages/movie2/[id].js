@@ -31,6 +31,15 @@ const Movie = () => {
                 }`}
                 allowFullScreen
               />
+              {/* <video
+                id="videoPlayer"
+                width="650"
+                controls
+                muted="muted"
+                autoPlay
+              > 
+                <source src="/api/video" type="video/mp4" />
+              </video>*/}
             </Center>
           </Container>
           <Container>
