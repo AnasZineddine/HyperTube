@@ -2,10 +2,12 @@ import { Flex, Text, Stack, Container, Center } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Comments from "../../components/Comments";
+import Plyr from "plyr";
 
 import { useSession } from "next-auth/react";
 
 const Movie = () => {
+  const player = new Plyr("#player");
   const fetcher = (url) => fetch(url).then((r) => r.json());
   const { data: session } = useSession();
   const router = useRouter();
@@ -22,7 +24,7 @@ const Movie = () => {
         <Stack spacing={20}>
           <Container>
             <Center>
-              <iframe
+              {/* <iframe
                 width="1200"
                 height="700"
                 title={data.title}
@@ -30,16 +32,16 @@ const Movie = () => {
                   data.trailer.split("=")[1]
                 }`}
                 allowFullScreen
-              />
-              {/* <video
+              /> */}
+              <video
                 id="videoPlayer"
                 width="650"
                 controls
                 muted="muted"
                 autoPlay
-              > 
+              >
                 <source src="/api/video" type="video/mp4" />
-              </video>*/}
+              </video>
             </Center>
           </Container>
           <Container>
