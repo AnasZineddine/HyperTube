@@ -135,7 +135,8 @@ export default function Movies() {
                     )
                 )
               )}
-            {paginatedData[0].data.movie_count !== 0 &&
+            {/*TODO:uncomment this*/}
+            {/* {paginatedData[0].data.movie_count !== 0 &&
               paginatedData.map((data) =>
                 data.data.movies.map(
                   (movies) =>
@@ -159,7 +160,7 @@ export default function Movies() {
                       </WrapItem>
                     )
                 )
-              )}
+              )} */}
           </Wrap>
         </InfiniteScroll>
       </Stack>

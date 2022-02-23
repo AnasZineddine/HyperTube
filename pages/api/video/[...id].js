@@ -1,5 +1,6 @@
 var torrentStream = require("torrent-stream");
 var path = require("path");
+const axios = require("axios");
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
@@ -7,44 +8,53 @@ export default async function handler(req, res) {
     var pathing = path.join(__dirname + "/temp");
     console.log(pathing);
 
-    var engine = torrentStream(
-      "magnet:?xt=urn:btih:E269478A44A9E8C27A9084B86191EC7BB2A5ECD8&tr=udp://tracker.opentrackr.org:1337&tr=udp://tracker.tiny-vps.com:6969&tr=udp://tracker.openbittorrent.com:1337&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://tracker.leechers-paradise.org:6969&tr=udp://p4p.arenabg.ch:1337&tr=udp://p4p.arenabg.com:1337&tr=udp://tracker.internetwarriors.net:1337&tr=udp://9.rarbg.to:2710&tr=udp://9.rarbg.me:2710&tr=udp://exodus.desync.com:6969&tr=udp://tracker.cyberia.is:6969&tr=udp://tracker.torrent.eu.org:451&tr=udp://open.stealth.si:80&tr=udp://tracker.moeking.me:6969&tr=udp://tracker.zerobytes.xyz:1337"
-    );
+    const movieId = req.query.id[0];
+    console.log(movieId);
 
-    engine.on("ready", function () {
-      engine.files.forEach(function (file) {
-        var extension = file.path
-          .slice(((file.path.lastIndexOf(".") - 1) >>> 0) + 2)
-          .toLowerCase();
-        if (extension === "mp4") {
-          const fileSize = file.length;
-          if (range) {
-            const parts = range.replace(/bytes=/, "").split("-");
-            const start = parseInt(parts[0], 10);
-            const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-            const chunksize = end - start + 1;
-
-            const head = {
-              "Content-Range": `bytes ${start}-${end}/${fileSize}`,
-              "Accept-Ranges": "bytes",
-              "Content-Length": chunksize,
-              "Content-Type": "video/mp4",
-            };
-            res.writeHead(206, head);
-
-            // console.log();
-            // console.log(`Now streaming: ${file.name}`);
-            // console.log();
-            console.log("Streaming:", file.name);
-
-            const s = file.createReadStream({ start, end });
-            s.pipe(res);
-          }
-        }
-
-        // stream is readable stream to containing the file content
+    try {
+      const response = await axios.get(`http://popcorn-ru.tk/movie/${movieId}`);
+      var engine = torrentStream(response.data.torrents.en["1080p"]?.url, {
+        path: "/Users/azineddi/goinfre/HyperTube/movies",
       });
-    });
+
+      engine.on("ready", function () {
+        engine.files.forEach(function (file) {
+          var extension = file.path
+            .slice(((file.path.lastIndexOf(".") - 1) >>> 0) + 2)
+            .toLowerCase();
+          console.log(file.name);
+          if (extension === "mp4" || extension === "mkv") {
+            file.select(file.name);
+            const fileSize = file.length;
+            if (range) {
+              const parts = range.replace(/bytes=/, "").split("-");
+              const start = parseInt(parts[0], 10);
+              const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+              const chunksize = end - start + 1;
+              const head = {
+                "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+                "Accept-Ranges": "bytes",
+                "Content-Length": chunksize,
+                "Content-Type": "video/mp4",
+              };
+              res.writeHead(206, head);
+
+              // console.log();
+              // console.log(`Now streaming: ${file.name}`);
+              // console.log();
+              console.log("Streaming===============>:", file.name);
+
+              const s = file.createReadStream({ start, end });
+              s.pipe(res);
+            }
+          }
+
+          // stream is readable stream to containing the file content
+        });
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 

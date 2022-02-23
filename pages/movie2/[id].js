@@ -40,7 +40,7 @@ const Movie = () => {
                 muted="muted"
                 autoPlay
               >
-                <source src="/api/video" type="video/mp4" />
+                <source src={`/api/video/${id}`} type="video/mp4" />
               </video>
             </Center>
           </Container>
