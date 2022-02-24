@@ -33,6 +33,7 @@ const Movie = () => {
                 }`}
                 allowFullScreen
               /> */}
+              {/* src={`/api/video/${id}`} */}
               <video
                 id="videoPlayer"
                 width="650"

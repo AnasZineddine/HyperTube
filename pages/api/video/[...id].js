@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
     try {
       const response = await axios.get(`http://popcorn-ru.tk/movie/${movieId}`);
-      var engine = torrentStream(response.data.torrents.en["1080p"]?.url, {
+      var engine = torrentStream(response.data.torrents.en["720p"]?.url, {
         path: "/Users/azineddi/goinfre/HyperTube/movies",
       });
 
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
             .toLowerCase();
           console.log(file.name);
           if (extension === "mp4" || extension === "mkv") {
-            file.select(file.name);
+            //file.select(file.name);
             const fileSize = file.length;
             if (range) {
               const parts = range.replace(/bytes=/, "").split("-");
@@ -38,17 +38,15 @@ export default async function handler(req, res) {
                 "Content-Type": "video/mp4",
               };
               res.writeHead(206, head);
-
-              // console.log();
-              // console.log(`Now streaming: ${file.name}`);
-              // console.log();
               console.log("Streaming===============>:", file.name);
 
               const s = file.createReadStream({ start, end });
               s.pipe(res);
+              engine.on("idle", () => {
+                console.log("done");
+              });
             }
           }
-
           // stream is readable stream to containing the file content
         });
       });
