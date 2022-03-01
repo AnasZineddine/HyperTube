@@ -1,6 +1,9 @@
 var torrentStream = require("torrent-stream");
 var path = require("path");
 const axios = require("axios");
+var ffmpeg = require("fluent-ffmpeg");
+
+const yifysubtitles = require("yifysubtitles");
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
@@ -9,11 +12,17 @@ export default async function handler(req, res) {
     console.log(pathing);
 
     const movieId = req.query.id[0];
-    console.log(movieId);
+    const results = await yifysubtitles(movieId, {
+      path: "/tmp",
+      langs: ["en", "fr"],
+    });
+    console.log(results);
+
+    //console.log(movieId);
 
     try {
       const response = await axios.get(`http://popcorn-ru.tk/movie/${movieId}`);
-      var engine = torrentStream(response.data.torrents.en["720p"]?.url, {
+      var engine = torrentStream(response.data.torrents.en["1080p"]?.url, {
         path: "/Users/azineddi/goinfre/HyperTube/movies",
       });
 
@@ -23,7 +32,7 @@ export default async function handler(req, res) {
             .slice(((file.path.lastIndexOf(".") - 1) >>> 0) + 2)
             .toLowerCase();
           console.log(file.name);
-          if (extension === "mp4" || extension === "mkv") {
+          if (extension === "mp4") {
             //file.select(file.name);
             const fileSize = file.length;
             if (range) {

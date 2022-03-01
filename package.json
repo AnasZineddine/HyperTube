@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "npx patch-package",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -20,6 +21,7 @@
     "axios": "^0.26.0",
     "crypto": "^1.0.1",
     "date-fns": "^2.25.0",
+    "fluent-ffmpeg": "^2.1.2",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "fs": "0.0.1-security",
@@ -44,6 +46,7 @@
     "swr": "^1.0.1",
     "torrent-stream": "^1.2.1",
     "unfetch": "^4.2.0",
+    "yifysubtitles": "^2.1.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {

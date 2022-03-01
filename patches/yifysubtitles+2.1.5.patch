@@ -1,0 +1,30 @@
+diff --git a/node_modules/yifysubtitles/index.js b/node_modules/yifysubtitles/index.js
+index e55c0a4..e597d5c 100644
+--- a/node_modules/yifysubtitles/index.js
++++ b/node_modules/yifysubtitles/index.js
+@@ -10,8 +10,8 @@ const cheerio = require('cheerio');
+ const langsFormat = require('./langs');
+ 
+ // Down const apiUri = 'http://api.yifysubtitles.com/subs';
+-const uri = 'https://www.yifysubtitles.com/movie-imdb';
+-const downloadUri = 'https://yifysubtitles.com';
++const uri = 'https://www.yts-subs.com/movie-imdb';
++const downloadUri = 'https://yifysubtitles.org';
+ const langK = Object.keys(langsFormat);
+ const langV = langK.map(i => langsFormat[i]);
+ 
+diff --git a/node_modules/yifysubtitles/test/api-alive.js b/node_modules/yifysubtitles/test/api-alive.js
+index 4ee75ad..c53e589 100644
+--- a/node_modules/yifysubtitles/test/api-alive.js
++++ b/node_modules/yifysubtitles/test/api-alive.js
+@@ -1,8 +1,8 @@
+ import test from 'ava';
+ import got from 'got';
+ 
+-test('http://yifysubtitles.com should be alive', async t => {
+-  const res = await got('http://yifysubtitles.com');
++test('http://yts-subs.com should be alive', async t => {
++  const res = await got('http://yts-subs.com');
+ 
+   t.is(res.statusCode, 200);
+ });
