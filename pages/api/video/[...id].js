@@ -55,7 +55,32 @@ export default async function handler(req, res) {
                 console.log("done");
               });
             }
-          }
+          } /* else {
+            
+            ffmpeg()
+              .input(stream)
+              .outputOptions('-movflags frag_keyframe+empty_moov')
+              .outputFormat('mp4')
+              .on('start', () => {
+                console.log('start')
+              })
+              .on('progress', (progress) => {
+                console.log(`progress: ${progress.timemark}`)
+              })
+              .on('end', () => {
+                console.log('Finished processing')
+              })
+              .on('error', (err) => {
+                console.log(`ERROR: ${err.message}`)
+              })
+              .inputFormat(realExtension)
+              .audioCodec('aac')
+              .videoCodec('libx264')
+              .pipe(res)
+            res.on('close', () => {
+              stream.destroy()
+            })
+          } */
           // stream is readable stream to containing the file content
         });
       });

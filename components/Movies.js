@@ -16,7 +16,7 @@ import {
 import useSWRInfinite from "swr/infinite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
-import { MdDeleteForever } from "react-icons/Md";
+//import { MdDeleteForever } from "react-icons/Md";
 
 const fetcher1 = (url) => fetch(url).then((r) => r.json());
 const fetcher2 = (url) => fetch(url).then((r) => r.json());
@@ -92,7 +92,7 @@ export default function Movies() {
         <Flex justifyContent="center">
           {router.asPath !== "/" && (
             <Button
-              leftIcon={<MdDeleteForever size={"1.4em"} />}
+              // leftIcon={<MdDeleteForever size={"1.4em"} />}
               onClick={() => router.push("/")}
             >
               Clear all filters
