@@ -73,7 +73,7 @@ export default function ProfilePage() {
     return <h1>user not found</h1>; //TODO: do it better
   }
 
-  console.log(data);
+  console.log({ data });
 
   const onSubmit = async (values) => {
     // use swr to patch changes using cache
@@ -121,6 +121,26 @@ export default function ProfilePage() {
     const response = await axios.post("/api/upload", formData, config);
 
     console.log("response", response.data);
+    if (response.data.success === true) {
+      //TODO: ADD email
+      toast({
+        title: "Done",
+        description: "Data saved successfully",
+        status: "success",
+        duration: 3500,
+        isClosable: true,
+        position: "top",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: response.data.error,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+    }
   };
 
   const { locale } = router;
@@ -162,7 +182,7 @@ export default function ProfilePage() {
                 <Stack>
                   <UploadUi
                     label="Upload Single File"
-                    uploadFileName="theFiles"
+                    uploadFileName="TheFile"
                     onChange={onChange}
                   />
                   <Button onClick={() => router.push("/forgotpassword")}>

@@ -56,7 +56,7 @@ export default function Movies() {
   const getKey2 = (pageIndex, previousPageData) => {
     pageIndex = pageIndex + 1;
     if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `http://popcorn-ru.tk/movies/${pageIndex}?sort=${sort_by}&order=${order_by}&keywords=${keyword}&genre=${genre}`; // SWR key
+    return `http://popcorn-time.ga/movies/${pageIndex}?sort=${sort_by}&order=${order_by}&keywords=${keyword}&genre=${genre}`; // SWR key
   };
   const {
     data: paginatedData,

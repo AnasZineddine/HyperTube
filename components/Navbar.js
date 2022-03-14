@@ -107,6 +107,7 @@ const Navbar = () => {
       </Flex>
     );
   }
+  console.log({ query, session });
   return (
     <Flex alignItems="center" justifyContent="space-between">
       <Stack p={30} direction="row" alignItems="center">
@@ -131,7 +132,9 @@ const Navbar = () => {
           minW={0}
           onClick={() => router.push(`/users/${session.id}`)}
         >
-          <Avatar name={session.user.name} src={session.user.image} />
+          {router.pathname !== "/users/[id]" && session.id !== query.id && (
+            <Avatar name={session.user.name} src={session.user.image} />
+          )}
         </Button>
         <Menu>
           <MenuButton

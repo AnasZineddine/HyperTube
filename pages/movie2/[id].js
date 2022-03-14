@@ -12,7 +12,7 @@ const Movie = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
-  const { data, error } = useSWR(`http://popcorn-ru.tk/movie/${id}`, fetcher);
+  const { data, error } = useSWR(`http://popcorn-time.ga/movie/${id}`, fetcher);
   if (error) return <div>failed to load</div>;
   if (!data) return <div>Loading...</div>;
 

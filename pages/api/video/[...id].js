@@ -12,25 +12,25 @@ export default async function handler(req, res) {
     console.log(pathing);
 
     const movieId = req.query.id[0];
-    const results = await yifysubtitles(movieId, {
+    /*  const results = await yifysubtitles(movieId, {
       path: "/tmp",
       langs: ["en", "fr"],
     });
-    console.log(results);
+    console.log(results); */
 
     //console.log(movieId);
 
     try {
-      const response = await axios.get(`http://popcorn-ru.tk/movie/${movieId}`);
+      const response = await axios.get(
+        `http://popcorn-time.ga/movie/${movieId}`
+      );
       var engine = torrentStream(response.data.torrents.en["1080p"]?.url, {
         path: "/Users/azineddi/goinfre/HyperTube/movies",
       });
 
       engine.on("ready", function () {
         engine.files.forEach(function (file) {
-          var extension = file.path
-            .slice(((file.path.lastIndexOf(".") - 1) >>> 0) + 2)
-            .toLowerCase();
+          var extension = file.path.split(".").pop();
           console.log(file.name);
           if (extension === "mp4") {
             //file.select(file.name);
