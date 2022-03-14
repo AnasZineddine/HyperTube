@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useToast } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
-import useSWR, { SWRConfig } from "swr";
+import useSWR from "swr";
 import UploadUi from "../../components/Upload";
 const axios = require("axios");
 
@@ -123,14 +123,7 @@ export default function ProfilePage() {
     console.log("response", response.data);
     if (response.data.success === true) {
       //TODO: ADD email
-      toast({
-        title: "Done",
-        description: "Data saved successfully",
-        status: "success",
-        duration: 3500,
-        isClosable: true,
-        position: "top",
-      });
+      router.reload();
     } else {
       toast({
         title: "Error",
