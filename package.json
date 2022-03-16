@@ -43,6 +43,7 @@
     "react-hook-form": "^7.19.5",
     "react-icons": "^4.3.1",
     "react-infinite-scroll-component": "^6.1.0",
+    "stream-transcoder": "0.0.5",
     "swr": "^1.0.1",
     "torrent-stream": "^1.2.1",
     "unfetch": "^4.2.0",

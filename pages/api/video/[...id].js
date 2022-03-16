@@ -2,6 +2,7 @@ var torrentStream = require("torrent-stream");
 var path = require("path");
 const axios = require("axios");
 var ffmpeg = require("fluent-ffmpeg");
+const streamTranscoder = require("stream-transcoder");
 
 const yifysubtitles = require("yifysubtitles");
 
@@ -24,7 +25,7 @@ export default async function handler(req, res) {
       const response = await axios.get(
         `http://popcorn-time.ga/movie/${movieId}`
       );
-      var engine = torrentStream(response.data.torrents.en["1080p"]?.url, {
+      var engine = torrentStream(response.data.torrents.en["2160p"]?.url, {
         path: "/Users/azineddi/goinfre/HyperTube/movies",
       });
 
@@ -55,7 +56,28 @@ export default async function handler(req, res) {
                 console.log("done");
               });
             }
-          } /* else {
+          } else if (extension !== "mp4" && file.length >= 20000000) {
+            const fileSize = file.length;
+
+            if (range) {
+              const parts = range.replace(/bytes=/, "").split("-");
+              const start = parseInt(parts[0], 10);
+              const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+              const chunksize = end - start + 1;
+              const head = {
+                "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+                "Accept-Ranges": "bytes",
+                "Content-Length": chunksize,
+                "Content-Type": "video/mp4",
+              };
+              res.writeHead(206, head);
+              console.log("Streaming===============>:", file.name);
+              const s = file.createReadStream({ start, end });
+
+              streamTranscoder(s).format("mp4").stream().pipe(res);
+            }
+          }
+          /* else {
             
             ffmpeg()
               .input(stream)
