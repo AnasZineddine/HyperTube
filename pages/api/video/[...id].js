@@ -1,7 +1,9 @@
 var torrentStream = require("torrent-stream");
 var path = require("path");
 const axios = require("axios");
-var ffmpeg = require("fluent-ffmpeg");
+const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
+const ffmpeg = require("fluent-ffmpeg");
+ffmpeg.setFfmpegPath(ffmpegPath);
 const streamTranscoder = require("stream-transcoder");
 
 const yifysubtitles = require("yifysubtitles");
@@ -72,9 +74,33 @@ export default async function handler(req, res) {
               };
               res.writeHead(206, head);
               console.log("Streaming===============>:", file.name);
-              const s = file.createReadStream({ start, end });
 
-              streamTranscoder(s).format("mp4").stream().pipe(res);
+              const stream = file.createReadStream({ start, end });
+
+              ffmpeg()
+                .input(stream)
+                .outputOptions("-movflags frag_keyframe+empty_moov")
+                .outputFormat("mp4")
+                .on("start", () => {
+                  console.log("start");
+                })
+                .on("progress", (progress) => {
+                  console.log(progress);
+                  console.log(`progress: ${progress.timemark}`);
+                })
+                .on("end", () => {
+                  console.log("Finished processing");
+                })
+                .on("error", (err) => {
+                  console.log(`ERROR: ${err.message}`);
+                })
+                .inputFormat(extension === "mkv" ? "matroska" : extension)
+                .audioCodec("aac")
+                .videoCodec("libx264")
+                .pipe(res);
+              res.on("close", () => {
+                stream.destroy();
+              });
             }
           }
           /* else {
