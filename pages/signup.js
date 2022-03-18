@@ -108,7 +108,7 @@ const SignUp = () => {
           <Input
             type="text"
             name="firstName"
-            placeholder="Enter your firstname"
+            placeholder={t.enteryourfirstname}
             {...register("firstName")}
           />
           <FormErrorMessage>{errors?.firstName?.message}</FormErrorMessage>
@@ -118,7 +118,7 @@ const SignUp = () => {
           <Input
             type="text"
             name="lastName"
-            placeholder="Enter your lastname"
+            placeholder={t.enteryourlastname}
             {...register("lastName")}
           />
           <FormErrorMessage>{errors?.lastName?.message}</FormErrorMessage>
@@ -128,7 +128,7 @@ const SignUp = () => {
           <Input
             type="text"
             name="username"
-            placeholder="Enter a username"
+            placeholder={t.enterausername}
             {...register("username")}
           />
           <FormErrorMessage>{errors?.username?.message}</FormErrorMessage>
@@ -138,7 +138,7 @@ const SignUp = () => {
           <Input
             type="email"
             name="email"
-            placeholder="Enter your email"
+            placeholder={t.enteryouremail}
             {...register("email")}
           />
           <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
@@ -148,7 +148,7 @@ const SignUp = () => {
           <Input
             type="password"
             name="password"
-            placeholder="Enter a password"
+            placeholder={t.enterapassword}
             {...register("password")}
           />
           <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>

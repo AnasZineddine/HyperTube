@@ -27,7 +27,7 @@ export default async function handler(req, res) {
       const response = await axios.get(
         `http://popcorn-time.ga/movie/${movieId}`
       );
-      var engine = torrentStream(response.data.torrents.en["2160p"]?.url, {
+      var engine = torrentStream(response.data.torrents.en["1080p"]?.url, {
         path: "/Users/azineddi/goinfre/HyperTube/movies",
       });
 
@@ -58,7 +58,7 @@ export default async function handler(req, res) {
                 console.log("done");
               });
             }
-          } else if (extension !== "mp4" && file.length >= 20000000) {
+          } /*  else if (extension !== "mp4" && file.length >= 20000000) {
             const fileSize = file.length;
 
             if (range) {
@@ -102,7 +102,7 @@ export default async function handler(req, res) {
                 stream.destroy();
               });
             }
-          }
+          } */
           /* else {
             
             ffmpeg()

@@ -28,6 +28,8 @@ import {
 import React from "react";
 import { Search2Icon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
+import fr from "../utils/fr";
+import en from "../utils/en";
 
 function RadioCard(props) {
   const { getInputProps, getCheckboxProps } = useRadio(props);
@@ -71,6 +73,8 @@ const SearchButton = () => {
   const [ratingGap, setRatingGap] = React.useState("");
   const [sort, setSort] = React.useState("");
   const [order, setOrder] = React.useState("");
+  const { locale } = router;
+  const t = locale === "en" ? en : fr;
 
   const handleChange = (event) => setValue(event.target.value);
   const handleChange2 = (event) => setSort(event.target.value);
@@ -85,18 +89,18 @@ const SearchButton = () => {
   const group = getRootProps();
 
   const options = [
-    "All",
-    "Comedy",
-    "Action",
-    "Horror",
-    "Sci-fi",
-    "Romance",
-    "Thriller",
-    "Drama",
-    "Adventure",
-    "Animation",
-    "Documentary",
-    "Crime",
+    t.all,
+    t.comedy,
+    t.action,
+    t.horror,
+    t.scifi,
+    t.romance,
+    t.thriller,
+    t.drama,
+    t.adventure,
+    t.animation,
+    t.documentary,
+    t.crime,
   ];
   return (
     <>
@@ -106,11 +110,12 @@ const SearchButton = () => {
         placement="left"
         onClose={onClose}
         finalFocusRef={btnRef}
+        size="sm"
       >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Search movies</DrawerHeader>
+          <DrawerHeader>{t.searchmovies}</DrawerHeader>
           <DrawerBody>
             <Stack spacing={2}>
               <Input
@@ -126,30 +131,30 @@ const SearchButton = () => {
                   setValue("");
                 }}
               >
-                Quick Search
+                {t.quicksearch}
               </Button>
               <Divider p={1} />
               <Stack pt={10} spacing={10}>
                 <HStack>
                   <Select
                     variant="filled"
-                    placeholder="Sort by"
+                    placeholder={t.sortby}
                     onChange={handleChange2}
                   >
-                    <option value="name">Name</option>
-                    <option value="rating">Rating</option>
-                    <option value="released">Released</option>
-                    <option value="trending">Trending</option>
-                    <option value="updated">Updated</option>
-                    <option value="year">Year</option>
+                    <option value="name">{t.name}</option>
+                    <option value="rating">{t.rating}</option>
+                    <option value="released">{t.released}</option>
+                    <option value="trending">{t.trending}</option>
+                    <option value="updated">{t.updated}</option>
+                    <option value="year">{t.year}</option>
                   </Select>
                   <Select
                     variant="filled"
-                    placeholder="Order"
+                    placeholder={t.order}
                     onChange={handleChange3}
                   >
-                    <option value="1">Ascending</option>
-                    <option value="-1">Descending</option>
+                    <option value="1">{t.ascending}</option>
+                    <option value="-1">{t.descending}</option>
                   </Select>
                 </HStack>
                 <Grid {...group} templateColumns="repeat(2, 1fr)" gap={6}>
@@ -164,7 +169,9 @@ const SearchButton = () => {
                 </Grid>
 
                 <Stack spacing={3}>
-                  <Text>Year gap {String(yearGap).match(/.{1,4}/g)}</Text>
+                  <Text>
+                    {t.yeargap} {String(yearGap).match(/.{1,4}/g)}
+                  </Text>
                   <RangeSlider
                     min={1920}
                     max={2021}
@@ -180,7 +187,9 @@ const SearchButton = () => {
                   </RangeSlider>
                 </Stack>
                 <Stack spacing={3}>
-                  <Text>Rating gap {String(ratingGap).match(/.{1,2}/g)}</Text>
+                  <Text>
+                    {t.ratinggap} {String(ratingGap).match(/.{1,2}/g)}
+                  </Text>
                   <RangeSlider
                     min={0}
                     max={100}
@@ -200,7 +209,7 @@ const SearchButton = () => {
           </DrawerBody>
           <DrawerFooter>
             <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
+              {t.cancel}
             </Button>
             <Button
               colorScheme="blue"
@@ -215,7 +224,7 @@ const SearchButton = () => {
                 setValue("");
               }}
             >
-              Advanced Search
+              {t.advancedsearch}
             </Button>
           </DrawerFooter>
         </DrawerContent>

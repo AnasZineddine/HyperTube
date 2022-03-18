@@ -32,7 +32,8 @@ import Link from "next/link";
 const Navbar = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const { pathname, asPath, query } = router;
+  const { pathname, asPath, query, locale } = router;
+  const t = locale === "en" ? en : fr;
 
   if (!session) {
     return (
@@ -61,7 +62,7 @@ const Navbar = () => {
                 boxShadow: "xl",
               }}
             >
-              Sign in
+              {t.signin}
             </Button>
           </Link>
           <Link href="/signup">
@@ -76,7 +77,7 @@ const Navbar = () => {
                 boxShadow: "xl",
               }}
             >
-              Sign up
+              {t.signup}
             </Button>
           </Link>
           <Menu>
@@ -149,14 +150,14 @@ const Navbar = () => {
                 router.push({ pathname, query }, asPath, { locale: "en" });
               }}
             >
-              en
+              English
             </MenuItem>
             <MenuItem
               onClick={() => {
                 router.push({ pathname, query }, asPath, { locale: "fr" });
               }}
             >
-              fr
+              Français
             </MenuItem>
           </MenuList>
         </Menu>
@@ -167,7 +168,7 @@ const Navbar = () => {
             signOut({ callbackUrl: "http://localhost:3000/signin" })
           }
         >
-          Sign out
+          {t.signout}
         </Button>
       </Stack>
     </Flex>
