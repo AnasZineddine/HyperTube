@@ -10,8 +10,9 @@ const Movie = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
+  const correctId = id?.replace("-1111", "");
   const { data, error } = useSWR(
-    `https://yts.mx/api/v2/movie_details.json?movie_id=${id}&with_cast=true`,
+    `https://yts.mx/api/v2/movie_details.json?movie_id=${correctId}&with_cast=true`,
     fetcher
   );
   if (error) return <div>failed to load</div>;
@@ -25,13 +26,22 @@ const Movie = () => {
         <Stack spacing={20}>
           <Container>
             <Center>
-              <iframe
+              {/* <iframe
                 width="1200"
                 height="700"
                 title={data.data.movie.title}
                 src={`https://www.youtube.com/embed/${data.data.movie.yt_trailer_code}`}
                 allowFullScreen
-              />
+              /> */}
+              <video
+                id="videoPlayer"
+                width="650"
+                controls
+                muted="muted"
+                autoPlay
+              >
+                <source src={`/api/video/${id}`} type="video/mp4" />
+              </video>
             </Center>
           </Container>
           <Container>
@@ -39,7 +49,7 @@ const Movie = () => {
           </Container>
         </Stack>
         <Container>
-          <Comments movieId={id} />
+          <Comments movieId={correctId} />
         </Container>
       </Stack>
     </Flex>

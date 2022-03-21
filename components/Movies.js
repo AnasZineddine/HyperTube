@@ -136,7 +136,7 @@ export default function Movies() {
                 )
               )}
             {/*TODO:uncomment this*/}
-            {/* {paginatedData[0].data.movie_count !== 0 &&
+            {paginatedData[0].data.movie_count !== 0 &&
               paginatedData.map((data) =>
                 data.data.movies.map(
                   (movies) =>
@@ -147,7 +147,9 @@ export default function Movies() {
                           variant={"link"}
                           //cursor={"pointer"}
                           minW={0}
-                          onClick={() => router.push(`/movie1/${movies.id}`)}
+                          onClick={() =>
+                            router.push(`/movie1/${movies.id}-1111`)
+                          }
                         >
                           <Image // TODO: see next/image docs for loading
                             alt="Movie picture"
@@ -160,7 +162,7 @@ export default function Movies() {
                       </WrapItem>
                     )
                 )
-              )} */}
+              )}
           </Wrap>
         </InfiniteScroll>
       </Stack>
