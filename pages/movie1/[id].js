@@ -18,6 +18,9 @@ const Movie = () => {
   if (error) return <div>failed to load</div>;
   if (!data) return <div>Loading...</div>;
 
+  const { locale } = router;
+  console.log(locale);
+
   console.log("movieData1", data);
 
   return (
@@ -41,6 +44,14 @@ const Movie = () => {
                 autoPlay
               >
                 <source src={`/api/video/${id}`} type="video/mp4" />
+
+                <track
+                  label="English"
+                  kind="subtitles"
+                  srcLang="en"
+                  src={`/api/subtitles/${data.data.movie.imdb_code}`}
+                  default
+                ></track>
               </video>
             </Center>
           </Container>

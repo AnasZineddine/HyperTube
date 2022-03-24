@@ -17,6 +17,8 @@ const Movie = () => {
   if (!data) return <div>Loading...</div>;
 
   console.log("movieData2", data);
+  const { locale } = router;
+  console.log(locale);
 
   return (
     <Flex alignItems="stretch" justifyContent="center">
@@ -42,6 +44,13 @@ const Movie = () => {
                 autoPlay
               >
                 <source src={`/api/video/${id}`} type="video/mp4" />
+                <track
+                  label="English"
+                  kind="subtitles"
+                  srcLang="en"
+                  src={`/api/subtitles/${id}`}
+                  default
+                ></track>
               </video>
             </Center>
           </Container>

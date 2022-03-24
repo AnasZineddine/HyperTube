@@ -17,10 +17,10 @@ export default async function handler(req, res) {
 
       console.log(req.query);
       /*  const results = await yifysubtitles(movieId, {
-      path: "/tmp",
-      langs: ["en", "fr"],
-    });
-    console.log(results); */
+        path: "/tmp",
+        langs: ["en", "fr"],
+      });
+      console.log(results); */
 
       try {
         const response = await axios.get(
