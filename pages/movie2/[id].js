@@ -48,8 +48,21 @@ const Movie = () => {
                   label="English"
                   kind="subtitles"
                   srcLang="en"
-                  src={`/api/subtitles/${id}`}
-                  default
+                  src={`/api/subtitles/${id}/en`}
+                  default={locale === "en" ? true : false}
+                ></track>
+                <track
+                  label="French"
+                  kind="subtitles"
+                  srcLang="fr"
+                  src={`/api/subtitles/${id}/fr`}
+                  default={locale === "fr" ? true : false}
+                ></track>
+                <track
+                  label="Arabic"
+                  kind="subtitles"
+                  srcLang="ar"
+                  src={`/api/subtitles/${id}/ar`}
                 ></track>
               </video>
             </Center>

@@ -79,6 +79,7 @@ export default async function handler(req, res) {
         const response = await axios.get(
           `https://yts.mx/api/v2/movie_details.json?movie_id=${correctId}`
         );
+
         const theChosenOne = response.data.data.movie.torrents.filter((obj) => {
           return obj.quality === "1080p";
         });
@@ -110,7 +111,6 @@ export default async function handler(req, res) {
                 };
                 res.writeHead(206, head);
                 console.log("Streaming===============>:", file.name);
-
                 const s = file.createReadStream({ start, end });
                 s.pipe(res);
                 engine.on("idle", () => {
