@@ -20,6 +20,7 @@ import {
   Input,
   FormErrorMessage,
   Button,
+  Divider,
 } from "@chakra-ui/react";
 
 const schema = Yup.object().shape({
@@ -62,9 +63,9 @@ export default function SignIn({ csrfToken, providers }) {
         alignItems="stretch"
         w={350}
       >
-        <Text display="flex" justifyContent="center">
+        {/* <Text display="flex" justifyContent="center">
           Sign In
-        </Text>
+        </Text> */}
 
         <Input name="csrfToken" type="hidden" defaultValue={csrfToken} />
         <FormControl isInvalid={errors.username?.message} p="1" isRequired>
@@ -97,6 +98,7 @@ export default function SignIn({ csrfToken, providers }) {
         >
           Sign in
         </Button>
+        <Divider />
 
         <Stack spacing={1}>
           {Object.values(providers).map((provider) => (

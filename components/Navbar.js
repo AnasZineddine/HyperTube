@@ -93,14 +93,14 @@ const Navbar = () => {
                   router.push({ pathname, query }, asPath, { locale: "en" });
                 }}
               >
-                en
+                English
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   router.push({ pathname, query }, asPath, { locale: "fr" });
                 }}
               >
-                fr
+                Français
               </MenuItem>
             </MenuList>
           </Menu>

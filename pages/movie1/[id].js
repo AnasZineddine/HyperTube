@@ -1,4 +1,11 @@
-import { Flex, Text, Stack, Container, Image, Center } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  Stack,
+  Container,
+  Divider,
+  Center,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Comments from "../../components/Comments";
@@ -69,7 +76,9 @@ const Movie = () => {
             </Center>
           </Container>
           <Container>
+            <Divider />
             <Text textAlign="justify">{data.data.movie.description_full}</Text>
+            <Divider />
           </Container>
         </Stack>
         <Container>

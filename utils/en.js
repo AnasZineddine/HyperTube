@@ -6,7 +6,7 @@ export default {
   username: "Username",
   email: "Email",
   password: "Password",
-  register: "Resgister",
+  register: "Sign up",
   signout: "Sign out",
   cancel: "Cancel",
   submit: "Submit",
