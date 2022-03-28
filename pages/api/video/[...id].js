@@ -6,6 +6,7 @@ const ffmpeg = require("fluent-ffmpeg");
 ffmpeg.setFfmpegPath(ffmpegPath);
 
 const yifysubtitles = require("yifysubtitles");
+import prisma from "../../../prisma/db";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
@@ -53,8 +54,22 @@ export default async function handler(req, res) {
 
                 const s = file.createReadStream({ start, end });
                 s.pipe(res);
-                engine.on("idle", () => {
-                  console.log("done");
+                engine.on("idle", async () => {
+                  console.log("doone");
+                  const checkExisting = await prisma.movie.findFirst({
+                    where: {
+                      apiId: movieId,
+                    },
+                  });
+
+                  if (!checkExisting) {
+                    await prisma.movie.create({
+                      data: {
+                        apiId: movieId,
+                        downloaded: true,
+                      },
+                    });
+                  }
                 });
               }
             }
@@ -95,7 +110,7 @@ export default async function handler(req, res) {
           engine.files.forEach(function (file) {
             var extension = file.path.split(".").pop();
             console.log(file.name);
-            if (extension === "mp4") {
+            if (extension === "mp4" || extension === "mkv") {
               //file.select(file.name);
               const fileSize = file.length;
               if (range) {
@@ -113,8 +128,22 @@ export default async function handler(req, res) {
                 console.log("Streaming===============>:", file.name);
                 const s = file.createReadStream({ start, end });
                 s.pipe(res);
-                engine.on("idle", () => {
-                  console.log("done");
+                engine.on("idle", async () => {
+                  console.log("doone");
+                  const checkExisting = await prisma.movie.findFirst({
+                    where: {
+                      apiId: correctId,
+                    },
+                  });
+
+                  if (!checkExisting) {
+                    await prisma.movie.create({
+                      data: {
+                        apiId: correctId,
+                        downloaded: true,
+                      },
+                    });
+                  }
                 });
               }
             }

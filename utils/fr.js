@@ -45,4 +45,5 @@ export default {
   enterausername: "Entrer un nom d'utilisateur",
   enteryouremail: "Entrer un email",
   enterapassword: "Entrer un mot de passe",
+  forgotpassword: "Mot de passe oublié ?",
 };

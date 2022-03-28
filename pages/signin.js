@@ -10,6 +10,7 @@ import {
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { useState } from "react";
 
 import {
   Flex,
@@ -35,6 +36,8 @@ const schema = Yup.object().shape({
 });
 
 export default function SignIn({ csrfToken, providers }) {
+  const [isLoading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -106,7 +109,12 @@ export default function SignIn({ csrfToken, providers }) {
               key={provider.name}
               variant="solid"
               size="md"
-              onClick={() => signIn(provider.id)}
+              onClick={() => {
+                setLoading(true);
+                signIn(provider.id);
+              }}
+              isLoading={isLoading}
+              loadingText="Submitting"
             >
               Sign in with {provider.name}
             </Button>

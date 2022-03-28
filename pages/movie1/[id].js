@@ -49,8 +49,9 @@ const Movie = () => {
                 controls
                 muted="muted"
                 autoPlay
+                src={`/api/video/${id}`}
               >
-                <source src={`/api/video/${id}`} type="video/mp4" />
+                {/*  <source src={`/api/video/${id}`} type="video/mp4" /> */}
 
                 <track
                   label="English"
