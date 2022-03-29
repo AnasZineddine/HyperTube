@@ -71,6 +71,7 @@ model Movie {
   apiId      String
   comments   Comment[]
   downloaded Boolean   @default(false)
+  filename   String?
 }
 
 model Comment {

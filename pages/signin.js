@@ -110,8 +110,8 @@ export default function SignIn({ csrfToken, providers }) {
               variant="solid"
               size="md"
               onClick={() => {
-                setLoading(true);
                 signIn(provider.id);
+                setLoading(true);
               }}
               isLoading={isLoading}
               loadingText="Submitting"

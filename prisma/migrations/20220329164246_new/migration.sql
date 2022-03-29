@@ -57,6 +57,8 @@ CREATE TABLE "VerificationToken" (
 CREATE TABLE "Movie" (
     "id" SERIAL NOT NULL,
     "apiId" TEXT NOT NULL,
+    "downloaded" BOOLEAN NOT NULL DEFAULT false,
+    "filename" TEXT,
 
     CONSTRAINT "Movie_pkey" PRIMARY KEY ("id")
 );
