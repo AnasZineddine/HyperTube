@@ -27,7 +27,7 @@ export default function Movies() {
   const router = useRouter();
   console.log(router);
 
-  let { keyword, genre, sort_by, order_by } = router.query;
+  let { keyword, genre, sort_by, order_by, ratingGap, year_gap } = router.query;
   if (!keyword) {
     keyword = "";
   }
@@ -83,6 +83,12 @@ export default function Movies() {
       />
     );
   console.log(paginatedData, paginatedData2);
+  if (year_gap) {
+    const yearArray = year_gap.split(",").map(Number);
+  }
+  if (ratingGap) {
+    const ratingArray = ratingGap.split(",").map(Number);
+  }
   if (
     paginatedData[0].data.movies &&
     (paginatedData[0].data.movie_count !== 0 || paginatedData2[0].length !== 0)

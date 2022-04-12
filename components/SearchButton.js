@@ -173,10 +173,10 @@ const SearchButton = () => {
                     {t.yeargap} {String(yearGap).match(/.{1,4}/g)}
                   </Text>
                   <RangeSlider
-                    min={1920}
-                    max={2021}
+                    min={1900}
+                    max={2022}
                     step={5}
-                    defaultValue={[1920, 2021]}
+                    defaultValue={[1900, 2022]}
                     onChangeEnd={(yearGap) => setYearGap(yearGap)}
                   >
                     <RangeSliderTrack>
@@ -214,9 +214,9 @@ const SearchButton = () => {
             <Button
               colorScheme="blue"
               onClick={() => {
-                (value || genre || sort || order) &&
+                (value || genre || sort || order || ratingGap || yearGap) &&
                   router.push(
-                    `/?keyword=${value}&genre=${genre}&sort_by=${sort}&order_by=${order}`
+                    `/?keyword=${value}&genre=${genre}&sort_by=${sort}&order_by=${order}&year_gap=${yearGap}&ratingGap=${ratingGap}`
                   );
                 onClose();
                 setSort("");

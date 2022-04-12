@@ -39,11 +39,11 @@ const schema = Yup.object().shape({
   password: Yup.string()
     .min(8, "Password is too short - should be 8 chars minimum.")
     .max(255, "Must be shorter than 255")
+    .required("Must enter a password")
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
       "Must Contain 8 Characters minimum, One Uppercase, One Lowercase, One Number and one special case Character"
-    ) // TODO:make it stronger
-    .required("Must enter a password"),
+    ), // TODO:make it stronger
 });
 
 const SignUp = () => {
