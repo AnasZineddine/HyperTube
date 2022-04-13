@@ -19,6 +19,9 @@ import { useRouter } from "next/router";
 import { MdDeleteForever } from "react-icons/Md";
 
 import { filterDeep } from "deepdash-es/standalone";
+import { mutate } from "swr";
+
+import React from "react";
 
 const fetcher1 = (url) => fetch(url).then((r) => r.json());
 const fetcher2 = (url) => fetch(url).then((r) => r.json());
@@ -66,7 +69,7 @@ export default function Movies() {
     size,
     setSize,
     mutate: mutate1,
-  } = useSWRInfinite(getKey1, fetcher1);
+  } = useSWRInfinite(getKey1, fetcher1, { revalidateFirstPage: true });
   const {
     mutate: mutate2,
     data: paginatedData2,
@@ -89,17 +92,32 @@ export default function Movies() {
   console.log(paginatedData, paginatedData2);
   if (year_gap) {
     const yearArray = year_gap.split(",").map(Number);
-    /*  const filteredPaginatedData = paginatedData[0].data.movies.filter(
+
+    /* const filteredPaginatedData = paginatedData[0].data.movies.filter(
       (movie) => movie.year >= yearArray[0]
     ); */
-    const filteredPaginatedData = filterDeep(
+
+    var filteredPaginatedDataFull = paginatedData.map((data) => {
+      if (data) {
+        return {
+          ...data,
+          movies: data.data.movies.filter(
+            (movie) => movie.year >= yearArray[0]
+          ),
+        };
+      }
+      return data;
+    });
+    console.log({ filteredPaginatedDataFull }, { paginatedData });
+    mutate1(filteredPaginatedDataFull, false);
+    // mutate1();
+
+    /* const filteredPaginatedData = filterDeep(
       paginatedData,
       (value, key, parent) => {
         if (key == "year" && value >= yearArray[0]) return true;
       }
-    );
-
-    console.log({ filteredPaginatedData });
+    ); */
   }
   if (ratingGap) {
     const ratingArray = ratingGap.split(",").map(Number);
@@ -131,7 +149,7 @@ export default function Movies() {
           //loader={} //TODO: do not display when reach end, or comment that shit :D
         >
           <Wrap spacing="5px" justify="center" w="full" p={30} bg={color}>
-            {paginatedData2.length !== 0 &&
+            {/* {paginatedData2.length !== 0 &&
               paginatedData2.map((data) =>
                 data.map(
                   (data) =>
@@ -155,12 +173,13 @@ export default function Movies() {
                       </WrapItem>
                     )
                 )
-              )}
+              )} */}
             {/*TODO:uncomment this*/}
             {paginatedData[0].data.movie_count !== 0 &&
               paginatedData.map((data) =>
-                data.data.movies.map(
-                  (movies) =>
+                data.data.movies.map((movies) => {
+                  console.log("test in jsx ", movies);
+                  return (
                     movies.medium_cover_image && (
                       <WrapItem key={movies.id}>
                         <Button //as={Button}
@@ -182,7 +201,8 @@ export default function Movies() {
                         </Button>
                       </WrapItem>
                     )
-                )
+                  );
+                })
               )}
           </Wrap>
         </InfiniteScroll>
