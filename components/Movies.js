@@ -18,6 +18,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
 import { MdDeleteForever } from "react-icons/Md";
 
+import { filterDeep } from "deepdash-es/standalone";
+
 const fetcher1 = (url) => fetch(url).then((r) => r.json());
 const fetcher2 = (url) => fetch(url).then((r) => r.json());
 
@@ -63,8 +65,10 @@ export default function Movies() {
     error: error1,
     size,
     setSize,
+    mutate: mutate1,
   } = useSWRInfinite(getKey1, fetcher1);
   const {
+    mutate: mutate2,
     data: paginatedData2,
     error: error2,
     size: size2,
@@ -85,6 +89,17 @@ export default function Movies() {
   console.log(paginatedData, paginatedData2);
   if (year_gap) {
     const yearArray = year_gap.split(",").map(Number);
+    /*  const filteredPaginatedData = paginatedData[0].data.movies.filter(
+      (movie) => movie.year >= yearArray[0]
+    ); */
+    const filteredPaginatedData = filterDeep(
+      paginatedData,
+      (value, key, parent) => {
+        if (key == "year" && value >= yearArray[0]) return true;
+      }
+    );
+
+    console.log({ filteredPaginatedData });
   }
   if (ratingGap) {
     const ratingArray = ratingGap.split(",").map(Number);
