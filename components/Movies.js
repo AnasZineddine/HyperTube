@@ -21,7 +21,7 @@ import { MdDeleteForever } from "react-icons/Md";
 import { filterDeep } from "deepdash-es/standalone";
 import { mutate } from "swr";
 
-import React from "react";
+import { useEffect, useState } from "react";
 
 const fetcher1 = (url) => fetch(url).then((r) => r.json());
 const fetcher2 = (url) => fetch(url).then((r) => r.json());
@@ -36,6 +36,7 @@ export default function Movies() {
   if (!keyword) {
     keyword = "";
   }
+
   if (!genre) {
     genre = "";
   }
@@ -69,7 +70,7 @@ export default function Movies() {
     size,
     setSize,
     mutate: mutate1,
-  } = useSWRInfinite(getKey1, fetcher1, { revalidateFirstPage: true });
+  } = useSWRInfinite(getKey1, fetcher1);
   const {
     mutate: mutate2,
     data: paginatedData2,
@@ -78,8 +79,35 @@ export default function Movies() {
     setSize: setSize2,
   } = useSWRInfinite(getKey2, fetcher2);
 
+  // console.log(paginatedData, paginatedData2);
+
+  useEffect(() => {
+    console.log("remdan");
+    if (year_gap && paginatedData) {
+      const yearArray = year_gap.split(",").map(Number);
+
+      var filteredPaginatedDataFull = paginatedData.map((data) => {
+        if (data) {
+          return {
+            ...data,
+            data: {
+              ...data.data,
+              movies: data.data.movies.filter(
+                (movie) => movie.year <= yearArray[1]
+              ),
+            },
+          };
+        }
+        return data;
+      });
+      console.log({ filteredPaginatedDataFull });
+      mutate1(filteredPaginatedDataFull, false);
+      // mutate1();
+    }
+  }, [year_gap]);
+
   if (error1 || error2) return <div>failed to load</div>;
-  if (!paginatedData2 || !paginatedData)
+  if (!paginatedData2 || !paginatedData) {
     return (
       <Spinner
         thickness="4px"
@@ -89,13 +117,10 @@ export default function Movies() {
         size="xl"
       />
     );
-  console.log(paginatedData, paginatedData2);
-  if (year_gap) {
-    const yearArray = year_gap.split(",").map(Number);
+  }
 
-    /* const filteredPaginatedData = paginatedData[0].data.movies.filter(
-      (movie) => movie.year >= yearArray[0]
-    ); */
+  /*if (year_gap) {
+    const yearArray = year_gap.split(",").map(Number);
 
     var filteredPaginatedDataFull = paginatedData.map((data) => {
       if (data) {
@@ -112,13 +137,7 @@ export default function Movies() {
     mutate1(filteredPaginatedDataFull, false);
     // mutate1();
 
-    /* const filteredPaginatedData = filterDeep(
-      paginatedData,
-      (value, key, parent) => {
-        if (key == "year" && value >= yearArray[0]) return true;
-      }
-    ); */
-  }
+  }*/
   if (ratingGap) {
     const ratingArray = ratingGap.split(",").map(Number);
   }
@@ -132,7 +151,9 @@ export default function Movies() {
           {router.asPath !== "/" && (
             <Button
               // leftIcon={<MdDeleteForever size={"1.4em"} />}
-              onClick={() => router.push("/")}
+              onClick={() => {
+                router.push("/");
+              }}
             >
               Clear all filters
             </Button>
@@ -178,7 +199,9 @@ export default function Movies() {
             {paginatedData[0].data.movie_count !== 0 &&
               paginatedData.map((data) =>
                 data.data.movies.map((movies) => {
-                  console.log("test in jsx ", movies);
+                  {
+                    /*  console.log("test in jsx ", movies); */
+                  }
                   return (
                     movies.medium_cover_image && (
                       <WrapItem key={movies.id}>
@@ -187,9 +210,9 @@ export default function Movies() {
                           variant={"link"}
                           //cursor={"pointer"}
                           minW={0}
-                          onClick={() =>
-                            router.push(`/movie1/${movies.id}-1111`)
-                          }
+                          onClick={() => {
+                            router.push(`/movie1/${movies.id}-1111`);
+                          }}
                         >
                           <Image // TODO: see next/image docs for loading
                             alt="Movie picture"
