@@ -41,6 +41,8 @@ export default function Movies() {
     genre = "";
   }
 
+  console.log("query", year_gap);
+
   /**
    * TODO: fix sort for both sources
    * popcorn sort :  name , rating , released , trending , updated , year .
@@ -103,6 +105,12 @@ export default function Movies() {
       console.log({ filteredPaginatedDataFull });
       mutate1(filteredPaginatedDataFull, false);
       // mutate1();
+    } else {
+      console.log(
+        "year_gap ceased to exist in this absurd universe and it left behind a sad developper",
+        year_gap
+      );
+      mutate1(filteredPaginatedDataFull, true);
     }
   }, [year_gap]);
 
