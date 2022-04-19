@@ -81,10 +81,13 @@ export default function Movies() {
     setSize: setSize2,
   } = useSWRInfinite(getKey2, fetcher2);
 
+  if (year_gap) {
+    const yearArray = year_gap.split(",").map(Number);
+  }
   // console.log(paginatedData, paginatedData2);
 
-  useEffect(() => {
-    console.log("remdan");
+  /* useEffect(() => {
+     console.log("remdan");
     if (year_gap && paginatedData) {
       const yearArray = year_gap.split(",").map(Number);
 
@@ -112,7 +115,7 @@ export default function Movies() {
       );
       mutate1(filteredPaginatedDataFull, true);
     }
-  }, [year_gap]);
+  }, [year_gap]); */
 
   if (error1 || error2) return <div>failed to load</div>;
   if (!paginatedData2 || !paginatedData) {
@@ -210,29 +213,70 @@ export default function Movies() {
                   {
                     /*  console.log("test in jsx ", movies); */
                   }
-                  return (
-                    movies.medium_cover_image && (
-                      <WrapItem key={movies.id}>
-                        <Button //as={Button}
-                          //rounded={"full"}
-                          variant={"link"}
-                          //cursor={"pointer"}
-                          minW={0}
-                          onClick={() => {
-                            router.push(`/movie1/${movies.id}-1111`);
-                          }}
-                        >
-                          <Image // TODO: see next/image docs for loading
-                            alt="Movie picture"
-                            key={movies.id}
-                            src={movies.medium_cover_image}
-                            width={230}
-                            height={345}
-                          />
-                        </Button>
-                      </WrapItem>
-                    )
-                  );
+
+                  {
+                    /*
+                    TODO:test this implementation
+                    if (year_gap){
+                        movies.medium_cover_image && movies.year <= yeaR_gap && (
+                          ......
+                        )
+                    }else {
+
+                    }
+                  */
+                  }
+                  if (year_gap) {
+                    return (
+                      movies.medium_cover_image &&
+                      movies.year <= year_gap.split(",").map(Number)[1] &&
+                      movies.year >= year_gap.split(",").map(Number)[0] && (
+                        <WrapItem key={movies.id}>
+                          <Button //as={Button}
+                            //rounded={"full"}
+                            variant={"link"}
+                            //cursor={"pointer"}
+                            minW={0}
+                            onClick={() => {
+                              router.push(`/movie1/${movies.id}-1111`);
+                            }}
+                          >
+                            <Image // TODO: see next/image docs for loading
+                              alt="Movie picture"
+                              key={movies.id}
+                              src={movies.medium_cover_image}
+                              width={230}
+                              height={345}
+                            />
+                          </Button>
+                        </WrapItem>
+                      )
+                    );
+                  } else {
+                    return (
+                      movies.medium_cover_image && (
+                        <WrapItem key={movies.id}>
+                          <Button //as={Button}
+                            //rounded={"full"}
+                            variant={"link"}
+                            //cursor={"pointer"}
+                            minW={0}
+                            onClick={() => {
+                              router.push(`/movie1/${movies.id}-1111`);
+                            }}
+                          >
+                            <Image // TODO: see next/image docs for loading
+                              alt="Movie picture"
+                              key={movies.id}
+                              src={movies.medium_cover_image}
+                              width={230}
+                              height={345}
+                            />
+                          </Button>
+                        </WrapItem>
+                      )
+                    );
+                  }
                 })
               )}
           </Wrap>
