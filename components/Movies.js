@@ -84,10 +84,10 @@ export default function Movies() {
   if (year_gap) {
     const yearArray = year_gap.split(",").map(Number);
   }
-  // console.log(paginatedData, paginatedData2);
+  console.log({ paginatedData }, { paginatedData2 });
 
-  /* useEffect(() => {
-     console.log("remdan");
+  useEffect(() => {
+    console.log("remdan");
     if (year_gap && paginatedData) {
       const yearArray = year_gap.split(",").map(Number);
 
@@ -113,9 +113,9 @@ export default function Movies() {
         "year_gap ceased to exist in this absurd universe and it left behind a sad developper",
         year_gap
       );
-      mutate1(filteredPaginatedDataFull, true);
+      mutate1(paginatedData, true);
     }
-  }, [year_gap]); */
+  }, [year_gap]);
 
   if (error1 || error2) return <div>failed to load</div>;
   if (!paginatedData2 || !paginatedData) {
@@ -210,22 +210,6 @@ export default function Movies() {
             {paginatedData[0].data.movie_count !== 0 &&
               paginatedData.map((data) =>
                 data.data.movies.map((movies) => {
-                  {
-                    /*  console.log("test in jsx ", movies); */
-                  }
-
-                  {
-                    /*
-                    TODO:test this implementation
-                    if (year_gap){
-                        movies.medium_cover_image && movies.year <= yeaR_gap && (
-                          ......
-                        )
-                    }else {
-
-                    }
-                  */
-                  }
                   if (year_gap) {
                     return (
                       movies.medium_cover_image &&
