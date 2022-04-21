@@ -16,7 +16,10 @@ import {
 import useSWRInfinite from "swr/infinite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
-import { MdDeleteForever } from "react-icons/Md";
+import {
+  MdDeleteForever,
+  MdSignalCellularConnectedNoInternet2Bar,
+} from "react-icons/Md";
 
 import { filterDeep } from "deepdash-es/standalone";
 import { mutate } from "swr";
@@ -84,12 +87,11 @@ export default function Movies() {
   if (year_gap) {
     const yearArray = year_gap.split(",").map(Number);
   }
-  console.log({ paginatedData }, { paginatedData2 });
 
   useEffect(() => {
-    console.log("remdan");
-    if (year_gap && paginatedData) {
+    if (year_gap && paginatedData && paginatedData2) {
       const yearArray = year_gap.split(",").map(Number);
+      console.log(yearArray);
 
       var filteredPaginatedDataFull = paginatedData.map((data) => {
         if (data) {
@@ -97,16 +99,28 @@ export default function Movies() {
             ...data,
             data: {
               ...data.data,
-              movies: data.data.movies.filter(
-                (movie) => movie.year <= yearArray[1]
-              ),
+              movies: data.data.movies.filter((movie) => {
+                return movie.year <= yearArray[1] && movie.year >= yearArray[0];
+              }),
             },
           };
         }
         return data;
       });
-      console.log({ filteredPaginatedDataFull });
+
+      var filteredPaginatedDataFull2 = paginatedData2.map((data) => {
+        return data.filter((movie) => {
+          return movie.year <= yearArray[1] && movie.year >= yearArray[0];
+        });
+      });
+
+      console.log(
+        { filteredPaginatedDataFull2 },
+        { filteredPaginatedDataFull }
+      );
+
       mutate1(filteredPaginatedDataFull, false);
+      mutate2(filteredPaginatedDataFull2, false);
       // mutate1();
     } else {
       console.log(
@@ -114,8 +128,9 @@ export default function Movies() {
         year_gap
       );
       mutate1(paginatedData, true);
+      mutate2(paginatedData2, true);
     }
-  }, [year_gap]);
+  }, [year_gap, paginatedData, paginatedData2]);
 
   if (error1 || error2) return <div>failed to load</div>;
   if (!paginatedData2 || !paginatedData) {
@@ -181,7 +196,7 @@ export default function Movies() {
           //loader={} //TODO: do not display when reach end, or comment that shit :D
         >
           <Wrap spacing="5px" justify="center" w="full" p={30} bg={color}>
-            {/* {paginatedData2.length !== 0 &&
+            {paginatedData2.length !== 0 &&
               paginatedData2.map((data) =>
                 data.map(
                   (data) =>
@@ -205,62 +220,33 @@ export default function Movies() {
                       </WrapItem>
                     )
                 )
-              )} */}
-            {/*TODO:uncomment this*/}
+              )}
             {paginatedData[0].data.movie_count !== 0 &&
               paginatedData.map((data) =>
                 data.data.movies.map((movies) => {
-                  if (year_gap) {
-                    return (
-                      movies.medium_cover_image &&
-                      movies.year <= year_gap.split(",").map(Number)[1] &&
-                      movies.year >= year_gap.split(",").map(Number)[0] && (
-                        <WrapItem key={movies.id}>
-                          <Button //as={Button}
-                            //rounded={"full"}
-                            variant={"link"}
-                            //cursor={"pointer"}
-                            minW={0}
-                            onClick={() => {
-                              router.push(`/movie1/${movies.id}-1111`);
-                            }}
-                          >
-                            <Image // TODO: see next/image docs for loading
-                              alt="Movie picture"
-                              key={movies.id}
-                              src={movies.medium_cover_image}
-                              width={230}
-                              height={345}
-                            />
-                          </Button>
-                        </WrapItem>
-                      )
-                    );
-                  } else {
-                    return (
-                      movies.medium_cover_image && (
-                        <WrapItem key={movies.id}>
-                          <Button //as={Button}
-                            //rounded={"full"}
-                            variant={"link"}
-                            //cursor={"pointer"}
-                            minW={0}
-                            onClick={() => {
-                              router.push(`/movie1/${movies.id}-1111`);
-                            }}
-                          >
-                            <Image // TODO: see next/image docs for loading
-                              alt="Movie picture"
-                              key={movies.id}
-                              src={movies.medium_cover_image}
-                              width={230}
-                              height={345}
-                            />
-                          </Button>
-                        </WrapItem>
-                      )
-                    );
-                  }
+                  return (
+                    movies.medium_cover_image && (
+                      <WrapItem key={movies.id}>
+                        <Button //as={Button}
+                          //rounded={"full"}
+                          variant={"link"}
+                          //cursor={"pointer"}
+                          minW={0}
+                          onClick={() => {
+                            router.push(`/movie1/${movies.id}-1111`);
+                          }}
+                        >
+                          <Image // TODO: see next/image docs for loading
+                            alt="Movie picture"
+                            key={movies.id}
+                            src={movies.medium_cover_image}
+                            width={230}
+                            height={345}
+                          />
+                        </Button>
+                      </WrapItem>
+                    )
+                  );
                 })
               )}
           </Wrap>
