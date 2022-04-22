@@ -44,7 +44,7 @@ export default function Movies() {
     genre = "";
   }
 
-  console.log("query", year_gap);
+  console.log("query", ratingGap);
 
   /**
    * TODO: fix sort for both sources
@@ -84,10 +84,6 @@ export default function Movies() {
     setSize: setSize2,
   } = useSWRInfinite(getKey2, fetcher2);
 
-  if (year_gap) {
-    const yearArray = year_gap.split(",").map(Number);
-  }
-
   useEffect(() => {
     if (year_gap && paginatedData && paginatedData2) {
       const yearArray = year_gap.split(",").map(Number);
@@ -123,14 +119,50 @@ export default function Movies() {
       mutate2(filteredPaginatedDataFull2, false);
       // mutate1();
     } else {
-      console.log(
-        "year_gap ceased to exist in this absurd universe and it left behind a sad developper",
-        year_gap
-      );
       mutate1(paginatedData, true);
       mutate2(paginatedData2, true);
     }
-  }, [year_gap, paginatedData, paginatedData2]);
+  }, [year_gap, paginatedData2]);
+
+  useEffect(() => {
+    if (ratingGap && paginatedData && paginatedData2) {
+      const ratingArray = ratingGap.split(",").map(Number);
+      console.log(ratingArray);
+
+      var filteredPaginatedDataRating = paginatedData.map((data) => {
+        if (data) {
+          return {
+            ...data,
+            data: {
+              ...data.data,
+              movies: data.data.movies.filter((movie) => {
+                return (
+                  movie.rating <= ratingArray[1] / 10 &&
+                  movie.rating >= ratingArray[0] / 10
+                );
+              }),
+            },
+          };
+        }
+        return data;
+      });
+
+      var filteredPaginatedDataRating2 = paginatedData2.map((data) => {
+        return data.filter((movie) => {
+          return (
+            movie.rating.percentage <= ratingArray[1] &&
+            movie.rating.percentage >= ratingArray[0]
+          );
+        });
+      });
+
+      mutate1(filteredPaginatedDataRating, false);
+      mutate2(filteredPaginatedDataRating2, false);
+    } else {
+      mutate1(paginatedData, true);
+      mutate2(paginatedData2, true);
+    }
+  }, [ratingGap, paginatedData2]);
 
   if (error1 || error2) return <div>failed to load</div>;
   if (!paginatedData2 || !paginatedData) {
@@ -145,28 +177,6 @@ export default function Movies() {
     );
   }
 
-  /*if (year_gap) {
-    const yearArray = year_gap.split(",").map(Number);
-
-    var filteredPaginatedDataFull = paginatedData.map((data) => {
-      if (data) {
-        return {
-          ...data,
-          movies: data.data.movies.filter(
-            (movie) => movie.year >= yearArray[0]
-          ),
-        };
-      }
-      return data;
-    });
-    console.log({ filteredPaginatedDataFull }, { paginatedData });
-    mutate1(filteredPaginatedDataFull, false);
-    // mutate1();
-
-  }*/
-  if (ratingGap) {
-    const ratingArray = ratingGap.split(",").map(Number);
-  }
   if (
     paginatedData[0].data.movies &&
     (paginatedData[0].data.movie_count !== 0 || paginatedData2[0].length !== 0)
