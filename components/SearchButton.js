@@ -176,7 +176,7 @@ const SearchButton = () => {
                   <RangeSlider
                     min={1900}
                     max={2022}
-                    step={5}
+                    step={10}
                     defaultValue={[1900, 2022]}
                     onChangeEnd={(yearGap) => setYearGap(yearGap)}
                   >
@@ -223,6 +223,8 @@ const SearchButton = () => {
                 setSort("");
                 setOrder("");
                 setValue("");
+                setRatingGap("");
+                setYearGap("");
               }}
             >
               {t.advancedsearch}
