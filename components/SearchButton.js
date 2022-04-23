@@ -167,6 +167,7 @@ const SearchButton = () => {
                     );
                   })}
                 </Grid>
+                <Divider />
 
                 <Stack spacing={3}>
                   <Text>
