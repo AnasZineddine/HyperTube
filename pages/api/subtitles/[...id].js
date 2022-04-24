@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       langs: ["en", "fr", "ar"],
     });
     res.writeHead(200, {
-      "Content-Type": "text/vtt",
+      "Content-Type": "text/vtt; charset=utf-8",
     });
     console.log(results);
     const arabic = results.filter((obj) => {

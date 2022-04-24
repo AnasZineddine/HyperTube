@@ -33,7 +33,7 @@ const Movie = () => {
   return (
     <Flex alignItems="stretch" justifyContent="center">
       <Stack spacing={10} m={50} justifyContent="center" alignItems="stretch">
-        <Stack spacing={20}>
+        <Stack spacing={10}>
           <Container>
             <Center>
               {/* <iframe
@@ -77,8 +77,20 @@ const Movie = () => {
             </Center>
           </Container>
           <Container>
+            <Center>
+              <Text textAlign="justify">
+                {data.data.movie.title} - {data.data.movie.year}
+              </Text>
+            </Center>
+          </Container>
+          <Container>
             <Divider />
             <Text textAlign="justify">{data.data.movie.description_full}</Text>
+            <Divider />
+          </Container>
+          <Container>
+            <Divider />
+            <Text textAlign="justify">{data.data.movie.cast[0].name}</Text>
             <Divider />
           </Container>
         </Stack>

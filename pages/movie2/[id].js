@@ -23,7 +23,7 @@ const Movie = () => {
   return (
     <Flex alignItems="stretch" justifyContent="center">
       <Stack spacing={10} m={50} justifyContent="center" alignItems="stretch">
-        <Stack spacing={20}>
+        <Stack spacing={10}>
           <Container>
             <Center>
               {/* <iframe
@@ -65,6 +65,13 @@ const Movie = () => {
                   src={`/api/subtitles/${id}/ar`}
                 ></track>
               </video>
+            </Center>
+          </Container>
+          <Container>
+            <Center>
+              <Text textAlign="justify">
+                {data.title} - {data.year}
+              </Text>
             </Center>
           </Container>
           <Container>
