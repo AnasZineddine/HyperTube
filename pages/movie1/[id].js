@@ -22,6 +22,7 @@ const Movie = () => {
     `https://yts.mx/api/v2/movie_details.json?movie_id=${correctId}&with_cast=true`,
     fetcher
   );
+
   if (error) return <div>failed to load</div>;
   if (!data) return <div>Loading...</div>;
 
