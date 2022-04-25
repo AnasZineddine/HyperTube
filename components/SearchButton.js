@@ -71,7 +71,7 @@ const SearchButton = () => {
   const [genre, setGenre] = React.useState("");
   const [yearGap, setYearGap] = React.useState("");
   const [ratingGap, setRatingGap] = React.useState("");
-  const [sort, setSort] = React.useState("");
+  const [sort, setSort] = React.useState("Name");
   const [order, setOrder] = React.useState("");
   const { locale } = router;
   const t = locale === "en" ? en : fr;

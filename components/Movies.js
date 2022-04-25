@@ -21,11 +21,6 @@ import {
   MdSignalCellularConnectedNoInternet2Bar,
 } from "react-icons/Md";
 
-import { filterDeep } from "deepdash-es/standalone";
-import { mutate } from "swr";
-
-import { useEffect, useState } from "react";
-
 const fetcher1 = (url) => fetch(url).then((r) => r.json());
 const fetcher2 = (url) => fetch(url).then((r) => r.json());
 

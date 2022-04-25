@@ -2,12 +2,10 @@ import { Flex, Text, Stack, Container, Center } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Comments from "../../components/Comments";
-import Plyr from "plyr";
 
 import { useSession } from "next-auth/react";
 
 const Movie = () => {
-  const player = new Plyr("#player");
   const fetcher = (url) => fetch(url).then((r) => r.json());
   const { data: session } = useSession();
   const router = useRouter();
@@ -18,7 +16,6 @@ const Movie = () => {
 
   console.log("movieData2", data);
   const { locale } = router;
-  console.log(locale);
 
   return (
     <Flex alignItems="stretch" justifyContent="center">
