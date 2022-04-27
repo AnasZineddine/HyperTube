@@ -88,10 +88,23 @@ const Movie = () => {
             <Divider />
             <Text textAlign="justify">{data.data.movie.description_full}</Text>
             <Divider />
+            <Container>
+              <Center>
+                <Text textAlign="justify">
+                  Rating : {data.data.movie.rating} / 10
+                </Text>
+              </Center>
+            </Container>
           </Container>
           <Container>
             <Divider />
-            <Text textAlign="justify">{data.data.movie.cast[0].name}</Text>
+
+            {data.data.movie.cast.map((actor) => (
+              <Text textAlign="Center" key={actor.imdb_code}>
+                {actor.name}
+              </Text>
+            ))}
+
             <Divider />
           </Container>
         </Stack>

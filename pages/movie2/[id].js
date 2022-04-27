@@ -71,8 +71,16 @@ const Movie = () => {
               </Text>
             </Center>
           </Container>
+
           <Container>
             <Text textAlign="justify">{data.synopsis}</Text>
+          </Container>
+          <Container>
+            <Center>
+              <Text textAlign="justify">
+                Rating : {data.rating.percentage}%
+              </Text>
+            </Center>
           </Container>
         </Stack>
         <Container>

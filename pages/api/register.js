@@ -55,7 +55,7 @@ export default async function handler(req, res) {
           password: await argon2.hash(password),
         },
       });
-      sendConfirmationEmail(user, "sdfsdfsdf");
+      // sendConfirmationEmail(user, "sdfsdfsdf");
       console.log(user);
       return res.status(200).json({ success: true });
     } catch (e) {
