@@ -59,6 +59,8 @@ CREATE TABLE "Movie" (
     "apiId" TEXT NOT NULL,
     "downloaded" BOOLEAN NOT NULL DEFAULT false,
     "filename" TEXT,
+    "watched" BOOLEAN NOT NULL DEFAULT false,
+    "expires" TIMESTAMP(3),
 
     CONSTRAINT "Movie_pkey" PRIMARY KEY ("id")
 );

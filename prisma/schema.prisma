@@ -72,6 +72,8 @@ model Movie {
   comments   Comment[]
   downloaded Boolean   @default(false)
   filename   String?
+  watched    Boolean   @default(false)
+  expires    DateTime?
 }
 
 model Comment {

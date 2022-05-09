@@ -101,6 +101,7 @@ export default async function handler(req, res) {
                     const checkExisting = await prisma.movie.findFirst({
                       where: {
                         apiId: movieId,
+                        downloaded: true,
                       },
                     });
 
@@ -110,6 +111,7 @@ export default async function handler(req, res) {
                           apiId: movieId,
                           downloaded: true,
                           filename: file.path,
+                          watched: true,
                         },
                       });
                     }
@@ -177,6 +179,7 @@ export default async function handler(req, res) {
                   const checkExisting = await prisma.movie.findFirst({
                     where: {
                       apiId: correctId,
+                      downloaded: true,
                     },
                   });
 
@@ -185,6 +188,8 @@ export default async function handler(req, res) {
                       data: {
                         apiId: correctId,
                         downloaded: true,
+                        filename: file.path,
+                        watched: true,
                       },
                     });
                   }
