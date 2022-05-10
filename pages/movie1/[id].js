@@ -22,12 +22,17 @@ const Movie = () => {
     `https://yts.mx/api/v2/movie_details.json?movie_id=${correctId}&with_cast=true`,
     fetcher
   );
+  const { data: data2, error: error2 } = useSWR(
+    `/api/watched/${correctId}`,
+    fetcher
+  );
 
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>Loading...</div>;
+  if (error || error2) return <div>failed to load</div>;
+  if (!data || !data2) return <div>Loading...</div>;
 
   const { locale } = router;
   console.log(locale);
+  console.log("watched", data2);
 
   console.log("movieData1", data);
 
