@@ -2,6 +2,7 @@ import { Flex, Text, Stack, Container, Center } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Comments from "../../components/Comments";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 import { useSession } from "next-auth/react";
 
@@ -68,6 +69,8 @@ const Movie = () => {
           </Container>
           <Container>
             <Center>
+              {data2.watched === true ? <FiEye /> : <FiEyeOff />}
+
               <Text textAlign="justify">
                 {data.title} - {data.year}
               </Text>

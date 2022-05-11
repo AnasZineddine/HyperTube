@@ -4,6 +4,7 @@ const axios = require("axios");
 const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
 const ffmpeg = require("fluent-ffmpeg");
 ffmpeg.setFfmpegPath(ffmpegPath);
+require("datejs");
 
 const yifysubtitles = require("yifysubtitles");
 import prisma from "../../../prisma/db";
@@ -69,7 +70,7 @@ export default async function handler(req, res) {
             `http://popcorn-time.ga/movie/${movieId}`
           );
           var engine = torrentStream(response.data.torrents.en["1080p"]?.url, {
-            path: `/Users/azineddi/goinfre/HyperTube/movies/${movieId}`,
+            path: `/Users/azineddi/goinfre/HyperTube/movies/${movieId}`, //TODO:use path of project folder
           });
 
           engine.on("ready", function () {
@@ -112,6 +113,7 @@ export default async function handler(req, res) {
                           downloaded: true,
                           filename: file.path,
                           watched: true,
+                          expires: Date.today().next().month(),
                         },
                       });
                     }
@@ -215,6 +217,7 @@ export default async function handler(req, res) {
                     "Content-Type": "video/mp4",
                   };
                   res.writeHead(206, head);
+
                   console.log("Streaming===============>:", file.name);
                   const stream = file.createReadStream({ start, end });
                   stream.pipe(res);
@@ -234,6 +237,7 @@ export default async function handler(req, res) {
                           downloaded: true,
                           filename: file.path,
                           watched: true,
+                          expires: Date.today().next().month(),
                         },
                       });
                     }

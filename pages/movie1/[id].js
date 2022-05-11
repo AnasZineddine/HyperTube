@@ -11,6 +11,7 @@ import useSWR from "swr";
 import Comments from "../../components/Comments";
 
 import { useSession } from "next-auth/react";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const Movie = () => {
   const fetcher = (url) => fetch(url).then((r) => r.json());
@@ -84,8 +85,10 @@ const Movie = () => {
           </Container>
           <Container>
             <Center>
+              {data2.watched === true ? <FiEye /> : <FiEyeOff />}
+
               <Text textAlign="justify">
-                {data.data.movie.title} - {data.data.movie.year}
+                - {data.data.movie.title} - {data.data.movie.year}
               </Text>
             </Center>
           </Container>

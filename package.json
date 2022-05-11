@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.1",
-    "@chakra-ui/react": "^1.6.10",
+    "@chakra-ui/react": "^1.8.8",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
@@ -22,6 +22,7 @@
     "axios": "^0.26.0",
     "crypto": "^1.0.1",
     "date-fns": "^2.25.0",
+    "datejs": "^1.0.0-rc3",
     "fluent-ffmpeg": "^2.1.2",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
