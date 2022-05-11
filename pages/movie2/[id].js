@@ -11,10 +11,12 @@ const Movie = () => {
   const router = useRouter();
   const { id } = router.query;
   const { data, error } = useSWR(`http://popcorn-time.ga/movie/${id}`, fetcher);
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>Loading...</div>;
+  const { data: data2, error: error2 } = useSWR(`/api/watched/${id}`, fetcher);
+  if (error || error2) return <div>failed to load</div>;
+  if (!data || !data2) return <div>Loading...</div>;
 
   console.log("movieData2", data);
+  console.log("watched", data2);
   const { locale } = router;
 
   return (
