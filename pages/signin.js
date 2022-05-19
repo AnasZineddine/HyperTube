@@ -78,6 +78,7 @@ export default function SignIn({ csrfToken, providers }) {
             name="username"
             placeholder="Enter a username"
             {...register("username")}
+            id="username"
           />
           <FormErrorMessage>{errors?.username?.message}</FormErrorMessage>
         </FormControl>
@@ -89,6 +90,7 @@ export default function SignIn({ csrfToken, providers }) {
             name="password"
             placeholder="Enter a password"
             {...register("password")}
+            id="password"
           />
           <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
         </FormControl>

@@ -80,30 +80,33 @@ const Navbar = () => {
               {t.signup}
             </Button>
           </Link>
-          <Menu>
-            <MenuButton
-              as={IconButton}
-              aria-label="Options"
-              icon={<IoLanguageSharp />}
-              variant="outline"
-            />
-            <MenuList>
-              <MenuItem
-                onClick={() => {
-                  router.push({ pathname, query }, asPath, { locale: "en" });
-                }}
-              >
-                English
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  router.push({ pathname, query }, asPath, { locale: "fr" });
-                }}
-              >
-                Français
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          <Box>
+            {" "}
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label="Options"
+                icon={<IoLanguageSharp />}
+                variant="outline"
+              />
+              <MenuList>
+                <MenuItem
+                  onClick={() => {
+                    router.push({ pathname, query }, asPath, { locale: "en" });
+                  }}
+                >
+                  English
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    router.push({ pathname, query }, asPath, { locale: "fr" });
+                  }}
+                >
+                  Français
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Box>
         </Stack>
       </Flex>
     );
@@ -137,30 +140,32 @@ const Navbar = () => {
             <Avatar name={session.user.name} src={session.user.image} />
           )}
         </Button>
-        <Menu>
-          <MenuButton
-            as={IconButton}
-            aria-label="Options"
-            icon={<IoLanguageSharp />}
-            variant="outline"
-          />
-          <MenuList>
-            <MenuItem
-              onClick={() => {
-                router.push({ pathname, query }, asPath, { locale: "en" });
-              }}
-            >
-              English
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                router.push({ pathname, query }, asPath, { locale: "fr" });
-              }}
-            >
-              Français
-            </MenuItem>
-          </MenuList>
-        </Menu>
+        <Box>
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"
+              icon={<IoLanguageSharp />}
+              variant="outline"
+            />
+            <MenuList>
+              <MenuItem
+                onClick={() => {
+                  router.push({ pathname, query }, asPath, { locale: "en" });
+                }}
+              >
+                English
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  router.push({ pathname, query }, asPath, { locale: "fr" });
+                }}
+              >
+                Français
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </Box>
 
         <Button
           colorScheme="red"
