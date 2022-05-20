@@ -70,9 +70,8 @@ const Movie = () => {
           <Container>
             <Center>
               {data2.watched === true ? <FiEye /> : <FiEyeOff />}
-
               <Text textAlign="justify">
-                {data.title} - {data.year}
+                - {data.title} - {data.year}
               </Text>
             </Center>
           </Container>

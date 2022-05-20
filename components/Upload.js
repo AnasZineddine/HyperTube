@@ -28,7 +28,7 @@ const UiFileInputButton = (props) => {
   return (
     <form ref={formRef}>
       <Button w="full" onClick={onClickHandler}>
-        Change Image
+        {props.txt}
       </Button>
       <input
         accept={props.acceptedFileTypes}

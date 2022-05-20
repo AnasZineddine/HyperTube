@@ -15,6 +15,9 @@ export default async function handler(req, res) {
     const movieId = req.query.id[0];
     if (!movieId.includes("-1111")) {
       const range = req.headers.range;
+      if (!range) {
+        res.status(400).send("Requires Range header");
+      }
 
       const checkDownloaded = await prisma.movie.findFirst({
         where: {
@@ -26,10 +29,6 @@ export default async function handler(req, res) {
         },
       });
       if (checkDownloaded) {
-        if (!range) {
-          res.status(400).send("Requires Range header");
-        }
-
         // get video stats (about 61MB)
         const videoPath =
           `/Users/azineddi/goinfre/HyperTube/movies/${movieId}/` +

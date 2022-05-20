@@ -37,6 +37,7 @@ export default {
   animation: "Animation",
   documentary: "Documentary",
   crime: "Crime",
+  all: "All",
   yeargap: "Year gap",
   ratinggap: "Rating gap",
   advancedsearch: "Advanced search",

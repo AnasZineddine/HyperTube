@@ -89,18 +89,18 @@ const SearchButton = () => {
   const group = getRootProps();
 
   const options = [
-    t.all,
-    t.comedy,
-    t.action,
-    t.horror,
-    t.scifi,
-    t.romance,
-    t.thriller,
-    t.drama,
-    t.adventure,
-    t.animation,
-    t.documentary,
-    t.crime,
+    "all",
+    "comedy",
+    "action",
+    "horror",
+    "scifi",
+    "romance",
+    "thriller",
+    "drama",
+    "adventure",
+    "animation",
+    "documentary",
+    "crime",
   ];
   return (
     <>
@@ -141,12 +141,12 @@ const SearchButton = () => {
                     placeholder={t.sortby}
                     onChange={handleChange2}
                   >
-                    <option value="name">{t.name}</option>
-                    <option value="rating">{t.rating}</option>
-                    <option value="released">{t.released}</option>
-                    <option value="trending">{t.trending}</option>
-                    <option value="updated">{t.updated}</option>
-                    <option value="year">{t.year}</option>
+                    <option value={en.name}>{t.name}</option>
+                    <option value={en.rating}>{t.rating}</option>
+                    <option value={en.released}>{t.released}</option>
+                    <option value={en.trending}>{t.trending}</option>
+                    <option value={en.updated}>{t.updated}</option>
+                    <option value={en.year}>{t.year}</option>
                   </Select>
                   <Select
                     variant="filled"
@@ -162,7 +162,7 @@ const SearchButton = () => {
                     const radio = getRadioProps({ value });
                     return (
                       <RadioCard key={value} {...radio}>
-                        {value}
+                        {t[value]}
                       </RadioCard>
                     );
                   })}
@@ -212,6 +212,7 @@ const SearchButton = () => {
             <Button variant="outline" mr={3} onClick={onClose}>
               {t.cancel}
             </Button>
+
             <Button
               colorScheme="blue"
               onClick={() => {

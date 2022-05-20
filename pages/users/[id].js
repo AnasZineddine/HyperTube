@@ -177,6 +177,7 @@ export default function ProfilePage() {
                     label="Upload Single File"
                     uploadFileName="TheFile"
                     onChange={onChange}
+                    txt={t.changeimage}
                   />
                   <Button onClick={() => router.push("/forgotpassword")}>
                     {t.changepassword}
