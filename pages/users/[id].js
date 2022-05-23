@@ -54,7 +54,10 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 export default function ProfilePage() {
   const { data: session } = useSession();
   const router = useRouter();
-  const { data, error } = useSWR(`/api/users/${router.query.id}`, fetcher);
+  const { data, error, mutate } = useSWR(
+    `/api/users/${router.query.id}`,
+    fetcher
+  );
   const toast = useToast();
 
   const {
@@ -95,6 +98,7 @@ export default function ProfilePage() {
         isClosable: true,
         position: "top",
       });
+      mutate();
     } else {
       toast({
         title: "Error",

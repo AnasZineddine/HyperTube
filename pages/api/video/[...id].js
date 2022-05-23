@@ -118,6 +118,51 @@ export default async function handler(req, res) {
                     }
                   });
                 }
+              } else if (extension === "mkv") {
+                const fileSize = file.length;
+
+                if (range) {
+                  const parts = range.replace(/bytes=/, "").split("-");
+                  const start = parseInt(parts[0], 10);
+                  const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+                  const chunksize = end - start + 1;
+                  const head = {
+                    "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+                    "Accept-Ranges": "bytes",
+                    "Content-Length": chunksize,
+                    "Content-Type": "video/mp4",
+                  };
+                  //res.writeHead(206, head);
+                  console.log("Streaming===============>:", file.name);
+
+                  const stream = file.createReadStream({ start, end });
+
+                  ffmpeg()
+                    .input(stream)
+                    .outputOptions("-movflags frag_keyframe+empty_moov")
+                    .outputFormat("mp4")
+                    .on("start", () => {
+                      console.log("start");
+                    })
+                    .on("progress", (progress) => {
+                      console.log(progress);
+                      console.log(`progress: ${progress.timemark}`);
+                    })
+                    .on("end", () => {
+                      console.log("Finished processing");
+                    })
+                    .on("error", (err) => {
+                      // console.log(`ERROR: ${err.message}`);
+                      stream.destroy();
+                    })
+                    .inputFormat(extension === "mkv" ? "matroska" : extension)
+                    .audioCodec("aac")
+                    .videoCodec("libx264")
+                    .pipe(res);
+                  res.on("close", () => {
+                    stream.destroy();
+                  });
+                }
               }
             });
           });
@@ -201,7 +246,7 @@ export default async function handler(req, res) {
             engine.files.forEach(function (file) {
               var extension = file.path.split(".").pop();
               console.log(file.name);
-              if (extension === "mp4" || extension === "mkv") {
+              if (extension === "mp4") {
                 //file.select(file.name);
                 const fileSize = file.length;
                 if (range) {
