@@ -16,6 +16,9 @@ import {
   Button,
 } from "@chakra-ui/react";
 
+import en from "../utils/en";
+import fr from "../utils/fr";
+
 const schema = Yup.object().shape({
   email: Yup.string()
     .email("Must be a valid email adress")
@@ -69,6 +72,8 @@ export default function ForgotPassword() {
 
     console.log(data);
   };
+  const { locale } = router;
+  const t = locale === "en" ? en : fr;
 
   return (
     //
@@ -82,7 +87,7 @@ export default function ForgotPassword() {
         spacing={7}
       >
         <Text display="flex" justifyContent="center">
-          Forgot Password
+          {t.forgotpassword}
         </Text>
 
         <FormControl isInvalid={errors.email?.message} p="1" isRequired>
@@ -90,7 +95,7 @@ export default function ForgotPassword() {
           <Input
             type="email"
             name="email"
-            placeholder="Enter your email"
+            placeholder={t.enteryouremail}
             {...register("email")}
           />
           <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
@@ -103,7 +108,7 @@ export default function ForgotPassword() {
             onClick={handleSubmit(onSubmit)}
             disabled={errors.email}
           >
-            Reset Password
+            {t.send}
           </Button>
           <Button
             bg={"red.400"}
@@ -114,7 +119,7 @@ export default function ForgotPassword() {
             }}
             onClick={() => router.back()}
           >
-            Cancel
+            {t.cancel}
           </Button>
         </Stack>
       </Stack>

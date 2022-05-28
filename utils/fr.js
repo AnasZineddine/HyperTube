@@ -47,4 +47,5 @@ export default {
   enteryouremail: "Entrer un email",
   enterapassword: "Entrer un mot de passe",
   forgotpassword: "Mot de passe oublié ?",
+  send: "Envoyer",
 };

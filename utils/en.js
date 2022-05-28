@@ -47,4 +47,5 @@ export default {
   enteryouremail: "Enter your email",
   enterapassword: "Enter a password",
   forgotpassword: "Forgot password ?",
+  send: "Send",
 };

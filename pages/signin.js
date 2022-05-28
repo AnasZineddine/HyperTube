@@ -24,6 +24,9 @@ import {
   Divider,
 } from "@chakra-ui/react";
 
+import en from "../utils/en";
+import fr from "../utils/fr";
+
 const schema = Yup.object().shape({
   username: Yup.string()
     .max(255, "Must be shorter than 255")
@@ -37,6 +40,7 @@ const schema = Yup.object().shape({
 
 export default function SignIn({ csrfToken, providers }) {
   const [isLoading, setLoading] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -56,6 +60,9 @@ export default function SignIn({ csrfToken, providers }) {
     });
   };
 
+  const { locale } = router;
+  const t = locale === "en" ? en : fr;
+
   return (
     //
     <Flex alignItems="stretch" justifyContent="center">
@@ -72,11 +79,11 @@ export default function SignIn({ csrfToken, providers }) {
 
         <Input name="csrfToken" type="hidden" defaultValue={csrfToken} />
         <FormControl isInvalid={errors.username?.message} p="1" isRequired>
-          <FormLabel htmlFor="username">Username</FormLabel>
+          <FormLabel htmlFor="username">{t.username}</FormLabel>
           <Input
             type="text"
             name="username"
-            placeholder="Enter a username"
+            placeholder={t.enterausername}
             {...register("username")}
             id="username"
           />
@@ -84,43 +91,46 @@ export default function SignIn({ csrfToken, providers }) {
         </FormControl>
 
         <FormControl isInvalid={errors.password?.message} p="1" isRequired>
-          <FormLabel htmlFor="password">Password</FormLabel>
+          <FormLabel htmlFor="password">{t.password}</FormLabel>
           <Input
             type="password"
             name="password"
-            placeholder="Enter a password"
+            placeholder={t.enterapassword}
             {...register("password")}
             id="password"
           />
           <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
         </FormControl>
-        <Link href="/forgotpassword">Forgot password?</Link>
+        <Link href="/forgotpassword">{t.forgotpassword}</Link>
         <Button
           variant="solid"
           size="md"
           onClick={handleSubmit(onSubmit)}
           disabled={errors.username || errors.password}
         >
-          Sign in
+          {t.signin}
         </Button>
         <Divider />
 
         <Stack spacing={1}>
-          {Object.values(providers).map((provider) => (
-            <Button
-              key={provider.name}
-              variant="solid"
-              size="md"
-              onClick={() => {
-                signIn(provider.id);
-                setLoading(true);
-              }}
-              isLoading={isLoading}
-              loadingText="Submitting"
-            >
-              Sign in with {provider.name}
-            </Button>
-          ))}
+          {Object.values(providers).map(
+            (provider) =>
+              provider.name != "Credentials" && (
+                <Button
+                  key={provider.name}
+                  variant="solid"
+                  size="md"
+                  onClick={() => {
+                    signIn(provider.id);
+                    setLoading(true);
+                  }}
+                  isLoading={isLoading}
+                  loadingText="Submitting"
+                >
+                  Sign in with {provider.name}
+                </Button>
+              )
+          )}
         </Stack>
       </Stack>
     </Flex>
