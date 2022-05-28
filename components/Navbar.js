@@ -111,7 +111,7 @@ const Navbar = () => {
       </Flex>
     );
   }
-  console.log({ query, session });
+  //console.log({ query, session });
   return (
     <Flex alignItems="center" justifyContent="space-between">
       <Stack p={30} direction="row" alignItems="center">

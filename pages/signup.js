@@ -58,7 +58,7 @@ const SignUp = () => {
     resolver: yupResolver(schema),
   });
   const onSubmit = async (values) => {
-    console.log(values);
+    //console.log(values);
     const response = await fetch("/api/register", {
       method: "POST",
       body: JSON.stringify(values),
@@ -88,7 +88,7 @@ const SignUp = () => {
         position: "top",
       });
     }
-    console.log(data);
+    //console.log(data);
   };
   const { locale } = router;
   const t = locale === "en" ? en : fr;

@@ -28,7 +28,7 @@ const fetcher2 = (url) => fetch(url).then((r) => r.json());
 //TODO: check for null img
 export default function Movies() {
   const router = useRouter();
-  console.log(router);
+  //console.log(router);
 
   let { keyword, genre, sort_by, order_by, ratingGap, year_gap } = router.query;
   if (!keyword) {
@@ -39,7 +39,7 @@ export default function Movies() {
     genre = "";
   }
 
-  console.log("query", ratingGap);
+  //console.log("query", ratingGap);
 
   /**
    * TODO: fix sort for both sources

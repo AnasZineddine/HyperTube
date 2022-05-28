@@ -73,7 +73,7 @@ export default function NewPassword({ csrfToken, providers }) {
         position: "top",
       });
     }
-    console.log(data);
+    //console.log(data);
   };
 
   return (

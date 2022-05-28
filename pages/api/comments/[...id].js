@@ -98,7 +98,7 @@ export default async function handler(req, res) {
         error: "Comments for this movie not found",
       });
     } else {
-      //console.log("comments", checkExisting.comments);
+      ////console.log("comments", checkExisting.comments);
       res.status(200).json({ success: true, content: checkExisting });
     }
   } else if (req.method === "DELETE") {

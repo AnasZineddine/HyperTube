@@ -25,7 +25,7 @@ const Comments = ({ movieId }) => {
   const router = useRouter();
   const toast = useToast();
 
-  //console.log(session);
+  ////console.log(session);
 
   // Fetch content from protected route
   useEffect(() => {

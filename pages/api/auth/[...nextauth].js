@@ -29,7 +29,7 @@ export default NextAuth({
       token: "https://api.intra.42.fr/oauth/token",
       userinfo: "https://api.intra.42.fr/v2/me",
       profile(profile) {
-        console.log(profile);
+        //console.log(profile);
         return {
           id: profile.id,
           email: profile.email,
@@ -49,7 +49,7 @@ export default NextAuth({
       authorizationUrl:
         "https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code",
       profile(profile) {
-        console.log({ profile });
+        //console.log({ profile });
         return {
           id: profile.sub,
           email: profile.email,
@@ -94,7 +94,7 @@ export default NextAuth({
           }
           return user;
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           return null;
         }
       },
@@ -116,7 +116,7 @@ export default NextAuth({
       if (token) {
         session.id = token.id;
       }
-      console.log("session", session);
+      //console.log("session", session);
       return session;
     },
   },

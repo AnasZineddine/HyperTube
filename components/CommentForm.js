@@ -45,7 +45,7 @@ const CommentForm = ({ movieId }) => {
     const data = await response.json();
     if (data.success === true) {
       router.reload();
-      //console.log(data);
+      ////console.log(data);
     } else {
       toast({
         title: "Error",
@@ -56,7 +56,7 @@ const CommentForm = ({ movieId }) => {
         position: "top",
       });
     }
-    console.log(data);
+    ////console.log(data);
   };
   return (
     <>

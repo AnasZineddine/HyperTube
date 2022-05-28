@@ -76,7 +76,7 @@ export default function ProfilePage() {
     return <h1>user not found</h1>; //TODO: do it better
   }
 
-  console.log({ data });
+  //console.log({ data });
 
   const onSubmit = async (values) => {
     // use swr to patch changes using cache
@@ -116,15 +116,15 @@ export default function ProfilePage() {
     const config = {
       headers: { "content-type": "multipart/form-data" },
       onUploadProgress: (event) => {
-        console.log(
+        /* console.log(
           `Current progress:`,
           Math.round((event.loaded * 100) / event.total)
-        );
+        ); */
       },
     };
     const response = await axios.post("/api/upload", formData, config);
 
-    console.log("response", response.data);
+    //console.log("response", response.data);
     if (response.data.success === true) {
       //TODO: ADD email
       router.reload();

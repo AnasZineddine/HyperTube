@@ -32,10 +32,10 @@ const Movie = () => {
   if (!data || !data2) return <div>Loading...</div>;
 
   const { locale } = router;
-  console.log(locale);
-  console.log("watched", data2);
+  //console.log(locale);
+  //console.log("watched", data2);
 
-  console.log("movieData1", data);
+  //console.log("movieData1", data);
 
   return (
     <Flex alignItems="stretch" justifyContent="center">

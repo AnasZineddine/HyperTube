@@ -16,8 +16,8 @@ const Movie = () => {
   if (error || error2) return <div>failed to load</div>;
   if (!data || !data2) return <div>Loading...</div>;
 
-  console.log("movieData2", data);
-  console.log("watched", data2);
+  //console.log("movieData2", data);
+  //console.log("watched", data2);
   const { locale } = router;
 
   return (

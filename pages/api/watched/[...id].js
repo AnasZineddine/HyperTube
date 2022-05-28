@@ -3,7 +3,7 @@ import prisma from "../../../prisma/db";
 export default async function handler(req, res) {
   if (req.method === "GET") {
     const movieId = req.query.id[0];
-    console.log(movieId);
+    //console.log(movieId);
     if (!movieId.includes("-1111")) {
       const checkWatched = await prisma.movie.findFirst({
         where: {

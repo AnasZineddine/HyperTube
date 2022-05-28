@@ -46,7 +46,7 @@ async function handler(req, res) {
             resetPasswordExpires: null,
           },
         });
-        console.log(user);
+        //console.log(user);
         return res.status(200).json({ success: true });
       }
     } catch (e) {

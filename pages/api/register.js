@@ -38,7 +38,7 @@ export default async function handler(req, res) {
           OR: [{ username: username }, { email: email }],
         },
       });
-      console.log({ result });
+      //console.log({ result });
       //TODO: return error more descriptiice here below
       if (result) {
         return res
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
         },
       });
       // sendConfirmationEmail(user, "sdfsdfsdf");
-      console.log(user);
+      //console.log(user);
       return res.status(200).json({ success: true });
     } catch (e) {
       res.send(

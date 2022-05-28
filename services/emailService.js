@@ -36,9 +36,9 @@ const sendConfirmationEmail = (user, token) => {
   }),
     function (error, info) {
       if (error) {
-        console.log(error);
+        //console.log(error);
       } else {
-        console.log("email sent : " + info.response);
+        //console.log("email sent : " + info.response);
       }
     };
 };
@@ -54,9 +54,9 @@ const sendResetEmail = (user) => {
   }),
     function (error, info) {
       if (error) {
-        console.log(error);
+        //console.log(error);
       } else {
-        console.log("email sent : " + info.response);
+        //console.log("email sent : " + info.response);
       }
     };
 };

@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 
 const Profile = (props) => {
-  console.log({ props });
+  //console.log({ props });
   const color = useColorModeValue("white", "gray.700");
 
   return (

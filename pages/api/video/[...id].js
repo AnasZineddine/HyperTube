@@ -63,7 +63,7 @@ export default async function handler(req, res) {
         path: "/tmp",
         langs: ["en", "fr"],
       });
-      console.log(results); */
+      //console.log(results); */
         try {
           const response = await axios.get(
             `http://popcorn-time.ga/movie/${movieId}`
@@ -75,7 +75,7 @@ export default async function handler(req, res) {
           engine.on("ready", function () {
             engine.files.forEach(function (file) {
               var extension = file.path.split(".").pop();
-              console.log(file.name);
+              //console.log(file.name);
               if (extension === "mp4") {
                 //file.select(file.name);
                 const fileSize = file.length;
@@ -91,13 +91,13 @@ export default async function handler(req, res) {
                     "Content-Type": "video/mp4",
                   };
                   res.writeHead(206, head);
-                  console.log("Streaming===============>:", file.name);
+                  //console.log("Streaming===============>:", file.name);
 
                   const stream = file.createReadStream({ start, end });
                   stream.pipe(res);
                   engine.on("idle", async () => {
-                    console.log("doone");
-                    console.log(file.path);
+                    //console.log("doone");
+                    //console.log(file.path);
                     const checkExisting = await prisma.movie.findFirst({
                       where: {
                         apiId: movieId,
@@ -133,7 +133,7 @@ export default async function handler(req, res) {
                     "Content-Type": "video/mp4",
                   };
                   //res.writeHead(206, head);
-                  console.log("Streaming===============>:", file.name);
+                  //console.log("Streaming===============>:", file.name);
 
                   const stream = file.createReadStream({ start, end });
 
@@ -142,17 +142,17 @@ export default async function handler(req, res) {
                     .outputOptions("-movflags frag_keyframe+empty_moov")
                     .outputFormat("mp4")
                     .on("start", () => {
-                      console.log("start");
+                      //console.log("start");
                     })
                     .on("progress", (progress) => {
-                      console.log(progress);
-                      console.log(`progress: ${progress.timemark}`);
+                      //console.log(progress);
+                      //console.log(`progress: ${progress.timemark}`);
                     })
                     .on("end", () => {
-                      console.log("Finished processing");
+                      //console.log("Finished processing");
                     })
                     .on("error", (err) => {
-                      // console.log(`ERROR: ${err.message}`);
+                      // //console.log(`ERROR: ${err.message}`);
                       stream.destroy();
                     })
                     .inputFormat(extension === "mkv" ? "matroska" : extension)
@@ -178,7 +178,7 @@ export default async function handler(req, res) {
         path: "/tmp",
         langs: ["en", "fr"],
       });
-      console.log(results); */
+      //console.log(results); */
 
       const checkDownloaded = await prisma.movie.findFirst({
         where: {
@@ -234,7 +234,7 @@ export default async function handler(req, res) {
               return obj.quality === "1080p";
             }
           );
-          //console.log(theChosenOne[0]);
+          ////console.log(theChosenOne[0]);
           var engine = torrentStream(
             `magnet:?xt=urn:btih:${theChosenOne[0].hash}&dn=${theChosenOne[0].url}&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://torrent.gresille.org:80/announce&tr=udp://tracker.openbittorrent.com:80&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://tracker.leechers-paradise.org:6969&tr=udp://p4p.arenabg.ch:1337&tr=udp://tracker.internetwarriors.net:1337`,
             {
@@ -245,7 +245,7 @@ export default async function handler(req, res) {
           engine.on("ready", function () {
             engine.files.forEach(function (file) {
               var extension = file.path.split(".").pop();
-              console.log(file.name);
+              //console.log(file.name);
               if (extension === "mp4") {
                 //file.select(file.name);
                 const fileSize = file.length;
@@ -262,11 +262,11 @@ export default async function handler(req, res) {
                   };
                   res.writeHead(206, head);
 
-                  console.log("Streaming===============>:", file.name);
+                  //console.log("Streaming===============>:", file.name);
                   const stream = file.createReadStream({ start, end });
                   stream.pipe(res);
                   engine.on("idle", async () => {
-                    console.log("doone");
+                    //console.log("doone");
                     const checkExisting = await prisma.movie.findFirst({
                       where: {
                         apiId: correctId,

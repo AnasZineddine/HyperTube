@@ -70,7 +70,7 @@ export default function ForgotPassword() {
     }
     router.back();
 
-    console.log(data);
+    //console.log(data);
   };
   const { locale } = router;
   const t = locale === "en" ? en : fr;

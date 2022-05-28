@@ -43,7 +43,7 @@ apiRoute.post(async (req, res) => {
     },
   }); */
 
-  // console.log(images);
+  // //console.log(images);
   try {
     const session = await getSession({ req });
     if (!session) {
@@ -58,11 +58,11 @@ apiRoute.post(async (req, res) => {
           image: "http://localhost:3000/uploads/" + req.file.filename,
         },
       });
-      console.log(req.file);
+      //console.log(req.file);
       res.status(200).json({ success: true, data: req.file.filename });
     }
   } catch (error) {
-    console.log(`Error: ${error}`);
+    //console.log(`Error: ${error}`);
     res.status(500).json({ error });
   }
 });
