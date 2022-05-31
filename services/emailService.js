@@ -13,17 +13,28 @@ const nodemailer = require("nodemailer");
   },
 });*/
 
+var transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  /* secure: false,
+  requireTLS: true, */
+  auth: {
+    user: `${process.env.email}`,
+    pass: `${process.env.password}`,
+  },
+});
+
 // http://ethereal.email/ Transporter
 //FIXME: ethereal email can crash the server sometimes don t use in defense !
 
-const transporter = nodemailer.createTransport({
+/* const transporter = nodemailer.createTransport({
   host: "smtp.ethereal.email",
   port: 587,
   auth: {
     user: `${process.env.email}`,
     pass: `${process.env.password}`,
   },
-});
+}); */
 
 const sendConfirmationEmail = (user, token) => {
   const url = `http://localhost:3000/confirmation/${token}`;
